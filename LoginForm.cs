@@ -115,7 +115,11 @@ namespace HRApplicantWindowSystem
 
                                     if (status == "Active")
                                     {
-                                        MessageBox.Show($"Welcome Applicant! (ID: {accountId})", "Login Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        this.Hide();
+                                        ApplicantDashboardForm appDashboard = new ApplicantDashboardForm(accountId);
+                                        appDashboard.ShowDialog();
+                                        this.Show();
+                                        btnBack_Click(null, null);
                                     }
                                 }
                             }
@@ -143,25 +147,6 @@ namespace HRApplicantWindowSystem
 
             this.Show();
         }
-                    this.Hide(); 
-
-            ApplicantDashboardForm dashboard = new ApplicantDashboardForm();
-            dashboard.ShowDialog(); 
-
-            this.Show(); 
-        }
-        }
-
-        private void btnCreateAccount_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-
-
-            ApplicantRegisterForm registerForm = new ApplicantRegisterForm();
-            registerForm.ShowDialog();
-
-            this.Show();
-        }
-
+         
     }
 }

@@ -10,9 +10,14 @@ namespace HRApplicantWindowSystem
 {
     public partial class ApplicantDashboardForm : Form
     {
-        public ApplicantDashboardForm()
+        // Add a variable to store the logged-in applicant's ID
+        private int currentAccountId;
+
+        // Modify the constructor to accept the ID
+        public ApplicantDashboardForm(int accountId)
         {
             InitializeComponent();
+            currentAccountId = accountId; // Save it so all your buttons on this form can use it later!
         }
 
         private void btnProfile_Click(object sender, EventArgs e)
