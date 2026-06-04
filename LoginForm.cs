@@ -9,21 +9,53 @@ namespace HRApplicantWindowSystem
     {
         private string connectionString = "Server=localhost;Database=db_hrapplicantwindowsystem;User ID=root;Password=abalo_mysql;";
 
+        private string selectedRole = "";
         public LoginForm()
         {
             InitializeComponent();
         }
 
-        private void btnLogin_Click(object sender, EventArgs e)
+        private void LoginForm_Load(object sender, EventArgs e)
         {
 
-            if (cmbLoginType.SelectedItem == null)
-            {
-                MessageBox.Show("Please select a Login Type.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            pnlRoleSelection.Visible = true;
+            pnlLoginInputs.Visible = false;
+        }
 
-            string loginType = cmbLoginType.SelectedItem.ToString();
+        private void btnRoleApplicant_Click(object sender, EventArgs e)
+        {
+            selectedRole = "Applicant";
+            SwitchToLoginView(true); 
+        }
+
+        private void btnRoleHR_Click(object sender, EventArgs e)
+        {
+            selectedRole = "HR/Admin";
+            SwitchToLoginView(false); 
+        }
+
+        private void SwitchToLoginView(bool allowRegistration)
+        {
+            pnlRoleSelection.Visible = false;
+            pnlLoginInputs.Visible = true;
+
+
+            btnCreateAccount.Visible = allowRegistration;
+
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+
+            txtUsername.Clear();
+            txtPassword.Clear();
+            pnlRoleSelection.Visible = true;
+            pnlLoginInputs.Visible = false;
+        }
+
+
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
             string username = txtUsername.Text.Trim();
             string password = txtPassword.Text;
 
@@ -40,18 +72,19 @@ namespace HRApplicantWindowSystem
                     conn.Open();
                     string query = "";
 
-                    if (loginType == "HR / Admin")
+
+                    if (selectedRole == "HR/Admin")
                     {
                         query = @"SELECT u.user_id, r.role_name 
-                          FROM Users u 
-                          INNER JOIN Roles r ON u.role_id = r.role_id 
-                          WHERE u.username = @username AND u.password_hash = @password";
+                                  FROM Users u 
+                                  INNER JOIN Roles r ON u.role_id = r.role_id 
+                                  WHERE u.username = @username AND u.password_hash = @password";
                     }
-                    else if (loginType == "Applicant")
+                    else if (selectedRole == "Applicant")
                     {
                         query = @"SELECT account_id, account_status 
-                          FROM ApplicantAccounts 
-                          WHERE email = @username AND password_hash = @password";
+                                  FROM ApplicantAccounts 
+                                  WHERE email = @username AND password_hash = @password";
                     }
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
@@ -61,25 +94,21 @@ namespace HRApplicantWindowSystem
 
                         using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
-                            if (reader.Read()) 
+                            if (reader.Read())
                             {
-
-                                if (loginType == "HR / Admin")
+                                if (selectedRole == "HR/Admin")
                                 {
                                     int userId = reader.GetInt32("user_id");
                                     string roleName = reader.GetString("role_name");
 
-
                                     this.Hide();
-
-
                                     HRDashboardForm dashboard = new HRDashboardForm(userId, roleName);
                                     dashboard.ShowDialog();
-
-
                                     this.Show();
+
+                                    btnBack_Click(null, null);
                                 }
-                                else if (loginType == "Applicant")
+                                else if (selectedRole == "Applicant")
                                 {
                                     int accountId = reader.GetInt32("account_id");
                                     string status = reader.GetString("account_status");
@@ -87,7 +116,6 @@ namespace HRApplicantWindowSystem
                                     if (status == "Active")
                                     {
                                         MessageBox.Show($"Welcome Applicant! (ID: {accountId})", "Login Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                                     }
                                 }
                             }
@@ -109,9 +137,9 @@ namespace HRApplicantWindowSystem
         {
             this.Hide();
 
-
             ApplicantRegisterForm registerForm = new ApplicantRegisterForm();
             registerForm.ShowDialog();
+
 
             this.Show();
         }

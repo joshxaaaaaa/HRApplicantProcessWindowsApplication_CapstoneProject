@@ -24,12 +24,6 @@ namespace HRApplicantWindowSystem
         }
 
 
-        private void HRDashboardForm_Load(object sender, EventArgs e)
-        {
-            lblWelcome.Text = $"Welcome, {currentUserRole}!";
-            LoadDashboardStatistics();
-        }
-
         private void LoadDashboardStatistics()
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -69,7 +63,38 @@ namespace HRApplicantWindowSystem
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
-            this.Close(); 
+            this.Close();
         }
+
+        private void btnDashboard_Click(object sender, EventArgs e)
+        {
+
+            lblWelcome.Text = $"Welcome, {currentUserRole}!";
+
+
+            LoadDashboardStatistics();
+
+   
+            btnAdminPanel.Visible = true;
+        }
+
+        private void btnAdminPanel_Click(object sender, EventArgs e)
+        {
+
+            if (currentUserRole == "HR Manager")
+            {
+                AdminSettingsForm adminForm = new AdminSettingsForm();
+                adminForm.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Access Denied: This feature is restricted to HR Managers and Administrators only.",
+                                "Restricted Area",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Stop);
+            }
+        }
+
     }
 }
+

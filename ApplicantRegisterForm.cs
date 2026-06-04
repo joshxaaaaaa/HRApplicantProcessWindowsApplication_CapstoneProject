@@ -46,13 +46,13 @@ namespace HRApplicantWindowSystem
                             string insertAccountQuery = @"
                                 INSERT INTO ApplicantAccounts (email, password_hash, account_status) 
                                 VALUES (@email, @password, 'Active');
-                                SELECT LAST_INSERT_ID();"; 
+                                SELECT LAST_INSERT_ID();";
 
                             int newAccountId = 0;
                             using (MySqlCommand cmdAcc = new MySqlCommand(insertAccountQuery, conn, transaction))
                             {
                                 cmdAcc.Parameters.AddWithValue("@email", email);
-                                cmdAcc.Parameters.AddWithValue("@password", password); 
+                                cmdAcc.Parameters.AddWithValue("@password", password);
 
 
                                 newAccountId = Convert.ToInt32(cmdAcc.ExecuteScalar());
@@ -76,13 +76,13 @@ namespace HRApplicantWindowSystem
                             transaction.Commit();
 
                             MessageBox.Show("Registration successful! You can now log in.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            this.Close(); 
+                            this.Close();
                         }
                         catch (Exception ex)
                         {
 
                             transaction.Rollback();
-                            throw ex; 
+                            throw ex;
                         }
                     }
                 }
@@ -109,5 +109,11 @@ namespace HRApplicantWindowSystem
         {
             this.Close();
         }
+
+        private void ApplicantRegisterForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

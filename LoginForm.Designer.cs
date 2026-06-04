@@ -33,19 +33,22 @@
             label2 = new Label();
             txtUsername = new TextBox();
             txtPassword = new TextBox();
-            cmbLoginType = new ComboBox();
             linkLabel1 = new LinkLabel();
             btnCreateAccount = new Button();
-            LoginPanel = new Panel();
-            label3 = new Label();
-            label4 = new Label();
+            pnlRoleSelection = new Panel();
+            btnRoleHR = new Button();
+            btnRoleApplicant = new Button();
             label5 = new Label();
-            LoginPanel.SuspendLayout();
+            label3 = new Label();
+            pnlLoginInputs = new Panel();
+            btnBack = new Button();
+            pnlRoleSelection.SuspendLayout();
+            pnlLoginInputs.SuspendLayout();
             SuspendLayout();
             // 
             // btnLogin
             // 
-            btnLogin.Location = new Point(76, 250);
+            btnLogin.Location = new Point(29, 378);
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(116, 52);
             btnLogin.TabIndex = 0;
@@ -56,7 +59,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(18, 141);
+            label1.Location = new Point(29, 258);
             label1.Name = "label1";
             label1.Size = new Size(121, 20);
             label1.TabIndex = 2;
@@ -65,7 +68,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(18, 194);
+            label2.Location = new Point(29, 311);
             label2.Name = "label2";
             label2.Size = new Size(73, 20);
             label2.TabIndex = 3;
@@ -73,27 +76,17 @@
             // 
             // txtUsername
             // 
-            txtUsername.Location = new Point(18, 164);
+            txtUsername.Location = new Point(29, 281);
             txtUsername.Name = "txtUsername";
-            txtUsername.Size = new Size(224, 27);
+            txtUsername.Size = new Size(278, 27);
             txtUsername.TabIndex = 4;
             // 
             // txtPassword
             // 
-            txtPassword.Location = new Point(18, 217);
+            txtPassword.Location = new Point(29, 334);
             txtPassword.Name = "txtPassword";
-            txtPassword.Size = new Size(224, 27);
+            txtPassword.Size = new Size(278, 27);
             txtPassword.TabIndex = 5;
-            // 
-            // cmbLoginType
-            // 
-            cmbLoginType.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbLoginType.FormattingEnabled = true;
-            cmbLoginType.Items.AddRange(new object[] { "Applicant", "HR / Admin" });
-            cmbLoginType.Location = new Point(15, 60);
-            cmbLoginType.Name = "cmbLoginType";
-            cmbLoginType.Size = new Size(220, 28);
-            cmbLoginType.TabIndex = 6;
             // 
             // linkLabel1
             // 
@@ -102,74 +95,108 @@
             linkLabel1.Name = "linkLabel1";
             linkLabel1.Size = new Size(0, 20);
             linkLabel1.TabIndex = 7;
+            linkLabel1.Click += LoginForm_Load;
             // 
             // btnCreateAccount
             // 
-            btnCreateAccount.Location = new Point(76, 386);
+            btnCreateAccount.Location = new Point(191, 378);
             btnCreateAccount.Name = "btnCreateAccount";
             btnCreateAccount.Size = new Size(116, 52);
             btnCreateAccount.TabIndex = 8;
-            btnCreateAccount.Text = "Register as Applicant";
+            btnCreateAccount.Text = "Register";
             btnCreateAccount.UseVisualStyleBackColor = true;
             btnCreateAccount.Click += btnCreateAccount_Click;
             // 
-            // LoginPanel
+            // pnlRoleSelection
             // 
-            LoginPanel.BackColor = SystemColors.Info;
-            LoginPanel.Controls.Add(label5);
-            LoginPanel.Controls.Add(label4);
-            LoginPanel.Controls.Add(cmbLoginType);
-            LoginPanel.Controls.Add(btnCreateAccount);
-            LoginPanel.Controls.Add(label1);
-            LoginPanel.Controls.Add(txtUsername);
-            LoginPanel.Controls.Add(btnLogin);
-            LoginPanel.Controls.Add(txtPassword);
-            LoginPanel.Controls.Add(label2);
-            LoginPanel.Dock = DockStyle.Right;
-            LoginPanel.Location = new Point(550, 0);
-            LoginPanel.Name = "LoginPanel";
-            LoginPanel.Size = new Size(250, 450);
-            LoginPanel.TabIndex = 9;
+            pnlRoleSelection.BackColor = SystemColors.Info;
+            pnlRoleSelection.Controls.Add(btnRoleHR);
+            pnlRoleSelection.Controls.Add(btnRoleApplicant);
+            pnlRoleSelection.Dock = DockStyle.Right;
+            pnlRoleSelection.Location = new Point(862, 0);
+            pnlRoleSelection.Name = "pnlRoleSelection";
+            pnlRoleSelection.Size = new Size(307, 622);
+            pnlRoleSelection.TabIndex = 9;
+            // 
+            // btnRoleHR
+            // 
+            btnRoleHR.Location = new Point(28, 345);
+            btnRoleHR.Name = "btnRoleHR";
+            btnRoleHR.Size = new Size(232, 60);
+            btnRoleHR.TabIndex = 1;
+            btnRoleHR.Text = "HR Staff / Manager";
+            btnRoleHR.UseVisualStyleBackColor = true;
+            btnRoleHR.Click += btnRoleHR_Click;
+            // 
+            // btnRoleApplicant
+            // 
+            btnRoleApplicant.Location = new Point(28, 255);
+            btnRoleApplicant.Name = "btnRoleApplicant";
+            btnRoleApplicant.Size = new Size(232, 60);
+            btnRoleApplicant.TabIndex = 0;
+            btnRoleApplicant.Text = "Applicant";
+            btnRoleApplicant.UseVisualStyleBackColor = true;
+            btnRoleApplicant.Click += btnRoleApplicant_Click;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(23, 365);
+            label5.Name = "label5";
+            label5.Size = new Size(0, 20);
+            label5.TabIndex = 10;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(132, 46);
+            label3.Location = new Point(172, 126);
             label3.Name = "label3";
             label3.Size = new Size(194, 20);
             label3.TabIndex = 10;
             label3.Text = "Welcome to Big 5 Company";
             // 
-            // label4
+            // pnlLoginInputs
             // 
-            label4.AutoSize = true;
-            label4.Location = new Point(15, 37);
-            label4.Name = "label4";
-            label4.Size = new Size(124, 20);
-            label4.TabIndex = 9;
-            label4.Text = "Choose your role:";
+            pnlLoginInputs.BackColor = SystemColors.Info;
+            pnlLoginInputs.Controls.Add(btnBack);
+            pnlLoginInputs.Controls.Add(label1);
+            pnlLoginInputs.Controls.Add(label5);
+            pnlLoginInputs.Controls.Add(txtUsername);
+            pnlLoginInputs.Controls.Add(btnCreateAccount);
+            pnlLoginInputs.Controls.Add(label2);
+            pnlLoginInputs.Controls.Add(btnLogin);
+            pnlLoginInputs.Controls.Add(txtPassword);
+            pnlLoginInputs.Dock = DockStyle.Right;
+            pnlLoginInputs.Location = new Point(531, 0);
+            pnlLoginInputs.Name = "pnlLoginInputs";
+            pnlLoginInputs.Size = new Size(331, 622);
+            pnlLoginInputs.TabIndex = 11;
             // 
-            // label5
+            // btnBack
             // 
-            label5.AutoSize = true;
-            label5.Location = new Point(23, 352);
-            label5.Name = "label5";
-            label5.Size = new Size(212, 20);
-            label5.TabIndex = 10;
-            label5.Text = "No account? Register here first";
+            btnBack.Location = new Point(191, 456);
+            btnBack.Name = "btnBack";
+            btnBack.Size = new Size(122, 36);
+            btnBack.TabIndex = 11;
+            btnBack.Text = "Back";
+            btnBack.UseVisualStyleBackColor = true;
+            btnBack.Click += btnBack_Click;
             // 
             // LoginForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(1169, 622);
+            Controls.Add(pnlLoginInputs);
             Controls.Add(label3);
-            Controls.Add(LoginPanel);
+            Controls.Add(pnlRoleSelection);
             Controls.Add(linkLabel1);
             Name = "LoginForm";
             Text = "Login";
-            LoginPanel.ResumeLayout(false);
-            LoginPanel.PerformLayout();
+            Load += LoginForm_Load;
+            pnlRoleSelection.ResumeLayout(false);
+            pnlLoginInputs.ResumeLayout(false);
+            pnlLoginInputs.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -181,12 +208,14 @@
         private Label label2;
         private TextBox txtUsername;
         private TextBox txtPassword;
-        private ComboBox cmbLoginType;
         private LinkLabel linkLabel1;
         private Button btnCreateAccount;
-        private Panel LoginPanel;
+        private Panel pnlRoleSelection;
         private Label label5;
-        private Label label4;
         private Label label3;
+        private Panel pnlLoginInputs;
+        private Button btnBack;
+        private Button btnRoleHR;
+        private Button btnRoleApplicant;
     }
 }
