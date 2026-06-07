@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient; 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,16 +11,17 @@ namespace HRApplicantWindowSystem
 {
     public partial class ApplicantProfileForm : Form
     {
+        private string connectionString = "Server=localhost;Database=db_hrapplicantwindowsystem;User ID=root;Password=abalo_mysql;";
         private int loggedInAccountId;
 
-        // 1. Update Plain constructor
+
         public ApplicantProfileForm(int accountId)
         {
             InitializeComponent();
             loggedInAccountId = accountId;
         }
 
-        // 2. Update Data constructor 
+
         public ApplicantProfileForm(string firstName, string lastName, string email, string address, int accountId)
         {
             InitializeComponent();
@@ -51,7 +53,7 @@ namespace HRApplicantWindowSystem
             }
         }
 
-        private void button1_Click(object sender, EventArgs e) // add/change picture click
+        private void button1_Click(object sender, EventArgs e) 
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
 
@@ -65,7 +67,7 @@ namespace HRApplicantWindowSystem
             }
         }
 
-        private void button2_Click(object sender, EventArgs e) // Back click - direct to Applicant Dashboard
+        private void button2_Click(object sender, EventArgs e) 
         {
             ApplicantDashboardForm dashboard = new ApplicantDashboardForm(loggedInAccountId);
 
@@ -75,9 +77,9 @@ namespace HRApplicantWindowSystem
 
         }
 
-        private void button3_Click(object sender, EventArgs e) // Save Click - direct to My Appplication page
+        private void button3_Click(object sender, EventArgs e) 
         {
-            // 1. Validate Full Name (textBox1)
+
             if (string.IsNullOrWhiteSpace(textBox1.Text) || textBox1.Text == "Full Name")
             {
                 MessageBox.Show("Please enter your Full Name.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -85,7 +87,7 @@ namespace HRApplicantWindowSystem
                 return;
             }
 
-            // 2. Validate Email (textBox2)
+
             if (string.IsNullOrWhiteSpace(textBox2.Text) || textBox2.Text == "Email")
             {
                 MessageBox.Show("Please enter your Email Address.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -93,7 +95,7 @@ namespace HRApplicantWindowSystem
                 return;
             }
 
-            // 3. Validate Contact Number (textBox3) - Check if empty
+
             if (string.IsNullOrWhiteSpace(textBox3.Text) || textBox3.Text == "Contact No.")
             {
                 MessageBox.Show("Please enter your Contact Number.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -101,7 +103,7 @@ namespace HRApplicantWindowSystem
                 return;
             }
 
-            // 4. Validate Contact Number (textBox3) - Check if numeric digits only
+ 
             if (!long.TryParse(textBox3.Text, out long dummy))
             {
                 MessageBox.Show("Contact Number must contain numbers only.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -109,7 +111,7 @@ namespace HRApplicantWindowSystem
                 return;
             }
 
-            // 5. Validate Address (richTextBox2)
+
             if (string.IsNullOrWhiteSpace(richTextBox2.Text) || richTextBox2.Text == "Address")
             {
                 MessageBox.Show("Please enter your Address.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -117,7 +119,7 @@ namespace HRApplicantWindowSystem
                 return;
             }
 
-            // 6. Validate Profile Picture Box Selection
+
             if (pictureBox2.Image == null)
             {
                 MessageBox.Show("You need to upload a profile picture before saving.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -143,7 +145,7 @@ namespace HRApplicantWindowSystem
 
             MessageBox.Show("Profile updated and saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            // Open MyApplication window layout by passing the account ID
+
             MyApplicationForm myApp = new MyApplicationForm(loggedInAccountId);
             myApp.StartPosition = FormStartPosition.CenterScreen;
             myApp.Show();
@@ -153,7 +155,7 @@ namespace HRApplicantWindowSystem
         {
             try
             {
-                // Capture data even if incomplete
+
                 string fullName = textBox1.Text;
                 string email = textBox3.Text;
                 string contact = textBox2.Text;
@@ -162,12 +164,11 @@ namespace HRApplicantWindowSystem
                 string draftLine = $"{fullName}|{email}|{contact}|{address}";
                 string fileName = $"draft_{loggedInAccountId}.txt";
 
-                // Save to file
+
                 System.IO.File.WriteAllText(fileName, draftLine);
 
                 MessageBox.Show("Progress saved as a draft!", "Draft Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Redirect to Dashboard
                 ApplicantDashboardForm dashboard = new ApplicantDashboardForm(loggedInAccountId);
                 dashboard.StartPosition = FormStartPosition.CenterScreen;
                 dashboard.Show();
@@ -179,28 +180,26 @@ namespace HRApplicantWindowSystem
             }
         }
 
-        private void ApplicantProfileForm_Load(object sender, EventArgs e) // empty load event handler to prevent errors when loading the form
+        private void ApplicantProfileForm_Load(object sender, EventArgs e) 
         {
             string fileName = $"draft_{loggedInAccountId}.txt";
 
-            // Check if a draft file exists for this logged-in user
+       
             if (System.IO.File.Exists(fileName))
             {
                 try
                 {
-                    // 1. Read the hidden line 
+
                     string draftData = System.IO.File.ReadAllText(fileName);
 
-                    // 2. Split the text line 
                     string[] pieces = draftData.Split('|');
 
-                    // 3. Put the pieces back 
                     if (pieces.Length >= 4)
                     {
-                        textBox1.Text = pieces[0];      // Full Name
-                        textBox3.Text = pieces[1];      // Email
-                        textBox2.Text = pieces[2];      // Contact No.
-                        richTextBox2.Text = pieces[3];  // Address
+                        textBox1.Text = pieces[0];      
+                        textBox3.Text = pieces[1];      
+                        textBox2.Text = pieces[2];    
+                        richTextBox2.Text = pieces[3];  
                     }
                 }
                 catch (Exception ex)

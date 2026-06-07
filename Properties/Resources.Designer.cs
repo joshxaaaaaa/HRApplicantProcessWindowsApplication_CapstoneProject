@@ -59,5 +59,15 @@ namespace HRApplicantWindowSystem.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _669691451_26325044287151514_249119427592236573_n {
+            get {
+                object obj = ResourceManager.GetObject("669691451_26325044287151514_249119427592236573_n", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }
