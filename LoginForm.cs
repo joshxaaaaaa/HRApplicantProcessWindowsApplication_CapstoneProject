@@ -25,13 +25,13 @@ namespace HRApplicantWindowSystem
         private void btnRoleApplicant_Click(object sender, EventArgs e)
         {
             selectedRole = "Applicant";
-            SwitchToLoginView(true); 
+            SwitchToLoginView(true);
         }
 
         private void btnRoleHR_Click(object sender, EventArgs e)
         {
             selectedRole = "HR/Admin";
-            SwitchToLoginView(false); 
+            SwitchToLoginView(false);
         }
 
         private void SwitchToLoginView(bool allowRegistration)
@@ -147,6 +147,10 @@ namespace HRApplicantWindowSystem
 
             this.Show();
         }
-         
+
+        private void pnlRoleSelection_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

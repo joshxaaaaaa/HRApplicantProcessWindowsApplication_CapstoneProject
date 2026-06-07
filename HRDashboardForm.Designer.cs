@@ -36,23 +36,43 @@
             btnApplicants = new Button();
             btnJobs = new Button();
             btnDashboard = new Button();
-            lblWelcome = new Label();
-            panel2 = new Panel();
-            label4 = new Label();
-            label3 = new Label();
-            label2 = new Label();
-            panel5 = new Panel();
-            lblPendingApplications = new Label();
-            panel4 = new Panel();
-            lblOpenJobs = new Label();
+            pnlDashboardSummary = new Panel();
             panel3 = new Panel();
+            dgvRecentApplicants = new DataGridView();
+            label2 = new Label();
+            txtSearchApplicants = new TextBox();
             lblTotalApplicants = new Label();
+            panel4 = new Panel();
+            dgvRecentJobs = new DataGridView();
+            txtSearchJobs = new TextBox();
+            label3 = new Label();
+            lblOpenJobs = new Label();
+            panel5 = new Panel();
+            txtSearchPending = new TextBox();
+            dgvPendingActions = new DataGridView();
+            lblPendingApplications = new Label();
+            label4 = new Label();
             label1 = new Label();
+            pnlWelcome = new Panel();
+            label5 = new Label();
+            pictureBox1 = new PictureBox();
+            pnlReports = new Panel();
+            dgvReportPreview = new DataGridView();
+            btnExportReport = new Button();
+            cmbReportType = new ComboBox();
+            label6 = new Label();
             panel1.SuspendLayout();
-            panel2.SuspendLayout();
-            panel5.SuspendLayout();
-            panel4.SuspendLayout();
+            pnlDashboardSummary.SuspendLayout();
             panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvRecentApplicants).BeginInit();
+            panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvRecentJobs).BeginInit();
+            panel5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvPendingActions).BeginInit();
+            pnlWelcome.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            pnlReports.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvReportPreview).BeginInit();
             SuspendLayout();
             // 
             // panel1
@@ -65,7 +85,6 @@
             panel1.Controls.Add(btnApplicants);
             panel1.Controls.Add(btnJobs);
             panel1.Controls.Add(btnDashboard);
-            panel1.Controls.Add(lblWelcome);
             panel1.Dock = DockStyle.Left;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
@@ -100,6 +119,7 @@
             btnReports.TabIndex = 5;
             btnReports.Text = "Reports";
             btnReports.UseVisualStyleBackColor = true;
+            btnReports.Click += btnReports_Click;
             // 
             // btnInterviews
             // 
@@ -127,6 +147,7 @@
             btnJobs.TabIndex = 2;
             btnJobs.Text = "Jobs";
             btnJobs.UseVisualStyleBackColor = true;
+            btnJobs.Click += cmbReportType_SelectedIndexChanged;
             // 
             // btnDashboard
             // 
@@ -138,112 +159,177 @@
             btnDashboard.UseVisualStyleBackColor = true;
             btnDashboard.Click += btnDashboard_Click;
             // 
-            // lblWelcome
+            // pnlDashboardSummary
             // 
-            lblWelcome.AutoSize = true;
-            lblWelcome.ForeColor = SystemColors.HighlightText;
-            lblWelcome.Location = new Point(51, 13);
-            lblWelcome.Name = "lblWelcome";
-            lblWelcome.Size = new Size(99, 20);
-            lblWelcome.TabIndex = 0;
-            lblWelcome.Text = "Welcome HR!";
-            // 
-            // panel2
-            // 
-            panel2.BackColor = SystemColors.Info;
-            panel2.Controls.Add(label4);
-            panel2.Controls.Add(label3);
-            panel2.Controls.Add(label2);
-            panel2.Controls.Add(panel5);
-            panel2.Controls.Add(panel4);
-            panel2.Controls.Add(panel3);
-            panel2.Controls.Add(label1);
-            panel2.Dock = DockStyle.Fill;
-            panel2.Location = new Point(305, 0);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(847, 638);
-            panel2.TabIndex = 1;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(596, 530);
-            label4.Name = "label4";
-            label4.Size = new Size(149, 20);
-            label4.TabIndex = 5;
-            label4.Text = "Pending Applications";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(363, 534);
-            label3.Name = "label3";
-            label3.Size = new Size(78, 20);
-            label3.TabIndex = 4;
-            label3.Text = "Open Jobs";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(94, 534);
-            label2.Name = "label2";
-            label2.Size = new Size(116, 20);
-            label2.TabIndex = 3;
-            label2.Text = "Total Applicants";
-            // 
-            // panel5
-            // 
-            panel5.BackColor = SystemColors.GradientActiveCaption;
-            panel5.Controls.Add(lblPendingApplications);
-            panel5.Location = new Point(548, 118);
-            panel5.Name = "panel5";
-            panel5.Size = new Size(223, 389);
-            panel5.TabIndex = 2;
-            // 
-            // lblPendingApplications
-            // 
-            lblPendingApplications.AutoSize = true;
-            lblPendingApplications.Location = new Point(124, 22);
-            lblPendingApplications.Name = "lblPendingApplications";
-            lblPendingApplications.Size = new Size(17, 20);
-            lblPendingApplications.TabIndex = 5;
-            lblPendingApplications.Text = "0";
-            // 
-            // panel4
-            // 
-            panel4.BackColor = SystemColors.GradientActiveCaption;
-            panel4.Controls.Add(lblOpenJobs);
-            panel4.Location = new Point(304, 118);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(223, 389);
-            panel4.TabIndex = 2;
-            // 
-            // lblOpenJobs
-            // 
-            lblOpenJobs.AutoSize = true;
-            lblOpenJobs.Location = new Point(110, 22);
-            lblOpenJobs.Name = "lblOpenJobs";
-            lblOpenJobs.Size = new Size(17, 20);
-            lblOpenJobs.TabIndex = 4;
-            lblOpenJobs.Text = "0";
+            pnlDashboardSummary.BackColor = SystemColors.Info;
+            pnlDashboardSummary.Controls.Add(panel3);
+            pnlDashboardSummary.Controls.Add(panel4);
+            pnlDashboardSummary.Controls.Add(panel5);
+            pnlDashboardSummary.Controls.Add(label1);
+            pnlDashboardSummary.Dock = DockStyle.Fill;
+            pnlDashboardSummary.Location = new Point(305, 0);
+            pnlDashboardSummary.Name = "pnlDashboardSummary";
+            pnlDashboardSummary.Size = new Size(847, 638);
+            pnlDashboardSummary.TabIndex = 1;
             // 
             // panel3
             // 
             panel3.BackColor = SystemColors.GradientActiveCaption;
+            panel3.Controls.Add(dgvRecentApplicants);
+            panel3.Controls.Add(label2);
+            panel3.Controls.Add(txtSearchApplicants);
             panel3.Controls.Add(lblTotalApplicants);
             panel3.Location = new Point(55, 118);
             panel3.Name = "panel3";
             panel3.Size = new Size(223, 389);
             panel3.TabIndex = 1;
             // 
+            // dgvRecentApplicants
+            // 
+            dgvRecentApplicants.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvRecentApplicants.BackgroundColor = SystemColors.ActiveCaption;
+            dgvRecentApplicants.BorderStyle = BorderStyle.None;
+            dgvRecentApplicants.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvRecentApplicants.ColumnHeadersVisible = false;
+            dgvRecentApplicants.Location = new Point(3, 76);
+            dgvRecentApplicants.Name = "dgvRecentApplicants";
+            dgvRecentApplicants.RowHeadersVisible = false;
+            dgvRecentApplicants.RowHeadersWidth = 51;
+            dgvRecentApplicants.Size = new Size(217, 310);
+            dgvRecentApplicants.TabIndex = 4;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(13, 20);
+            label2.Name = "label2";
+            label2.Size = new Size(116, 20);
+            label2.TabIndex = 3;
+            label2.Text = "Total Applicants";
+            // 
+            // txtSearchApplicants
+            // 
+            txtSearchApplicants.Location = new Point(-3, 43);
+            txtSearchApplicants.Name = "txtSearchApplicants";
+            txtSearchApplicants.Size = new Size(223, 27);
+            txtSearchApplicants.TabIndex = 9;
+            txtSearchApplicants.Tag = "Search Applicants...";
+            txtSearchApplicants.TextChanged += txtSearchApplicants_TextChanged;
+            // 
             // lblTotalApplicants
             // 
             lblTotalApplicants.AutoSize = true;
-            lblTotalApplicants.Location = new Point(89, 22);
+            lblTotalApplicants.Location = new Point(192, 20);
             lblTotalApplicants.Name = "lblTotalApplicants";
             lblTotalApplicants.Size = new Size(17, 20);
             lblTotalApplicants.TabIndex = 3;
             lblTotalApplicants.Text = "0";
+            // 
+            // panel4
+            // 
+            panel4.BackColor = SystemColors.GradientActiveCaption;
+            panel4.Controls.Add(dgvRecentJobs);
+            panel4.Controls.Add(txtSearchJobs);
+            panel4.Controls.Add(label3);
+            panel4.Controls.Add(lblOpenJobs);
+            panel4.Location = new Point(304, 118);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(223, 389);
+            panel4.TabIndex = 2;
+            // 
+            // dgvRecentJobs
+            // 
+            dgvRecentJobs.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvRecentJobs.BackgroundColor = SystemColors.ActiveCaption;
+            dgvRecentJobs.BorderStyle = BorderStyle.None;
+            dgvRecentJobs.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvRecentJobs.ColumnHeadersVisible = false;
+            dgvRecentJobs.Location = new Point(3, 76);
+            dgvRecentJobs.Name = "dgvRecentJobs";
+            dgvRecentJobs.RowHeadersVisible = false;
+            dgvRecentJobs.RowHeadersWidth = 51;
+            dgvRecentJobs.Size = new Size(217, 310);
+            dgvRecentJobs.TabIndex = 5;
+            // 
+            // txtSearchJobs
+            // 
+            txtSearchJobs.Location = new Point(0, 46);
+            txtSearchJobs.Name = "txtSearchJobs";
+            txtSearchJobs.Size = new Size(223, 27);
+            txtSearchJobs.TabIndex = 10;
+            txtSearchJobs.Tag = "Search Jobs...";
+            txtSearchJobs.TextChanged += txtSearchJobs_TextChanged;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(21, 20);
+            label3.Name = "label3";
+            label3.Size = new Size(78, 20);
+            label3.TabIndex = 4;
+            label3.Text = "Open Jobs";
+            // 
+            // lblOpenJobs
+            // 
+            lblOpenJobs.AutoSize = true;
+            lblOpenJobs.Location = new Point(177, 20);
+            lblOpenJobs.Name = "lblOpenJobs";
+            lblOpenJobs.Size = new Size(17, 20);
+            lblOpenJobs.TabIndex = 4;
+            lblOpenJobs.Text = "0";
+            // 
+            // panel5
+            // 
+            panel5.BackColor = SystemColors.GradientActiveCaption;
+            panel5.Controls.Add(txtSearchPending);
+            panel5.Controls.Add(dgvPendingActions);
+            panel5.Controls.Add(lblPendingApplications);
+            panel5.Controls.Add(label4);
+            panel5.Location = new Point(548, 118);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(223, 389);
+            panel5.TabIndex = 2;
+            // 
+            // txtSearchPending
+            // 
+            txtSearchPending.Location = new Point(0, 43);
+            txtSearchPending.Name = "txtSearchPending";
+            txtSearchPending.Size = new Size(223, 27);
+            txtSearchPending.TabIndex = 11;
+            txtSearchPending.Tag = "Search Pendings...";
+            txtSearchPending.TextChanged += txtSearchPending_TextChanged;
+            // 
+            // dgvPendingActions
+            // 
+            dgvPendingActions.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvPendingActions.BackgroundColor = SystemColors.ActiveCaption;
+            dgvPendingActions.BorderStyle = BorderStyle.None;
+            dgvPendingActions.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvPendingActions.ColumnHeadersVisible = false;
+            dgvPendingActions.Location = new Point(3, 76);
+            dgvPendingActions.Name = "dgvPendingActions";
+            dgvPendingActions.RowHeadersVisible = false;
+            dgvPendingActions.RowHeadersWidth = 51;
+            dgvPendingActions.Size = new Size(217, 310);
+            dgvPendingActions.TabIndex = 6;
+            // 
+            // lblPendingApplications
+            // 
+            lblPendingApplications.AutoSize = true;
+            lblPendingApplications.Location = new Point(191, 20);
+            lblPendingApplications.Name = "lblPendingApplications";
+            lblPendingApplications.Size = new Size(17, 20);
+            lblPendingApplications.TabIndex = 5;
+            lblPendingApplications.Text = "0";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(21, 20);
+            label4.Name = "label4";
+            label4.Size = new Size(149, 20);
+            label4.TabIndex = 5;
+            label4.Text = "Pending Applications";
             // 
             // label1
             // 
@@ -254,25 +340,118 @@
             label1.TabIndex = 0;
             label1.Text = "Dashboard Summary";
             // 
+            // pnlWelcome
+            // 
+            pnlWelcome.Controls.Add(label5);
+            pnlWelcome.Controls.Add(pictureBox1);
+            pnlWelcome.Dock = DockStyle.Fill;
+            pnlWelcome.Location = new Point(305, 0);
+            pnlWelcome.Name = "pnlWelcome";
+            pnlWelcome.Size = new Size(847, 638);
+            pnlWelcome.TabIndex = 6;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(142, 30);
+            label5.Name = "label5";
+            label5.Size = new Size(553, 20);
+            label5.TabIndex = 8;
+            label5.Text = "Welcome to the HR Management Portal! Select an option from the menu to begin.";
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = Properties.Resources._669691451_26325044287151514_249119427592236573_n;
+            pictureBox1.Location = new Point(20, 62);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(805, 564);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 0;
+            pictureBox1.TabStop = false;
+            // 
+            // pnlReports
+            // 
+            pnlReports.Controls.Add(dgvReportPreview);
+            pnlReports.Controls.Add(btnExportReport);
+            pnlReports.Controls.Add(cmbReportType);
+            pnlReports.Controls.Add(label6);
+            pnlReports.Dock = DockStyle.Fill;
+            pnlReports.Location = new Point(305, 0);
+            pnlReports.Name = "pnlReports";
+            pnlReports.Size = new Size(847, 638);
+            pnlReports.TabIndex = 8;
+            pnlReports.Paint += pnlReports_Paint;
+            // 
+            // dgvReportPreview
+            // 
+            dgvReportPreview.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvReportPreview.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvReportPreview.Location = new Point(38, 99);
+            dgvReportPreview.Name = "dgvReportPreview";
+            dgvReportPreview.RowHeadersWidth = 51;
+            dgvReportPreview.Size = new Size(773, 440);
+            dgvReportPreview.TabIndex = 13;
+            // 
+            // btnExportReport
+            // 
+            btnExportReport.Location = new Point(688, 564);
+            btnExportReport.Name = "btnExportReport";
+            btnExportReport.Size = new Size(123, 51);
+            btnExportReport.TabIndex = 12;
+            btnExportReport.Text = "Export to Excel (CSV)";
+            btnExportReport.UseVisualStyleBackColor = true;
+            btnExportReport.Click += btnExportReport_Click;
+            // 
+            // cmbReportType
+            // 
+            cmbReportType.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbReportType.FormattingEnabled = true;
+            cmbReportType.Items.AddRange(new object[] { "Applicant List", "Pending Applications", "Interview Schedules", "Accepted/Rejected Applicants" });
+            cmbReportType.Location = new Point(38, 64);
+            cmbReportType.Name = "cmbReportType";
+            cmbReportType.Size = new Size(212, 28);
+            cmbReportType.TabIndex = 11;
+            cmbReportType.SelectedIndexChanged += cmbReportType_SelectedIndexChanged;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(38, 30);
+            label6.Name = "label6";
+            label6.Size = new Size(140, 20);
+            label6.TabIndex = 10;
+            label6.Text = "Select Report Type: ";
+            // 
             // HRDashboardForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1152, 638);
-            Controls.Add(panel2);
+            Controls.Add(pnlWelcome);
+            Controls.Add(pnlReports);
+            Controls.Add(pnlDashboardSummary);
             Controls.Add(panel1);
             Name = "HRDashboardForm";
             Text = "HR UI";
+            Load += HRDashboardForm_Load;
             panel1.ResumeLayout(false);
-            panel1.PerformLayout();
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
-            panel5.ResumeLayout(false);
-            panel5.PerformLayout();
-            panel4.ResumeLayout(false);
-            panel4.PerformLayout();
+            pnlDashboardSummary.ResumeLayout(false);
+            pnlDashboardSummary.PerformLayout();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvRecentApplicants).EndInit();
+            panel4.ResumeLayout(false);
+            panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvRecentJobs).EndInit();
+            panel5.ResumeLayout(false);
+            panel5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvPendingActions).EndInit();
+            pnlWelcome.ResumeLayout(false);
+            pnlWelcome.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            pnlReports.ResumeLayout(false);
+            pnlReports.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvReportPreview).EndInit();
             ResumeLayout(false);
         }
 
@@ -281,13 +460,12 @@
         private Panel panel1;
         private Button button2;
         private Button btnDashboard;
-        private Label lblWelcome;
         private Button btnLogout;
         private Button btnReports;
         private Button btnInterviews;
         private Button btnApplicants;
         private Button btnJobs;
-        private Panel panel2;
+        private Panel pnlDashboardSummary;
         private Label label1;
         private Label label4;
         private Label label3;
@@ -299,7 +477,20 @@
         private Panel panel3;
         private Label lblTotalApplicants;
         private Button button7;
-        private Button button1;
         private Button btnAdminPanel;
+        private Panel pnlWelcome;
+        private PictureBox pictureBox1;
+        private Label label5;
+        private DataGridView dgvPendingActions;
+        private DataGridView dgvRecentJobs;
+        private DataGridView dgvRecentApplicants;
+        private TextBox txtSearchPending;
+        private TextBox txtSearchJobs;
+        private TextBox txtSearchApplicants;
+        private Panel pnlReports;
+        private DataGridView dgvReportPreview;
+        private Button btnExportReport;
+        private ComboBox cmbReportType;
+        private Label label6;
     }
 }

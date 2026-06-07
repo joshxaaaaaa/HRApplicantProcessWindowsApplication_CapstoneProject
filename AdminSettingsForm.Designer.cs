@@ -130,7 +130,7 @@
             btnSaveUser.UseVisualStyleBackColor = true;
             btnSaveUser.Click += btnSaveUser_Click;
             // 
-            // cmbNewRole
+            // cmbNewRole 
             // 
             cmbNewRole.FormattingEnabled = true;
             cmbNewRole.Items.AddRange(new object[] { "HR Staff", "HR Manager" });

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,19 +11,24 @@ namespace HRApplicantWindowSystem
 {
     public partial class ApplicantDashboardForm : Form
     {
-        // Add a variable to store the logged-in applicant's ID
+        private string connectionString = "Server=localhost;Database=db_hrapplicantwindowsystem;User ID=root;Password=abalo_mysql;";
+  
         private int currentAccountId;
 
-        // Modify the constructor to accept the ID
+
         public ApplicantDashboardForm(int accountId)
         {
             InitializeComponent();
-            currentAccountId = accountId; // Save it so all your buttons on this form can use it later!
+            currentAccountId = accountId; 
         }
 
         private void btnProfile_Click(object sender, EventArgs e)
         {
+            ApplicantProfileForm profilePage = new ApplicantProfileForm(currentAccountId);
 
+            profilePage.StartPosition = FormStartPosition.CenterScreen;
+            profilePage.Show();
+            this.Hide();
         }
 
         private void btnJobVacancies_Click(object sender, EventArgs e)
@@ -47,7 +53,12 @@ namespace HRApplicantWindowSystem
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
-            this.Close(); 
+            this.Close();
+        }
+
+        private void ApplicantDashboardForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
