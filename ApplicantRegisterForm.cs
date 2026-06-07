@@ -11,7 +11,7 @@ namespace HRApplicantWindowSystem
 {
     public partial class ApplicantRegisterForm : Form
     {
-        private string connectionString = "Server=localhost;Database=db_hrapplicantwindowsystem;User ID=root;Password=abalo_mysql;";
+        private string connectionString = "Server=localhost;Database=db_hrapplicantwindowsystem;User ID=root;Password=password123;";
         public ApplicantRegisterForm()
         {
             InitializeComponent();
@@ -115,5 +115,9 @@ namespace HRApplicantWindowSystem
 
         }
 
+        private void txtEmail_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

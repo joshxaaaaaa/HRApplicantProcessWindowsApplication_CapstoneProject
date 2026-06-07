@@ -17,12 +17,16 @@ namespace HRApplicantWindowSystem
         public ApplicantDashboardForm(int accountId)
         {
             InitializeComponent();
-            currentAccountId = accountId; // Save it so all your buttons on this form can use it later!
+            currentAccountId = accountId; 
         }
 
         private void btnProfile_Click(object sender, EventArgs e)
         {
+            ApplicantProfileForm profilePage = new ApplicantProfileForm(currentAccountId);
 
+            profilePage.StartPosition = FormStartPosition.CenterScreen;
+            profilePage.Show();
+            this.Hide();
         }
 
         private void btnJobVacancies_Click(object sender, EventArgs e)
@@ -47,7 +51,12 @@ namespace HRApplicantWindowSystem
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
-            this.Close(); 
+            this.Close();
+        }
+
+        private void ApplicantDashboardForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

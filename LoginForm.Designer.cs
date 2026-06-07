@@ -117,6 +117,7 @@
             pnlRoleSelection.Name = "pnlRoleSelection";
             pnlRoleSelection.Size = new Size(307, 622);
             pnlRoleSelection.TabIndex = 9;
+            pnlRoleSelection.Paint += pnlRoleSelection_Paint;
             // 
             // btnRoleHR
             // 
@@ -192,6 +193,7 @@
             Controls.Add(pnlRoleSelection);
             Controls.Add(linkLabel1);
             Name = "LoginForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Login";
             Load += LoginForm_Load;
             pnlRoleSelection.ResumeLayout(false);
