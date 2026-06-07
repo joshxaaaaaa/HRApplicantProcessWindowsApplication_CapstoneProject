@@ -11,10 +11,9 @@ namespace HRApplicantWindowSystem
 {
     public partial class HRDashboardForm : Form
     {
-        private string connectionString = "Server=localhost;Database=db_hrapplicantwindowsystem;User ID=root;Password=abalo_mysql;";
+        private string connectionString = "Server=localhost;Database=db_hrapplicantwindowsystem;User ID=root;Password=#Sheena003;";
         private int currentUserId;
         private string currentUserRole;
-
 
         public HRDashboardForm(int userId, string role)
         {
@@ -22,7 +21,6 @@ namespace HRApplicantWindowSystem
             currentUserId = userId;
             currentUserRole = role;
         }
-
 
         private void LoadDashboardStatistics()
         {
@@ -74,7 +72,7 @@ namespace HRApplicantWindowSystem
 
             LoadDashboardStatistics();
 
-   
+
             btnAdminPanel.Visible = true;
         }
 
@@ -94,7 +92,5 @@ namespace HRApplicantWindowSystem
                                 MessageBoxIcon.Stop);
             }
         }
-
     }
 }
-
