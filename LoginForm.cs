@@ -7,7 +7,7 @@ namespace HRApplicantWindowSystem
 {
     public partial class LoginForm : Form
     {
-        private string connectionString = "Server=localhost;Database=db_hrapplicantwindowsystem;User ID=root;Password=abalo_mysql;";
+        private string connectionString = "Server=localhost;Database=db_hrapplicantwindowsystem;User ID=root;Password=#Sheena003;";
 
         private string selectedRole = "";
         public LoginForm()
