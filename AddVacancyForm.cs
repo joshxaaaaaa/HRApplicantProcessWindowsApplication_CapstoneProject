@@ -18,40 +18,87 @@ namespace HRApplicantWindowSystem
         {
             InitializeComponent();
         }
-        public void SetValues(int deptId, string jobTitle, string qualifications, string requirements)
+        public void SetValues(int deptId, string jobTitle, string description, string requirements)
         {
-            cmbDepartment.SelectedValue = deptId; 
-            EntJobtitle.Text = jobTitle; 
-            EntJobtitle.ForeColor = Color.Black; // Force black text when editing 
-            EntQualifications.Text = qualifications;
-            EntRequirements.Text = requirements;
+            cmbDepartment.SelectedValue = deptId;
+            EntJobtitle.Text = jobTitle;
+            EntJobtitle.ForeColor = Color.Black;
+            EntDescription.Text = description;
+
+
+            for (int i = 0; i < clbRequirements.Items.Count; i++)
+            {
+                clbRequirements.SetItemChecked(i, false);
+            }
+
+            if (!string.IsNullOrWhiteSpace(requirements))
+            {
+                string[] savedReqs = requirements.Split(new string[] { ", " }, StringSplitOptions.None);
+                for (int i = 0; i < clbRequirements.Items.Count; i++)
+                {
+                    DataRowView item = (DataRowView)clbRequirements.Items[i];
+                    if (Array.Exists(savedReqs, r => r == item["requirement_name"].ToString()))
+                    {
+                        clbRequirements.SetItemChecked(i, true);
+                    }
+                }
+            }
         }
         public string JobTitle => EntJobtitle.Text;
-        public string Qualifications => EntQualifications.Text;
-        public string Requirements => EntRequirements.Text;
-        public int DepartmentId => Convert.ToInt32(cmbDepartment.SelectedValue); // The new department property
+        public string Description => EntDescription.Text;
+        public string Requirements
+        {
+            get
+            {
+                System.Collections.Generic.List<string> checkedList = new System.Collections.Generic.List<string>();
+
+
+                foreach (DataRowView item in clbRequirements.CheckedItems)
+                {
+                    checkedList.Add(item["requirement_name"].ToString());
+                }
+
+
+                return string.Join(", ", checkedList);
+            }
+        }
+        public int DepartmentId => Convert.ToInt32(cmbDepartment.SelectedValue);
 
         private void AddVacancyForm_Load(object sender, EventArgs e)
         {
-            // 1. Your existing placeholder logic
+
             EntJobtitle.Text = "Enter job title...";
             EntJobtitle.ForeColor = Color.Gray;
+            EntDescription.Text = "Enter description...";
+            EntDescription.ForeColor = Color.Gray;
 
-            // 2. Load the departments from the database
+
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 try
                 {
                     conn.Open();
-                    string query = "SELECT department_id, department_name FROM departments";
-                    MySqlDataAdapter adapter = new MySqlDataAdapter(query, conn);
-                    DataTable dt = new DataTable();
-                    adapter.Fill(dt);
 
-                    cmbDepartment.DataSource = dt;
+                    string deptQuery = "SELECT department_id, department_name FROM departments";
+                    MySqlDataAdapter deptAdapter = new MySqlDataAdapter(deptQuery, conn);
+                    DataTable deptDt = new DataTable();
+                    deptAdapter.Fill(deptDt);
+
+                    cmbDepartment.DataSource = deptDt;
                     cmbDepartment.DisplayMember = "department_name";
                     cmbDepartment.ValueMember = "department_id";
-                    cmbDepartment.SelectedIndex = -1; // Leaves it blank initially
+                    cmbDepartment.SelectedIndex = -1;
+
+
+                    string reqQuery = "SELECT requirement_type_id, requirement_name FROM requirementtypes";
+                    MySqlDataAdapter reqAdapter = new MySqlDataAdapter(reqQuery, conn);
+                    DataTable reqDt = new DataTable();
+                    reqAdapter.Fill(reqDt);
+
+
+                    ((ListBox)clbRequirements).DataSource = reqDt;
+                    ((ListBox)clbRequirements).DisplayMember = "requirement_name";
+                    ((ListBox)clbRequirements).ValueMember = "requirement_type_id";
                 }
                 catch (Exception ex)
                 {
@@ -90,109 +137,79 @@ namespace HRApplicantWindowSystem
                 }
                 else
                 {
-                    // Example: show confirmation
+
                     MessageBox.Show("Job Title added: " + jobTitle);
                 }
 
-                e.SuppressKeyPress = true; // para walang beep sound
+                e.SuppressKeyPress = true;
                 btnSaveVacancy.Focus();
             }
         }
 
-        private void EntQualifications_Enter(object sender, EventArgs e)
+        private void EntDescription_Enter(object sender, EventArgs e)
         {
-            if (EntQualifications.Text == "Enter qualifications...")
+            if (EntDescription.Text == "Enter description...")
             {
-                EntQualifications.Text = "";
-                EntQualifications.ForeColor = Color.Black;
+                EntDescription.Text = "";
+                EntDescription.ForeColor = Color.Black;
             }
         }
 
-        private void EntQualifications_Leave(object sender, EventArgs e)
+        
+        private void EntDescription_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(EntJobtitle.Text))
             {
-                EntQualifications.Text = "Enter qualifications...";
-                EntQualifications.ForeColor = Color.Gray;
+                EntDescription.Text = "Enter description...";
+                EntDescription.ForeColor = Color.Gray;
             }
         }
+        
 
-        private void EntQualifications_KeyDown(object sender, KeyEventArgs e)
+        private void EntDescription_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                string qualification = EntQualifications.Text.Trim();
+                string description = EntDescription.Text.Trim();
 
-                if (qualification == "Enter qualification..." || string.IsNullOrWhiteSpace(qualification))
+                if (description == "Enter description..." || string.IsNullOrWhiteSpace(description))
                 {
-                    MessageBox.Show("Please enter a valid qualification.");
+                    MessageBox.Show("Please enter a valid description.");
                 }
                 else
                 {
-                    // Example: show confirmation
-                    MessageBox.Show("Qualification added: " + qualification);
+
+                    MessageBox.Show("Description added: " + description);
 
                 }
 
-                e.SuppressKeyPress = true; // para walang beep sound
+                e.SuppressKeyPress = true;
                 btnSaveVacancy.Focus();
             }
         }
+        
 
-        private void EntRequirements_Enter(object sender, EventArgs e)
-        {
-            if (EntRequirements.Text == "Enter requirements...")
-            {
-                EntRequirements.Text = "";
-                EntRequirements.ForeColor = Color.Black;
-            }
-        }
-
-        private void EntRequirements_Leave(object sender, EventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(EntRequirements.Text))
-            {
-                EntRequirements.Text = "Enter requirements...";
-                EntRequirements.ForeColor = Color.Gray;
-            }
-        }
-
-        private void EntRequirements_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                string requirements = EntRequirements.Text.Trim();
-
-                if (requirements == "Enter requirements..." || string.IsNullOrWhiteSpace(requirements))
-                {
-                    MessageBox.Show("Please enter a valid requirement.");
-                }
-                else
-                {
-                    // Example: show confirmation
-                    MessageBox.Show("Requirements added: " + requirements);
-                }
-
-                e.SuppressKeyPress = true; // para walang beep sound
-                btnSaveVacancy.Focus();
-            }
-        }
         private void btnSaveVacancy_Click_1(object sender, EventArgs e)
         {
-            // Validate both Job Title AND Department Selection
+
             if (string.IsNullOrWhiteSpace(EntJobtitle.Text) || EntJobtitle.Text == "Enter job title..." || cmbDepartment.SelectedIndex == -1)
             {
                 MessageBox.Show("Please enter a valid job title and select a department.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            this.DialogResult = DialogResult.OK; // Signal na may valid data
+            this.DialogResult = DialogResult.OK;
             this.Close();
         }
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
+        }
+
+        private void clbRequirements_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
