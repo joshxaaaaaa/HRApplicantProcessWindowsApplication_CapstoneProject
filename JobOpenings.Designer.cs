@@ -1,0 +1,472 @@
+﻿namespace HRApplicantWindowSystem
+{
+    partial class JobOpenings
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            panel1 = new Panel();
+            btnAdminPanel = new Button();
+            btnLogout = new Button();
+            btnReports = new Button();
+            btnInterviews = new Button();
+            btnApplicants = new Button();
+            btnJobs = new Button();
+            btnDashboard = new Button();
+            lblWelcome = new Label();
+            label1 = new Label();
+            label2 = new Label();
+            panel2 = new Panel();
+            panel3 = new Panel();
+            dgvJobOpenings = new DataGridView();
+            ColID = new DataGridViewTextBoxColumn();
+            ColJobTitle = new DataGridViewTextBoxColumn();
+            ColStatus = new DataGridViewTextBoxColumn();
+            ColPostedDate = new DataGridViewTextBoxColumn();
+            ColActions = new DataGridViewComboBoxColumn();
+            ColQualifications = new DataGridViewTextBoxColumn();
+            ColRequirements = new DataGridViewTextBoxColumn();
+            label4 = new Label();
+            label3 = new Label();
+            textBox1 = new TextBox();
+            btnAddVacancy = new Button();
+            panel4 = new Panel();
+            dgvClosedJobs = new DataGridView();
+            label5 = new Label();
+            ColID2 = new DataGridViewTextBoxColumn();
+            ColJobTitle2 = new DataGridViewTextBoxColumn();
+            ColStatus2 = new DataGridViewTextBoxColumn();
+            ColPostedDate2 = new DataGridViewTextBoxColumn();
+            ColActions2 = new DataGridViewComboBoxColumn();
+            ColQualifications2 = new DataGridViewTextBoxColumn();
+            ColRequirements2 = new DataGridViewTextBoxColumn();
+            panel1.SuspendLayout();
+            panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvJobOpenings).BeginInit();
+            panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvClosedJobs).BeginInit();
+            SuspendLayout();
+            // 
+            // panel1
+            // 
+            panel1.BackColor = SystemColors.ControlDarkDark;
+            panel1.Controls.Add(btnAdminPanel);
+            panel1.Controls.Add(btnLogout);
+            panel1.Controls.Add(btnReports);
+            panel1.Controls.Add(btnInterviews);
+            panel1.Controls.Add(btnApplicants);
+            panel1.Controls.Add(btnJobs);
+            panel1.Controls.Add(btnDashboard);
+            panel1.Controls.Add(lblWelcome);
+            panel1.Dock = DockStyle.Left;
+            panel1.Location = new Point(0, 0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(305, 654);
+            panel1.TabIndex = 1;
+            // 
+            // btnAdminPanel
+            // 
+            btnAdminPanel.Location = new Point(28, 477);
+            btnAdminPanel.Name = "btnAdminPanel";
+            btnAdminPanel.Size = new Size(228, 62);
+            btnAdminPanel.TabIndex = 7;
+            btnAdminPanel.Text = "Admin Settings";
+            btnAdminPanel.UseVisualStyleBackColor = true;
+            // 
+            // btnLogout
+            // 
+            btnLogout.Location = new Point(28, 564);
+            btnLogout.Name = "btnLogout";
+            btnLogout.Size = new Size(228, 62);
+            btnLogout.TabIndex = 6;
+            btnLogout.Text = "Logout";
+            btnLogout.UseVisualStyleBackColor = true;
+            // 
+            // btnReports
+            // 
+            btnReports.Location = new Point(28, 388);
+            btnReports.Name = "btnReports";
+            btnReports.Size = new Size(228, 62);
+            btnReports.TabIndex = 5;
+            btnReports.Text = "Reports";
+            btnReports.UseVisualStyleBackColor = true;
+            // 
+            // btnInterviews
+            // 
+            btnInterviews.Location = new Point(28, 298);
+            btnInterviews.Name = "btnInterviews";
+            btnInterviews.Size = new Size(228, 62);
+            btnInterviews.TabIndex = 4;
+            btnInterviews.Text = "Interviews";
+            btnInterviews.UseVisualStyleBackColor = true;
+            // 
+            // btnApplicants
+            // 
+            btnApplicants.Location = new Point(28, 212);
+            btnApplicants.Name = "btnApplicants";
+            btnApplicants.Size = new Size(228, 62);
+            btnApplicants.TabIndex = 3;
+            btnApplicants.Text = "Applicants";
+            btnApplicants.UseVisualStyleBackColor = true;
+            // 
+            // btnJobs
+            // 
+            btnJobs.Location = new Point(28, 129);
+            btnJobs.Name = "btnJobs";
+            btnJobs.Size = new Size(228, 62);
+            btnJobs.TabIndex = 2;
+            btnJobs.Text = "Jobs";
+            btnJobs.UseVisualStyleBackColor = true;
+            // 
+            // btnDashboard
+            // 
+            btnDashboard.Location = new Point(28, 46);
+            btnDashboard.Name = "btnDashboard";
+            btnDashboard.Size = new Size(228, 62);
+            btnDashboard.TabIndex = 1;
+            btnDashboard.Text = "Dashboard";
+            btnDashboard.UseVisualStyleBackColor = true;
+            // 
+            // lblWelcome
+            // 
+            lblWelcome.AutoSize = true;
+            lblWelcome.ForeColor = SystemColors.HighlightText;
+            lblWelcome.Location = new Point(51, 13);
+            lblWelcome.Name = "lblWelcome";
+            lblWelcome.Size = new Size(99, 20);
+            lblWelcome.TabIndex = 0;
+            lblWelcome.Text = "Welcome HR!";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(323, 23);
+            label1.Name = "label1";
+            label1.Size = new Size(308, 28);
+            label1.TabIndex = 2;
+            label1.Text = "JOB OPENINGS MANAGEMENT";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label2.Location = new Point(323, 51);
+            label2.Name = "label2";
+            label2.Size = new Size(269, 20);
+            label2.TabIndex = 3;
+            label2.Text = "Manage job vacancies and hiring status";
+            // 
+            // panel2
+            // 
+            panel2.BackColor = SystemColors.ControlDark;
+            panel2.Location = new Point(323, 93);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(800, 1);
+            panel2.TabIndex = 4;
+            // 
+            // panel3
+            // 
+            panel3.BorderStyle = BorderStyle.FixedSingle;
+            panel3.Controls.Add(dgvJobOpenings);
+            panel3.Controls.Add(label4);
+            panel3.Location = new Point(323, 149);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(817, 233);
+            panel3.TabIndex = 6;
+            // 
+            // dgvJobOpenings
+            // 
+            dgvJobOpenings.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvJobOpenings.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dgvJobOpenings.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvJobOpenings.Columns.AddRange(new DataGridViewColumn[] { ColID, ColJobTitle, ColStatus, ColPostedDate, ColActions, ColQualifications, ColRequirements });
+            dgvJobOpenings.Location = new Point(14, 44);
+            dgvJobOpenings.Name = "dgvJobOpenings";
+            dgvJobOpenings.RowHeadersVisible = false;
+            dgvJobOpenings.RowHeadersWidth = 51;
+            dgvJobOpenings.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvJobOpenings.Size = new Size(785, 176);
+            dgvJobOpenings.TabIndex = 11;
+            dgvJobOpenings.CellContentClick += dgvJobOpenings_CellContentClick;
+            dgvJobOpenings.CellValueChanged += dgvJobOpenings_CellValueChanged;
+            dgvJobOpenings.CurrentCellDirtyStateChanged += dgvJobOpenings_CurrentCellDirtyStateChanged_1;
+            // 
+            // ColID
+            // 
+            ColID.HeaderText = "ID";
+            ColID.MinimumWidth = 6;
+            ColID.Name = "ColID";
+            ColID.ReadOnly = true;
+            // 
+            // ColJobTitle
+            // 
+            ColJobTitle.HeaderText = "Job Title";
+            ColJobTitle.MinimumWidth = 6;
+            ColJobTitle.Name = "ColJobTitle";
+            ColJobTitle.ReadOnly = true;
+            // 
+            // ColStatus
+            // 
+            ColStatus.HeaderText = "Status";
+            ColStatus.MinimumWidth = 6;
+            ColStatus.Name = "ColStatus";
+            ColStatus.ReadOnly = true;
+            // 
+            // ColPostedDate
+            // 
+            ColPostedDate.HeaderText = "Posted Date";
+            ColPostedDate.MinimumWidth = 6;
+            ColPostedDate.Name = "ColPostedDate";
+            ColPostedDate.ReadOnly = true;
+            // 
+            // ColActions
+            // 
+            ColActions.HeaderText = "Actions";
+            ColActions.Items.AddRange(new object[] { "Close Hiring", "Edit Details" });
+            ColActions.MinimumWidth = 6;
+            ColActions.Name = "ColActions";
+            ColActions.Resizable = DataGridViewTriState.True;
+            ColActions.SortMode = DataGridViewColumnSortMode.Automatic;
+            // 
+            // ColQualifications
+            // 
+            ColQualifications.HeaderText = "Qualifications";
+            ColQualifications.MinimumWidth = 6;
+            ColQualifications.Name = "ColQualifications";
+            ColQualifications.Visible = false;
+            // 
+            // ColRequirements
+            // 
+            ColRequirements.HeaderText = "Requirements";
+            ColRequirements.MinimumWidth = 6;
+            ColRequirements.Name = "ColRequirements";
+            ColRequirements.Visible = false;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label4.Location = new Point(14, 18);
+            label4.Name = "label4";
+            label4.Size = new Size(102, 23);
+            label4.TabIndex = 10;
+            label4.Text = "OPEN JOBS";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label3.Location = new Point(323, 109);
+            label3.Name = "label3";
+            label3.Size = new Size(230, 28);
+            label3.TabIndex = 7;
+            label3.Text = "Job openings overview";
+            // 
+            // textBox1
+            // 
+            textBox1.ForeColor = SystemColors.WindowFrame;
+            textBox1.Location = new Point(793, 110);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(146, 27);
+            textBox1.TabIndex = 8;
+            textBox1.Text = "Search job title...";
+            textBox1.TextChanged += textBox1_TextChanged;
+            textBox1.Enter += textBox1_Enter;
+            textBox1.KeyDown += textBox1_KeyDown;
+            textBox1.Leave += textBox1_Leave;
+            // 
+            // btnAddVacancy
+            // 
+            btnAddVacancy.BackColor = SystemColors.Highlight;
+            btnAddVacancy.FlatStyle = FlatStyle.Flat;
+            btnAddVacancy.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnAddVacancy.ForeColor = SystemColors.ButtonHighlight;
+            btnAddVacancy.Location = new Point(964, 109);
+            btnAddVacancy.Name = "btnAddVacancy";
+            btnAddVacancy.Size = new Size(148, 29);
+            btnAddVacancy.TabIndex = 9;
+            btnAddVacancy.Text = "Add New Vacancy";
+            btnAddVacancy.UseVisualStyleBackColor = false;
+            btnAddVacancy.Click += btnAddVacancy_Click;
+            // 
+            // panel4
+            // 
+            panel4.BorderStyle = BorderStyle.FixedSingle;
+            panel4.Controls.Add(dgvClosedJobs);
+            panel4.Controls.Add(label5);
+            panel4.Location = new Point(323, 393);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(817, 233);
+            panel4.TabIndex = 10;
+            // 
+            // dgvClosedJobs
+            // 
+            dgvClosedJobs.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvClosedJobs.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dgvClosedJobs.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvClosedJobs.Columns.AddRange(new DataGridViewColumn[] { ColID2, ColJobTitle2, ColStatus2, ColPostedDate2, ColActions2, ColQualifications2, ColRequirements2 });
+            dgvClosedJobs.Location = new Point(14, 44);
+            dgvClosedJobs.Name = "dgvClosedJobs";
+            dgvClosedJobs.RowHeadersVisible = false;
+            dgvClosedJobs.RowHeadersWidth = 51;
+            dgvClosedJobs.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvClosedJobs.Size = new Size(785, 176);
+            dgvClosedJobs.TabIndex = 11;
+            dgvClosedJobs.CellContentClick += dgvClosedJobs_CellContentClick;
+            dgvClosedJobs.CellValueChanged += dgvClosedJobs_CellValueChanged_1;
+            dgvClosedJobs.CurrentCellDirtyStateChanged += dgvClosedJobs_CurrentCellDirtyStateChanged_1;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label5.Location = new Point(14, 18);
+            label5.Name = "label5";
+            label5.Size = new Size(122, 23);
+            label5.TabIndex = 10;
+            label5.Text = "CLOSED JOBS";
+            // 
+            // ColID2
+            // 
+            ColID2.HeaderText = "ID";
+            ColID2.MinimumWidth = 6;
+            ColID2.Name = "ColID2";
+            ColID2.ReadOnly = true;
+            // 
+            // ColJobTitle2
+            // 
+            ColJobTitle2.HeaderText = "Job Title";
+            ColJobTitle2.MinimumWidth = 6;
+            ColJobTitle2.Name = "ColJobTitle2";
+            ColJobTitle2.ReadOnly = true;
+            // 
+            // ColStatus2
+            // 
+            ColStatus2.HeaderText = "Status";
+            ColStatus2.MinimumWidth = 6;
+            ColStatus2.Name = "ColStatus2";
+            ColStatus2.ReadOnly = true;
+            // 
+            // ColPostedDate2
+            // 
+            ColPostedDate2.HeaderText = "Posted Date";
+            ColPostedDate2.MinimumWidth = 6;
+            ColPostedDate2.Name = "ColPostedDate2";
+            ColPostedDate2.ReadOnly = true;
+            // 
+            // ColActions2
+            // 
+            ColActions2.HeaderText = "Actions";
+            ColActions2.Items.AddRange(new object[] { "Re-Open Hiring", "Edit Details" });
+            ColActions2.MinimumWidth = 6;
+            ColActions2.Name = "ColActions2";
+            ColActions2.Resizable = DataGridViewTriState.True;
+            ColActions2.SortMode = DataGridViewColumnSortMode.Automatic;
+            // 
+            // ColQualifications2
+            // 
+            ColQualifications2.HeaderText = "Qualifications";
+            ColQualifications2.MinimumWidth = 6;
+            ColQualifications2.Name = "ColQualifications2";
+            ColQualifications2.Visible = false;
+            // 
+            // ColRequirements2
+            // 
+            ColRequirements2.HeaderText = "Requirements";
+            ColRequirements2.MinimumWidth = 6;
+            ColRequirements2.Name = "ColRequirements2";
+            ColRequirements2.Visible = false;
+            // 
+            // JobOpenings
+            // 
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1154, 654);
+            Controls.Add(panel4);
+            Controls.Add(btnAddVacancy);
+            Controls.Add(textBox1);
+            Controls.Add(label3);
+            Controls.Add(panel3);
+            Controls.Add(panel2);
+            Controls.Add(label2);
+            Controls.Add(label1);
+            Controls.Add(panel1);
+            Name = "JobOpenings";
+            Text = "Form1";
+            Load += JobOpenings_Load;
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
+            panel3.ResumeLayout(false);
+            panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvJobOpenings).EndInit();
+            panel4.ResumeLayout(false);
+            panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvClosedJobs).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
+        }
+
+        #endregion
+
+        private Panel panel1;
+        private Button btnAdminPanel;
+        private Button btnLogout;
+        private Button btnReports;
+        private Button btnInterviews;
+        private Button btnApplicants;
+        private Button btnJobs;
+        private Button btnDashboard;
+        private Label lblWelcome;
+        private Label label1;
+        private Label label2;
+        private Panel panel2;
+        private Panel panel3;
+        private Label label3;
+        private TextBox textBox1;
+        private Button btnAddVacancy;
+        private Label label4;
+        private DataGridView dgvJobOpenings;
+        private Panel panel4;
+        private DataGridView dgvClosedJobs;
+        private Label label5;
+        private DataGridViewTextBoxColumn ColID;
+        private DataGridViewTextBoxColumn ColJobTitle;
+        private DataGridViewTextBoxColumn ColStatus;
+        private DataGridViewTextBoxColumn ColPostedDate;
+        private DataGridViewComboBoxColumn ColActions;
+        private DataGridViewTextBoxColumn ColQualifications;
+        private DataGridViewTextBoxColumn ColRequirements;
+        private DataGridViewTextBoxColumn ColID2;
+        private DataGridViewTextBoxColumn ColJobTitle2;
+        private DataGridViewTextBoxColumn ColStatus2;
+        private DataGridViewTextBoxColumn ColPostedDate2;
+        private DataGridViewComboBoxColumn ColActions2;
+        private DataGridViewTextBoxColumn ColQualifications2;
+        private DataGridViewTextBoxColumn ColRequirements2;
+        
+    }
+}
