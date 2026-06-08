@@ -12,7 +12,7 @@ namespace HRApplicantWindowSystem
 {
     public partial class HRDashboardForm : Form
     {
-        private string connectionString = "Server=localhost;Database=db_hrapplicantwindowsystem;User ID=root;Password=#Sheena003;";
+        private string connectionString = "Server=localhost;Database=db_hrapplicantwindowsystem;User ID=root;Password=abalo_mysql;";
         private int currentUserId;
         private string currentUserRole;
 
@@ -307,6 +307,16 @@ namespace HRApplicantWindowSystem
                     MessageBox.Show("Error exporting file: " + ex.Message, "Export Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void btnJobs_Click(object sender, EventArgs e)
+        {
+
+
+            JobOpenings jobsForm = new JobOpenings();
+
+
+            jobsForm.ShowDialog();
         }
 
         private void btnReports_Click(object sender, EventArgs e)

@@ -55,7 +55,6 @@
             btnAddVacancy = new Button();
             panel4 = new Panel();
             dgvClosedJobs = new DataGridView();
-            label5 = new Label();
             ColID2 = new DataGridViewTextBoxColumn();
             ColJobTitle2 = new DataGridViewTextBoxColumn();
             ColStatus2 = new DataGridViewTextBoxColumn();
@@ -63,6 +62,7 @@
             ColActions2 = new DataGridViewComboBoxColumn();
             ColQualifications2 = new DataGridViewTextBoxColumn();
             ColRequirements2 = new DataGridViewTextBoxColumn();
+            label5 = new Label();
             panel1.SuspendLayout();
             panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvJobOpenings).BeginInit();
@@ -340,16 +340,6 @@
             dgvClosedJobs.CellValueChanged += dgvClosedJobs_CellValueChanged_1;
             dgvClosedJobs.CurrentCellDirtyStateChanged += dgvClosedJobs_CurrentCellDirtyStateChanged_1;
             // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.Location = new Point(14, 18);
-            label5.Name = "label5";
-            label5.Size = new Size(122, 23);
-            label5.TabIndex = 10;
-            label5.Text = "CLOSED JOBS";
-            // 
             // ColID2
             // 
             ColID2.HeaderText = "ID";
@@ -401,6 +391,16 @@
             ColRequirements2.Name = "ColRequirements2";
             ColRequirements2.Visible = false;
             // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label5.Location = new Point(14, 18);
+            label5.Name = "label5";
+            label5.Size = new Size(122, 23);
+            label5.TabIndex = 10;
+            label5.Text = "CLOSED JOBS";
+            // 
             // JobOpenings
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -416,7 +416,7 @@
             Controls.Add(label1);
             Controls.Add(panel1);
             Name = "JobOpenings";
-            Text = "Form1";
+            Text = "Job Openings";
             Load += JobOpenings_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();

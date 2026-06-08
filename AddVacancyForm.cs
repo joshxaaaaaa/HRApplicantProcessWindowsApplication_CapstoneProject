@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient; 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,25 +12,52 @@ namespace HRApplicantWindowSystem
 {
     public partial class AddVacancyForm : Form
     {
+        private string connectionString = "Server=localhost;Database=db_hrapplicantwindowsystem;User ID=root;Password=abalo_mysql;";
 
         public AddVacancyForm()
         {
             InitializeComponent();
         }
-        public void SetValues(string jobTitle, string qualifications, string requirements)
+        public void SetValues(int deptId, string jobTitle, string qualifications, string requirements)
         {
-            EntJobtitle.Text = jobTitle;
+            cmbDepartment.SelectedValue = deptId; 
+            EntJobtitle.Text = jobTitle; 
+            EntJobtitle.ForeColor = Color.Black; // Force black text when editing 
             EntQualifications.Text = qualifications;
             EntRequirements.Text = requirements;
         }
         public string JobTitle => EntJobtitle.Text;
         public string Qualifications => EntQualifications.Text;
         public string Requirements => EntRequirements.Text;
+        public int DepartmentId => Convert.ToInt32(cmbDepartment.SelectedValue); // The new department property
 
         private void AddVacancyForm_Load(object sender, EventArgs e)
         {
+            // 1. Your existing placeholder logic
             EntJobtitle.Text = "Enter job title...";
             EntJobtitle.ForeColor = Color.Gray;
+
+            // 2. Load the departments from the database
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    string query = "SELECT department_id, department_name FROM departments";
+                    MySqlDataAdapter adapter = new MySqlDataAdapter(query, conn);
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+
+                    cmbDepartment.DataSource = dt;
+                    cmbDepartment.DisplayMember = "department_name";
+                    cmbDepartment.ValueMember = "department_id";
+                    cmbDepartment.SelectedIndex = -1; // Leaves it blank initially
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error loading departments: " + ex.Message);
+                }
+            }
         }
 
         private void EntJobtitle_Enter(object sender, EventArgs e)
@@ -151,13 +179,14 @@ namespace HRApplicantWindowSystem
         }
         private void btnSaveVacancy_Click_1(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(EntJobtitle.Text) || EntJobtitle.Text == "Enter job title...")
+            // Validate both Job Title AND Department Selection
+            if (string.IsNullOrWhiteSpace(EntJobtitle.Text) || EntJobtitle.Text == "Enter job title..." || cmbDepartment.SelectedIndex == -1)
             {
-                MessageBox.Show("Please enter a valid job title.");
+                MessageBox.Show("Please enter a valid job title and select a department.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            this.DialogResult = DialogResult.OK; // signal na may valid data
+            this.DialogResult = DialogResult.OK; // Signal na may valid data
             this.Close();
         }
         private void btnCancel_Click(object sender, EventArgs e)

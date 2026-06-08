@@ -7,7 +7,7 @@ namespace HRApplicantWindowSystem
 {
     public partial class JobOpenings : Form
     {
-        private string connectionString = "Server=localhost;Database=db_hrapplicantwindowsystem;User ID=root;Password=#Sheena003;";
+        private string connectionString = "Server=localhost;Database=db_hrapplicantwindowsystem;User ID=root;Password=abalo_mysql;";
         private int vacancyCounter = 1;
         public JobOpenings()
         {
@@ -19,7 +19,6 @@ namespace HRApplicantWindowSystem
             textBox1.Text = "Search job title...";
             textBox1.ForeColor = Color.Gray;
 
-            // Attach handlers
             dgvJobOpenings.CellValueChanged += dgvJobOpenings_CellValueChanged;
             dgvJobOpenings.CurrentCellDirtyStateChanged += dgvJobOpenings_CurrentCellDirtyStateChanged_1;
             dgvJobOpenings.DataError += dgvJobOpenings_DataError;
@@ -30,25 +29,29 @@ namespace HRApplicantWindowSystem
             dgvClosedJobs.EditingControlShowing += dgvClosedJobs_EditingControlShowing;
 
             dgvJobOpenings.Columns["ColActions"].ReadOnly = true;
-            dgvClosedJobs.Columns["ColActions2"].ReadOnly = true;
+            dgvClosedJobs.Columns["ColActions2"].ReadOnly = true; 
 
             LoadJobsFromDatabase();
         }
 
-        private void SaveJobToDatabase(string jobTitle, string qualifications, string requirements)
+        private void SaveJobToDatabase(int departmentId, string jobTitle, string qualifications, string requirements)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string sql = @"INSERT INTO jobs 
-                               (JobTitle, Status, PostedDate, Qualifications, Requirements) 
-                               VALUES (@title, 'Open', @date, @qual, @req)";
+
+                string sql = @"INSERT INTO jobvacancies 
+                       (department_id, job_title, status, posted_date, description, requirements) 
+                       VALUES (@deptId, @title, 'Open', @date, @qual, @req)";
+
                 using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                 {
+                    cmd.Parameters.AddWithValue("@deptId", departmentId); 
                     cmd.Parameters.AddWithValue("@title", jobTitle);
                     cmd.Parameters.AddWithValue("@date", DateTime.Now);
                     cmd.Parameters.AddWithValue("@qual", qualifications);
                     cmd.Parameters.AddWithValue("@req", requirements);
+
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -59,29 +62,30 @@ namespace HRApplicantWindowSystem
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string sql = "SELECT * FROM jobs";
+                string sql = "SELECT * FROM jobvacancies";
+
                 using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                 using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
                         int rowIndex = dgvJobOpenings.Rows.Add(
-                            reader["JobID"],
-                            reader["JobTitle"],
-                            reader["Status"],
-                            Convert.ToDateTime(reader["PostedDate"]).ToString("MM/dd/yyyy hh:mm tt"),
-                            reader["Status"].ToString() == "Open" ? "Close Hiring" : "Re-Open Hiring"
+                            reader["vacancy_id"],
+                            reader["job_title"],
+                            reader["status"],
+                            Convert.ToDateTime(reader["posted_date"]).ToString("MM/dd/yyyy hh:mm tt"),
+                            reader["status"].ToString() == "Open" ? "Close Hiring" : "Re-Open Hiring"
                         );
 
-                        dgvJobOpenings.Rows[rowIndex].Cells["ColQualifications"].Value = reader["Qualifications"];
-                        dgvJobOpenings.Rows[rowIndex].Cells["ColRequirements"].Value = reader["Requirements"];
+                        dgvJobOpenings.Rows[rowIndex].Cells["ColQualifications"].Value = reader["description"];
+                        dgvJobOpenings.Rows[rowIndex].Cells["ColRequirements"].Value = reader["requirements"];
                         dgvJobOpenings.Rows[rowIndex].Cells["ColActions"].ReadOnly = false;
                     }
                 }
             }
         }
 
-        //Search bar
+
         private void textBox1_Enter(object sender, EventArgs e)
         {
             if (textBox1.Text == "Search job title...")
@@ -110,7 +114,7 @@ namespace HRApplicantWindowSystem
 
         private void textBox1_TextChanged(object sender, EventArgs e) { }
 
-        //Add Vacancy
+
         private void btnAddVacancy_Click(object sender, EventArgs e)
         {
             AddVacancyForm addForm = new AddVacancyForm();
@@ -118,21 +122,21 @@ namespace HRApplicantWindowSystem
             if (addForm.ShowDialog() == DialogResult.OK)
             {
                 int rowIndex = dgvJobOpenings.Rows.Add(
-                    vacancyCounter++,                  // ColID
-                    addForm.JobTitle,                  // ColJobTitle
-                    "Open",                            // ColStatus
-                    DateTime.Now.ToString("MM/dd/yyyy hh:mm tt"), // ColPostedDate
-                    "Close Hiring"                     // ColActions
+                    vacancyCounter++,                  
+                    addForm.JobTitle,                  
+                    "Open",                           
+                    DateTime.Now.ToString("MM/dd/yyyy hh:mm tt"),
+                    "Close Hiring"                    
                 );
                 dgvJobOpenings.Rows[rowIndex].Cells["ColQualifications"].Value = addForm.Qualifications;
                 dgvJobOpenings.Rows[rowIndex].Cells["ColRequirements"].Value = addForm.Requirements;
                 
                 dgvJobOpenings.Rows[rowIndex].Cells["ColActions"].ReadOnly = false;
-                SaveJobToDatabase(addForm.JobTitle, addForm.Qualifications, addForm.Requirements);
+                SaveJobToDatabase(addForm.DepartmentId, addForm.JobTitle, addForm.Qualifications, addForm.Requirements);
             }
         }
 
-        //Open Jobs
+
         private void dgvJobOpenings_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
@@ -142,9 +146,31 @@ namespace HRApplicantWindowSystem
 
             if (action == "Edit Details")
             {
+ 
+                string jobId = dgvJobOpenings.Rows[e.RowIndex].Cells["ColID"].Value.ToString();
+                int currentDeptId = 0;
+
+
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    conn.Open();
+                    string getDeptSql = "SELECT department_id FROM jobvacancies WHERE vacancy_id = @id";
+                    using (MySqlCommand cmd = new MySqlCommand(getDeptSql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@id", jobId);
+                        object result = cmd.ExecuteScalar();
+                        if (result != null && result != DBNull.Value)
+                        {
+                            currentDeptId = Convert.ToInt32(result);
+                        }
+                    }
+                }
+
                 AddVacancyForm editForm = new AddVacancyForm();
 
+
                 editForm.SetValues(
+                    currentDeptId,
                     dgvJobOpenings.Rows[e.RowIndex].Cells["ColJobTitle"].Value?.ToString(),
                     dgvJobOpenings.Rows[e.RowIndex].Cells["ColQualifications"]?.Value?.ToString() ?? "",
                     dgvJobOpenings.Rows[e.RowIndex].Cells["ColRequirements"]?.Value?.ToString() ?? ""
@@ -152,20 +178,23 @@ namespace HRApplicantWindowSystem
 
                 if (editForm.ShowDialog() == DialogResult.OK)
                 {
-                    string jobId = dgvJobOpenings.Rows[e.RowIndex].Cells["ColID"].Value.ToString();
 
                     using (MySqlConnection conn = new MySqlConnection(connectionString))
                     {
                         conn.Open();
-                        string sql = @"UPDATE jobs 
-                       SET JobTitle=@title, Qualifications=@qual, Requirements=@req 
-                       WHERE JobID=@id";
+                        string sql = @"UPDATE jobvacancies 
+                        SET department_id=@deptId, job_title=@title, description=@qual, requirements=@req 
+                        WHERE vacancy_id=@id";
+
                         using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                         {
+
+                            cmd.Parameters.AddWithValue("@deptId", editForm.DepartmentId);
                             cmd.Parameters.AddWithValue("@title", editForm.JobTitle);
                             cmd.Parameters.AddWithValue("@qual", editForm.Qualifications);
                             cmd.Parameters.AddWithValue("@req", editForm.Requirements);
                             cmd.Parameters.AddWithValue("@id", jobId);
+
                             cmd.ExecuteNonQuery();
                         }
                     }
@@ -187,7 +216,7 @@ namespace HRApplicantWindowSystem
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     conn.Open();
-                    string sql = "UPDATE jobs SET Status = 'Closed' WHERE JobID = @id";
+                    string sql = "UPDATE jobvacancies SET status = 'Closed' WHERE vacancy_id = @id;";
                     using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                     {
                         cmd.Parameters.AddWithValue("@id", jobId);
@@ -241,7 +270,7 @@ namespace HRApplicantWindowSystem
                 dgvJobOpenings.CommitEdit(DataGridViewDataErrorContexts.Commit);
         }
 
-        //Closed Jobs
+
         private void dgvClosedJobs_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
@@ -251,16 +280,56 @@ namespace HRApplicantWindowSystem
 
             if (action == "Edit Details")
             {
+
+                string jobId = dgvClosedJobs.Rows[e.RowIndex].Cells["ColID2"].Value.ToString();
+                int currentDeptId = 0;
+
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    conn.Open();
+                    string getDeptSql = "SELECT department_id FROM jobvacancies WHERE vacancy_id = @id";
+                    using (MySqlCommand cmd = new MySqlCommand(getDeptSql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@id", jobId);
+                        object result = cmd.ExecuteScalar();
+                        if (result != null && result != DBNull.Value)
+                        {
+                            currentDeptId = Convert.ToInt32(result);
+                        }
+                    }
+                }
+
                 AddVacancyForm editForm = new AddVacancyForm();
 
                 editForm.SetValues(
+                    currentDeptId,
                     dgvClosedJobs.Rows[e.RowIndex].Cells["ColJobTitle2"].Value?.ToString(),
-                    dgvClosedJobs.Rows[e.RowIndex].Cells["ColQualifications2"].Value?.ToString() ?? "",
-                    dgvClosedJobs.Rows[e.RowIndex].Cells["ColRequirements2"].Value?.ToString() ?? ""
+                    dgvClosedJobs.Rows[e.RowIndex].Cells["ColQualifications2"]?.Value?.ToString() ?? "",
+                    dgvClosedJobs.Rows[e.RowIndex].Cells["ColRequirements2"]?.Value?.ToString() ?? ""
                 );
 
                 if (editForm.ShowDialog() == DialogResult.OK)
                 {
+
+                    using (MySqlConnection conn = new MySqlConnection(connectionString))
+                    {
+                        conn.Open();
+                        string sql = @"UPDATE jobvacancies 
+                           SET department_id=@deptId, job_title=@title, description=@qual, requirements=@req 
+                           WHERE vacancy_id=@id";
+
+                        using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@deptId", editForm.DepartmentId);
+                            cmd.Parameters.AddWithValue("@title", editForm.JobTitle);
+                            cmd.Parameters.AddWithValue("@qual", editForm.Qualifications);
+                            cmd.Parameters.AddWithValue("@req", editForm.Requirements);
+                            cmd.Parameters.AddWithValue("@id", jobId);
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+
+
                     dgvClosedJobs.Rows[e.RowIndex].Cells["ColJobTitle2"].Value = editForm.JobTitle;
                     dgvClosedJobs.Rows[e.RowIndex].Cells["ColQualifications2"].Value = editForm.Qualifications;
                     dgvClosedJobs.Rows[e.RowIndex].Cells["ColRequirements2"].Value = editForm.Requirements;
@@ -278,7 +347,7 @@ namespace HRApplicantWindowSystem
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     conn.Open();
-                    string sql = "UPDATE jobs SET Status = 'Open' WHERE JobID = @id";
+                    string sql = "UPDATE jobvacancies SET status = 'Open' WHERE vacancy_id = @id;"; 
                     using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                     {
                         cmd.Parameters.AddWithValue("@id", jobId);

@@ -147,7 +147,7 @@
             btnJobs.TabIndex = 2;
             btnJobs.Text = "Jobs";
             btnJobs.UseVisualStyleBackColor = true;
-            btnJobs.Click += cmbReportType_SelectedIndexChanged;
+            btnJobs.Click += btnJobs_Click;
             // 
             // btnDashboard
             // 
