@@ -212,7 +212,7 @@ namespace HRApplicantWindowSystem
             txtNewPassword.Clear();
             cmbNewRole.SelectedIndex = -1;
         }
-        // Helper Method: Maps dropdown text to exact Database Table & Column names
+
         private (string Table, string IdCol, string NameCol, string DescCol) GetDbMap()
         {
             string selection = cmbMaintenanceCategory.SelectedItem?.ToString() ?? "";
@@ -273,7 +273,7 @@ namespace HRApplicantWindowSystem
                 return;
             }
 
-            // Get the ID of the selected row (assuming ID is always the 1st column [0])
+
             string selectedId = dgvMaintenanceValues.SelectedRows[0].Cells[0].Value.ToString();
 
             DialogResult result = MessageBox.Show("Are you sure you want to permanently delete this record?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -293,8 +293,7 @@ namespace HRApplicantWindowSystem
                 }
 
                 MessageBox.Show("Record deleted successfully!");
-                // Refresh your grid here
-                // Example: LoadMaintenanceGrid(); 
+
             }
         }
         private void LoadMaintenanceGrid()
@@ -307,20 +306,20 @@ namespace HRApplicantWindowSystem
                 try
                 {
                     conn.Open();
-                    // We use 'AS' to dynamically rename the headers so they always say "ID", "Name", and "Description"
+
                     string sql = $"SELECT {map.IdCol} AS 'ID', {map.NameCol} AS 'Name', {map.DescCol} AS 'Description' FROM {map.Table}";
 
                     MySqlDataAdapter adapter = new MySqlDataAdapter(sql, conn);
                     DataTable dt = new DataTable();
                     adapter.Fill(dt);
 
-                    // 1. Clear any hardcoded columns from the designer
+
                     dgvMaintenanceValues.Columns.Clear();
 
-                    // 2. Force the grid to accept the new data (even if it's 0 rows!)
+
                     dgvMaintenanceValues.DataSource = dt;
 
-                    // 3. Optional: Make the Description column stretch to fill the empty space
+
                     if (dgvMaintenanceValues.Columns["Description"] != null)
                     {
                         dgvMaintenanceValues.Columns["Description"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -331,6 +330,11 @@ namespace HRApplicantWindowSystem
                     MessageBox.Show("Error loading data: " + ex.Message);
                 }
             }
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

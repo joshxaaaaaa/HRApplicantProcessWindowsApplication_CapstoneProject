@@ -16,8 +16,8 @@ namespace HRApplicantWindowSystem
 
         private void JobOpenings_Load(object sender, EventArgs e)
         {
-            textBox1.Text = "Search job title...";
-            textBox1.ForeColor = Color.Gray;
+            txtSearch.Text = "Search job title...";
+            txtSearch.ForeColor = Color.Gray;
 
             dgvJobOpenings.CellValueChanged += dgvJobOpenings_CellValueChanged;
             dgvJobOpenings.CurrentCellDirtyStateChanged += dgvJobOpenings_CurrentCellDirtyStateChanged_1;
@@ -85,34 +85,78 @@ namespace HRApplicantWindowSystem
             }
         }
 
-
-        private void textBox1_Enter(object sender, EventArgs e)
+        private void txtSearch_Enter(object sender, EventArgs e)
         {
-            if (textBox1.Text == "Search job title...")
+            if (txtSearch.Text == "Search job title...")
             {
-                textBox1.Text = "";
-                textBox1.ForeColor = Color.Black;
+                txtSearch.Text = "";
+                txtSearch.ForeColor = Color.Black;
             }
         }
-        private void textBox1_Leave(object sender, EventArgs e)
+        
+        private void txtSearch_Leave(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(textBox1.Text))
+            if (string.IsNullOrWhiteSpace(txtSearch.Text))
             {
-                textBox1.Text = "Search job title...";
-                textBox1.ForeColor = Color.Gray;
+                txtSearch.Text = "Search job title...";
+                txtSearch.ForeColor = Color.Gray;
             }
         }
-        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        private void txtSearch_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                string keyword = textBox1.Text.Trim();
+                string keyword = txtSearch.Text.Trim();
                 MessageBox.Show("You searched for: " + keyword);
                 e.SuppressKeyPress = true;
             }
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e) { }
+        private void txtSearch_TextChanged(object sender, EventArgs e) 
+        {
+
+            string keyword = txtSearch.Text.Trim().ToLower();
+
+
+            if (keyword == "search job title...")
+            {
+                keyword = "";
+            }
+
+
+            foreach (DataGridViewRow row in dgvJobOpenings.Rows)
+            {
+                if (!row.IsNewRow) 
+                {
+                    bool isMatch = row.Cells["ColJobTitle"].Value != null &&
+                                   row.Cells["ColJobTitle"].Value.ToString().ToLower().Contains(keyword);
+
+
+                    if (row.Visible != isMatch)
+                    {
+                        dgvJobOpenings.CurrentCell = null;
+                        row.Visible = isMatch;
+                    }
+                }
+            }
+
+
+            foreach (DataGridViewRow row in dgvClosedJobs.Rows)
+            {
+                if (!row.IsNewRow)
+                {
+
+                    bool isMatch = row.Cells["ColJobTitle2"].Value != null &&
+                                   row.Cells["ColJobTitle2"].Value.ToString().ToLower().Contains(keyword);
+
+                    if (row.Visible != isMatch)
+                    {
+                        dgvClosedJobs.CurrentCell = null;
+                        row.Visible = isMatch;
+                    }
+                }
+            }
+        }
 
 
         private void btnAddVacancy_Click(object sender, EventArgs e)
@@ -416,7 +460,7 @@ namespace HRApplicantWindowSystem
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
-
+            this.Close();
         }
     }
 }

@@ -29,8 +29,9 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
-            btnLogout = new Button();
-            btnDashboard = new Button();
+            btnBack = new Button();
+            txtSearch = new TextBox();
+            btnAddVacancy = new Button();
             lblWelcome = new Label();
             label1 = new Label();
             label2 = new Label();
@@ -46,8 +47,6 @@
             ColRequirements = new DataGridViewTextBoxColumn();
             label4 = new Label();
             label3 = new Label();
-            textBox1 = new TextBox();
-            btnAddVacancy = new Button();
             panel4 = new Panel();
             dgvClosedJobs = new DataGridView();
             ColID2 = new DataGridViewTextBoxColumn();
@@ -68,33 +67,51 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.ControlDarkDark;
-            panel1.Controls.Add(btnLogout);
-            panel1.Controls.Add(btnDashboard);
+            panel1.Controls.Add(btnBack);
+            panel1.Controls.Add(btnAddVacancy);
             panel1.Controls.Add(lblWelcome);
             panel1.Dock = DockStyle.Left;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(305, 654);
+            panel1.Size = new Size(260, 654);
             panel1.TabIndex = 1;
             // 
-            // btnLogout
+            // btnBack
             // 
-            btnLogout.Location = new Point(28, 308);
-            btnLogout.Name = "btnLogout";
-            btnLogout.Size = new Size(228, 62);
-            btnLogout.TabIndex = 6;
-            btnLogout.Text = "Logout";
-            btnLogout.UseVisualStyleBackColor = true;
-            btnLogout.Click += btnLogout_Click;
+            btnBack.Location = new Point(12, 552);
+            btnBack.Name = "btnBack";
+            btnBack.Size = new Size(228, 62);
+            btnBack.TabIndex = 6;
+            btnBack.Text = "Back";
+            btnBack.UseVisualStyleBackColor = true;
+            btnBack.Click += btnLogout_Click;
             // 
-            // btnDashboard
+            // txtSearch
             // 
-            btnDashboard.Location = new Point(28, 224);
-            btnDashboard.Name = "btnDashboard";
-            btnDashboard.Size = new Size(228, 62);
-            btnDashboard.TabIndex = 1;
-            btnDashboard.Text = "Dashboard";
-            btnDashboard.UseVisualStyleBackColor = true;
+            txtSearch.ForeColor = SystemColors.WindowFrame;
+            txtSearch.Location = new Point(805, 109);
+            txtSearch.Name = "txtSearch";
+            txtSearch.Size = new Size(318, 27);
+            txtSearch.TabIndex = 8;
+            txtSearch.Text = "Search job title...";
+            txtSearch.TextChanged += txtSearch_TextChanged;
+            txtSearch.Enter += txtSearch_Enter;
+            txtSearch.KeyDown += txtSearch_KeyDown;
+            txtSearch.Leave += txtSearch_Leave;
+            // 
+            // btnAddVacancy
+            // 
+            btnAddVacancy.BackColor = SystemColors.Highlight;
+            btnAddVacancy.FlatStyle = FlatStyle.Flat;
+            btnAddVacancy.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnAddVacancy.ForeColor = SystemColors.ButtonHighlight;
+            btnAddVacancy.Location = new Point(12, 463);
+            btnAddVacancy.Name = "btnAddVacancy";
+            btnAddVacancy.Size = new Size(228, 72);
+            btnAddVacancy.TabIndex = 9;
+            btnAddVacancy.Text = "Add New Vacancy";
+            btnAddVacancy.UseVisualStyleBackColor = false;
+            btnAddVacancy.Click += btnAddVacancy_Click;
             // 
             // lblWelcome
             // 
@@ -232,33 +249,6 @@
             label3.TabIndex = 7;
             label3.Text = "Job openings overview";
             // 
-            // textBox1
-            // 
-            textBox1.ForeColor = SystemColors.WindowFrame;
-            textBox1.Location = new Point(793, 110);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(146, 27);
-            textBox1.TabIndex = 8;
-            textBox1.Text = "Search job title...";
-            textBox1.TextChanged += textBox1_TextChanged;
-            textBox1.Enter += textBox1_Enter;
-            textBox1.KeyDown += textBox1_KeyDown;
-            textBox1.Leave += textBox1_Leave;
-            // 
-            // btnAddVacancy
-            // 
-            btnAddVacancy.BackColor = SystemColors.Highlight;
-            btnAddVacancy.FlatStyle = FlatStyle.Flat;
-            btnAddVacancy.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnAddVacancy.ForeColor = SystemColors.ButtonHighlight;
-            btnAddVacancy.Location = new Point(964, 109);
-            btnAddVacancy.Name = "btnAddVacancy";
-            btnAddVacancy.Size = new Size(148, 29);
-            btnAddVacancy.TabIndex = 9;
-            btnAddVacancy.Text = "Add New Vacancy";
-            btnAddVacancy.UseVisualStyleBackColor = false;
-            btnAddVacancy.Click += btnAddVacancy_Click;
-            // 
             // panel4
             // 
             panel4.BorderStyle = BorderStyle.FixedSingle;
@@ -353,8 +343,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1154, 654);
             Controls.Add(panel4);
-            Controls.Add(btnAddVacancy);
-            Controls.Add(textBox1);
+            Controls.Add(txtSearch);
             Controls.Add(label3);
             Controls.Add(panel3);
             Controls.Add(panel2);
@@ -379,15 +368,14 @@
         #endregion
 
         private Panel panel1;
-        private Button btnLogout;
-        private Button btnDashboard;
+        private Button btnBack;
         private Label lblWelcome;
         private Label label1;
         private Label label2;
         private Panel panel2;
         private Panel panel3;
         private Label label3;
-        private TextBox textBox1;
+        private TextBox txtSearch;
         private Button btnAddVacancy;
         private Label label4;
         private DataGridView dgvJobOpenings;
