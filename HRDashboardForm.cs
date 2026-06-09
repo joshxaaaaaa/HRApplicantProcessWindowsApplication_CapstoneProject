@@ -12,7 +12,7 @@ namespace HRApplicantWindowSystem
 {
     public partial class HRDashboardForm : Form
     {
-        private string connectionString = "Server=localhost;Database=db_hrapplicantwindowsystem;User ID=root;Password=#Sheena003;";
+        private string connectionString = "Server=localhost;Database=db_hrapplicantwindowsystem;User ID=root;Password=may292007";
         private int currentUserId;
         private string currentUserRole;
 
