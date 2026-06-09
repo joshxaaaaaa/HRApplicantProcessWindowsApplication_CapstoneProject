@@ -86,9 +86,49 @@ namespace HRApplicantWindowSystem
 
         private void btnStatusTracking_Click(object sender, EventArgs e)
         {
+            int activeApplicationId = 0;
 
+            string query = @"
+                SELECT app.application_id 
+                FROM Applications app
+                INNER JOIN Applicants a ON app.applicant_id = a.applicant_id
+                WHERE a.account_id = @AccountID 
+                ORDER BY app.applied_date DESC 
+                LIMIT 1;";
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@AccountID", currentAccountId);
+                    try
+                    {
+                        conn.Open();
+                        object result = cmd.ExecuteScalar();
+                        if (result != null && result != DBNull.Value)
+                        {
+                            activeApplicationId = Convert.ToInt32(result);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error retrieving application track: " + ex.Message, "System Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+            }
+
+            if (activeApplicationId > 0)
+            {
+                ApplicantStatusForm statusForm = new ApplicantStatusForm();
+                statusForm.CurrentApplicationID = activeApplicationId;
+                statusForm.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("You haven't submitted any job applications yet. You can track your progress once you have applied.", "No Progress Found", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
-
         private void btnLogout_Click(object sender, EventArgs e)
         {
             this.Close();
