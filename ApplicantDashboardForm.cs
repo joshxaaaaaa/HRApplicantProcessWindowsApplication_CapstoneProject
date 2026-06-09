@@ -33,7 +33,12 @@ namespace HRApplicantWindowSystem
 
         private void btnJobVacancies_Click(object sender, EventArgs e)
         {
+            JobVacanciesForm vacanciesPage = new JobVacanciesForm();
 
+            vacanciesPage.StartPosition = FormStartPosition.CenterScreen;
+            vacanciesPage.Show();
+
+            this.Hide();
         }
 
         private void btnMyApplication_Click(object sender, EventArgs e)
