@@ -8,6 +8,9 @@
     <Compile Update="ApplicantDashboardForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="ApplicantDocumentsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="ApplicantProfileForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -18,12 +21,16 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Form1.cs">
+    <Compile Update="ApplicantStatusForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="HRDashboardForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="JobOpenings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="JobVacanciesForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="LoginForm.cs">

@@ -34,11 +34,13 @@
             label3 = new Label();
             EntJobtitle = new TextBox();
             label4 = new Label();
-            EntQualifications = new TextBox();
+            EntDescription = new TextBox();
             label5 = new Label();
-            EntRequirements = new TextBox();
             btnSaveVacancy = new Button();
             btnCancel = new Button();
+            cmbDepartment = new ComboBox();
+            label6 = new Label();
+            clbRequirements = new CheckedListBox();
             SuspendLayout();
             // 
             // label1
@@ -73,7 +75,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(22, 99);
+            label3.Location = new Point(22, 159);
             label3.Name = "label3";
             label3.Size = new Size(66, 20);
             label3.TabIndex = 6;
@@ -82,7 +84,7 @@
             // EntJobtitle
             // 
             EntJobtitle.ForeColor = SystemColors.WindowFrame;
-            EntJobtitle.Location = new Point(22, 122);
+            EntJobtitle.Location = new Point(20, 182);
             EntJobtitle.Name = "EntJobtitle";
             EntJobtitle.Size = new Size(515, 27);
             EntJobtitle.TabIndex = 9;
@@ -95,47 +97,34 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(22, 174);
+            label4.Location = new Point(22, 212);
             label4.Name = "label4";
-            label4.Size = new Size(105, 20);
+            label4.Size = new Size(96, 20);
             label4.TabIndex = 10;
-            label4.Text = "Qualifications";
+            label4.Text = "Descriptions";
             // 
-            // EntQualifications
+            // EntDescription
             // 
-            EntQualifications.ForeColor = SystemColors.WindowFrame;
-            EntQualifications.Location = new Point(22, 197);
-            EntQualifications.Multiline = true;
-            EntQualifications.Name = "EntQualifications";
-            EntQualifications.Size = new Size(515, 118);
-            EntQualifications.TabIndex = 11;
-            EntQualifications.Text = "Enter qualifications...";
-            EntQualifications.Enter += EntQualifications_Enter;
-            EntQualifications.KeyDown += EntQualifications_KeyDown;
-            EntQualifications.Leave += EntQualifications_Leave;
+            EntDescription.ForeColor = SystemColors.WindowFrame;
+            EntDescription.Location = new Point(22, 235);
+            EntDescription.Multiline = true;
+            EntDescription.Name = "EntDescription";
+            EntDescription.Size = new Size(515, 118);
+            EntDescription.TabIndex = 11;
+            EntDescription.Text = "Enter description...";
+            EntDescription.Enter += EntDescription_Enter;
+            EntDescription.KeyDown += EntDescription_KeyDown;
+            EntDescription.Leave += EntDescription_Leave;
             // 
             // label5
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.Location = new Point(20, 340);
+            label5.Location = new Point(20, 356);
             label5.Name = "label5";
             label5.Size = new Size(107, 20);
             label5.TabIndex = 12;
             label5.Text = "Requirements";
-            // 
-            // EntRequirements
-            // 
-            EntRequirements.ForeColor = SystemColors.WindowFrame;
-            EntRequirements.Location = new Point(22, 363);
-            EntRequirements.Multiline = true;
-            EntRequirements.Name = "EntRequirements";
-            EntRequirements.Size = new Size(515, 118);
-            EntRequirements.TabIndex = 13;
-            EntRequirements.Text = "Enter requirements...";
-            EntRequirements.Enter += EntRequirements_Enter;
-            EntRequirements.KeyDown += EntRequirements_KeyDown;
-            EntRequirements.Leave += EntRequirements_Leave;
             // 
             // btnSaveVacancy
             // 
@@ -163,16 +152,46 @@
             btnCancel.UseVisualStyleBackColor = false;
             btnCancel.Click += btnCancel_Click;
             // 
+            // cmbDepartment
+            // 
+            cmbDepartment.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbDepartment.FormattingEnabled = true;
+            cmbDepartment.Location = new Point(22, 128);
+            cmbDepartment.Name = "cmbDepartment";
+            cmbDepartment.Size = new Size(513, 28);
+            cmbDepartment.TabIndex = 16;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(29, 87);
+            label6.Name = "label6";
+            label6.Size = new Size(89, 20);
+            label6.TabIndex = 17;
+            label6.Text = "Department";
+            // 
+            // clbRequirements
+            // 
+            clbRequirements.CheckOnClick = true;
+            clbRequirements.FormattingEnabled = true;
+            clbRequirements.Location = new Point(22, 379);
+            clbRequirements.Name = "clbRequirements";
+            clbRequirements.Size = new Size(515, 114);
+            clbRequirements.TabIndex = 18;
+            clbRequirements.SelectedIndexChanged += clbRequirements_SelectedIndexChanged;
+            // 
             // AddVacancyForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(563, 629);
+            Controls.Add(clbRequirements);
+            Controls.Add(label6);
+            Controls.Add(cmbDepartment);
             Controls.Add(btnCancel);
             Controls.Add(btnSaveVacancy);
-            Controls.Add(EntRequirements);
             Controls.Add(label5);
-            Controls.Add(EntQualifications);
+            Controls.Add(EntDescription);
             Controls.Add(label4);
             Controls.Add(EntJobtitle);
             Controls.Add(label3);
@@ -194,10 +213,12 @@
         private Label label3;
         private TextBox EntJobtitle;
         private Label label4;
-        private TextBox EntQualifications;
+        private TextBox EntDescription;
         private Label label5;
-        private TextBox EntRequirements;
         private Button btnSaveVacancy;
         private Button btnCancel;
+        private ComboBox cmbDepartment;
+        private Label label6;
+        private CheckedListBox clbRequirements;
     }
 }
