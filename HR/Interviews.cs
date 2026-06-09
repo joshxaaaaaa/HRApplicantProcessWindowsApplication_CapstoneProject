@@ -8,9 +8,9 @@ using System.Windows.Forms;
 
 namespace HRApplicantWindowSystem
 {
-    public partial class Screenings : Form
+    public partial class Interviews : Form
     {
-        public Screenings()
+        public Interviews()
         {
             InitializeComponent();
         }

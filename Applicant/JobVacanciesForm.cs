@@ -3,7 +3,7 @@ using System;
 using System.Data;
 using System.Windows.Forms;
 
-namespace HRApplicantWindowSystem
+namespace HRApplicantWindowSystem.Applicant
 {
     public partial class JobVacanciesForm : Form
     {
@@ -285,10 +285,10 @@ namespace HRApplicantWindowSystem
                     conn.Open();
 
                     string checkQuery = @"
-                SELECT COUNT(*)
-                FROM Applications
-                WHERE account_id = @accountId
-                AND vacancy_id = @vacancyId";
+                    SELECT COUNT(*) 
+                    FROM Applications 
+                    WHERE ApplicantID = @accountId 
+                    AND JobID = @vacancyId";
 
                     using (MySqlCommand checkCmd =
                            new MySqlCommand(checkQuery, conn))
@@ -315,26 +315,22 @@ namespace HRApplicantWindowSystem
                     }
 
                     string insertQuery = @"
-                   INSERT INTO Applications
-                    (
-                        account_id,
-                        applicant_id,
-                        vacancy_id,
-                        status
-                    )
-                    VALUES
-                    (
-                    @accountId,
-                    @applicantId,
-                    @vacancyId,
-                    'Submitted'
-                )";
+                    INSERT INTO Applications (
+                        ApplicantID, 
+                        JobID, 
+                        Status
+                    ) 
+                    VALUES (
+                        @accountId, 
+                        @vacancyId, 
+                        'Pending Review'
+                    )";
 
-                    using (MySqlCommand cmd =
-                           new MySqlCommand(insertQuery, conn))
+                    using (MySqlCommand cmd = new MySqlCommand(insertQuery, conn))
                     {
-                        cmd.Parameters.AddWithValue("@applicant_id", applicantId);
-                        cmd.Parameters.AddWithValue("@vacancy_id", vacancyId);
+
+                        cmd.Parameters.AddWithValue("@accountId", currentAccountId);
+                        cmd.Parameters.AddWithValue("@vacancyId", vacancyId);
 
                         cmd.ExecuteNonQuery();
                     }

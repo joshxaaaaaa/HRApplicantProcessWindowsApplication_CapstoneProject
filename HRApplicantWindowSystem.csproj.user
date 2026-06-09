@@ -2,41 +2,46 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
-    <Compile Update="AddVacancyForm.cs">
+    <Compile Update="HR\AddVacancyForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="ApplicantDashboardForm.cs">
+    <Compile Update="HR\AdminSettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="ApplicantDocumentsForm.cs">
+    <Compile Update="Applicant\ApplicantDashboardForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="ApplicantProfileForm.cs">
+    <Compile Update="Applicant\ApplicantDocumentsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="ApplicantRegisterForm.cs">
+    <Compile Update="Applicant\ApplicantProfileForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="AdminSettingsForm.cs">
+    <Compile Update="LoginPage\ApplicantRegisterForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Form1.cs">
-    <Compile Update="ApplicantStatusForm.cs">
+    <Compile Update="Applicant\ApplicantStatusForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="HRDashboardForm.cs">
+    <Compile Update="HR\ApplicantProcess.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="JobOpenings.cs">
+    <Compile Update="HR\HRDashboardForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="JobVacanciesForm.cs">
+    <Compile Update="HR\JobOpenings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="LoginForm.cs">
+    <Compile Update="Applicant\JobVacanciesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="MyApplicationForm.cs">
+    <Compile Update="LoginPage\LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Applicant\MyApplicationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="HR\Interviews.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

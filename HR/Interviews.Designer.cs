@@ -1,6 +1,6 @@
 ﻿namespace HRApplicantWindowSystem
 {
-    partial class Screenings
+    partial class Interviews
     {
         /// <summary>
         /// Required designer variable.

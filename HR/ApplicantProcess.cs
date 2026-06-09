@@ -5,12 +5,12 @@ using MySql.Data.MySqlClient;
 
 namespace HRApplicantWindowSystem
 {
-    public partial class Form1 : Form
+    public partial class ApplicantProcess : Form
     {
-        private string connString = "server=127.0.0.1;port=3306;uid=root;pwd=abalo_mysql;database=your_database_name;";
+        private string connectionString = "Server=localhost;Database=db_hrapplicantwindowsystem;User ID=root;Password=abalo_mysql;";
         private int selectedApplicantId = -1;
 
-        public Form1()
+        public ApplicantProcess()
         {
             InitializeComponent();
             RefreshApplicantGrid();
@@ -21,10 +21,10 @@ namespace HRApplicantWindowSystem
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connString))
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     conn.Open();
-                    string query = "SELECT a.applicant_id AS 'ID', CONCAT(a.first_name, ' ', a.last_name) AS 'Full Name', j.job_title AS 'Applied Position', ap.status AS 'Status' FROM applicants a INNER JOIN applications ap ON a.applicant_id = ap.applicant_id INNER JOIN jobvacancies j ON ap.job_vacancy_id = j.vacancy_id ORDER BY ap.application_date DESC;";
+                    string query = "SELECT a.applicant_id AS 'ID', CONCAT(a.first_name, ' ', a.last_name) AS 'Full Name', j.job_title AS 'Applied Position', ap.status AS 'Status' FROM applicants a INNER JOIN applications ap ON a.applicant_id = ap.applicant_id INNER JOIN jobvacancies j ON ap.vacancy_id = j.vacancy_id;";
                     using (MySqlDataAdapter adapter = new MySqlDataAdapter(query, conn))
                     {
                         DataTable table = new DataTable();
@@ -47,8 +47,8 @@ namespace HRApplicantWindowSystem
 
         private void LoadApplicantSummary(int id)
         {
-            // This loads all data into Summary, Checklist, and Notes
-            using (MySqlConnection conn = new MySqlConnection(connString))
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
                 string query = "SELECT a.*, ap.status, ie.comments FROM applicants a LEFT JOIN applications ap ON a.applicant_id = ap.applicant_id LEFT JOIN interviewevaluations ie ON ap.application_id = ie.application_id WHERE a.applicant_id = @id";
@@ -61,7 +61,7 @@ namespace HRApplicantWindowSystem
                         {
                             UpdateControlText<Label>("lblSummaryName", "Name: " + reader["first_name"] + " " + reader["last_name"]);
                             UpdateControlText<TextBox>("txtHRNotes", reader["comments"].ToString());
-                            // Add other field mappings here...
+
                         }
                     }
                 }
@@ -71,7 +71,7 @@ namespace HRApplicantWindowSystem
         private void btnSaveNotes_Click(object sender, EventArgs e)
         {
             if (selectedApplicantId == -1) return;
-            using (MySqlConnection conn = new MySqlConnection(connString))
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
                 string query = "UPDATE interviewevaluations SET comments = @notes WHERE application_id = (SELECT application_id FROM applications WHERE applicant_id = @id LIMIT 1)";
@@ -88,14 +88,14 @@ namespace HRApplicantWindowSystem
         private void btnSaveChecklist_Click(object sender, EventArgs e)
         {
             if (selectedApplicantId == -1) return;
-            // Add your UPDATE query for your screening_checklist table here
+
             MessageBox.Show("Checklist progress saved!");
         }
 
         private void UpdateApplicantStatus(string newStatus)
         {
             if (selectedApplicantId == -1) return;
-            using (MySqlConnection conn = new MySqlConnection(connString))
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
                 string query = "UPDATE applications SET status = @status WHERE applicant_id = @id";
@@ -109,7 +109,7 @@ namespace HRApplicantWindowSystem
             RefreshApplicantGrid();
         }
 
-        // Helper methods to prevent crashes if UI names change
+
         private T FindControl<T>(string name) where T : Control
         {
             Control[] match = this.Controls.Find(name, true);
@@ -122,6 +122,6 @@ namespace HRApplicantWindowSystem
             if (ctrl != null) ctrl.Text = text;
         }
 
-        private void UpdateMetricSummaryCards() { /* Logic for your top cards */ }
+        private void UpdateMetricSummaryCards() {  }
     }
 }
