@@ -17,6 +17,7 @@ namespace HRApplicantWindowSystem
             InitializeComponent();
         }
 
+
         private void AdminSettingsForm_Load(object sender, EventArgs e)
         {
             LoadUsersList();
@@ -50,8 +51,9 @@ namespace HRApplicantWindowSystem
         }
 
         private void cmbMaintenanceCategory_SelectedIndexChanged(object sender, EventArgs e)
-        { 
-            LoadMaintenanceData(); 
+        {
+            LoadMaintenanceGrid();
+            LoadMaintenanceData();
         }
 
         private void LoadMaintenanceData()
@@ -73,7 +75,7 @@ namespace HRApplicantWindowSystem
 
             if (string.IsNullOrEmpty(query)) return;
 
-            using (MySqlConnection conn = new MySqlConnection(connectionString)) 
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 try
                 {
@@ -85,66 +87,6 @@ namespace HRApplicantWindowSystem
                 catch (Exception ex)
                 {
                     MessageBox.Show("Error loading data: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void btnAddRecord_Click(object sender, EventArgs e)
-        {
-            if (cmbMaintenanceCategory.SelectedItem == null)
-            {
-                MessageBox.Show("Please select a category from the dropdown first.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            string category = cmbMaintenanceCategory.SelectedItem.ToString();
-            string newValue = txtNewValue.Text.Trim();
-
-            if (string.IsNullOrEmpty(newValue))
-            {
-                MessageBox.Show("Please enter a value to add.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
-            {
-                try
-                {
-                    conn.Open();
-                    string query = "";
-
-                    if (category == "Departments")
-                    {
-                        query = "INSERT INTO Departments (department_name, description) VALUES (@val, 'Added via Admin Configuration Panel')";
-                    }
-                    else if (category == "Requirement Types")
-                    {
-                        query = "INSERT INTO RequirementTypes (requirement_name, description) VALUES (@val, 'Added via Admin Configuration Panel')";
-                    }
-                    else
-                    {
-                        MessageBox.Show("Table setup for this category is currently pending.", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return;
-                    }
-
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@val", newValue);
-                        cmd.ExecuteNonQuery();
-                    }
-
-                    MessageBox.Show($"'{newValue}' was successfully added to {category}!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-
-                    txtNewValue.Clear();
-                    LoadMaintenanceData();
-                }
-                catch (MySqlException ex)
-                {
-                    if (ex.Number == 1062) 
-                        MessageBox.Show("This exact record already exists in the system.", "Duplicate Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    else
-                        MessageBox.Show("Database error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -198,7 +140,7 @@ namespace HRApplicantWindowSystem
                     using (MySqlCommand cmd = new MySqlCommand(insertQuery, conn))
                     {
                         cmd.Parameters.AddWithValue("@username", username);
-                        cmd.Parameters.AddWithValue("@password", password); 
+                        cmd.Parameters.AddWithValue("@password", password);
                         cmd.Parameters.AddWithValue("@email", email);
                         cmd.Parameters.AddWithValue("@roleId", roleId);
 
@@ -213,7 +155,7 @@ namespace HRApplicantWindowSystem
                 }
                 catch (MySqlException ex)
                 {
-                    if (ex.Number == 1062) 
+                    if (ex.Number == 1062)
                         MessageBox.Show("Username or Email is already taken.", "Duplicate Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     else
                         MessageBox.Show("Database error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -248,7 +190,7 @@ namespace HRApplicantWindowSystem
                             }
 
                             MessageBox.Show("User deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            LoadUsersList(); 
+                            LoadUsersList();
                         }
                         catch (Exception ex)
                         {
@@ -262,12 +204,133 @@ namespace HRApplicantWindowSystem
                 MessageBox.Show("Please select a user from the list to delete.", "Selection Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+
         private void ClearInputFields()
         {
             txtNewUsername.Clear();
             txtNewEmail.Clear();
             txtNewPassword.Clear();
             cmbNewRole.SelectedIndex = -1;
+        }
+        // Helper Method: Maps dropdown text to exact Database Table & Column names
+        private (string Table, string IdCol, string NameCol, string DescCol) GetDbMap()
+        {
+            string selection = cmbMaintenanceCategory.SelectedItem?.ToString() ?? "";
+
+            switch (selection)
+            {
+                case "Departments":
+                    return ("departments", "department_id", "department_name", "description");
+                case "Requirement Types":
+                    return ("requirementtypes", "requirement_type_id", "requirement_name", "description");
+                case "Positions":
+                    return ("positions", "position_id", "position_name", "description");
+                case "Employment Types":
+                    return ("employment_types", "employment_type_id", "employment_name", "description");
+                case "Interview Types":
+                    return ("interview_types", "interview_type_id", "interview_name", "description");
+                case "Assessment Types":
+                    return ("assessment_types", "assessment_type_id", "assessment_name", "description");
+                default:
+                    return ("", "", "", "");
+            }
+        }
+
+        private void btnSaveRecord_Click(object sender, EventArgs e)
+        {
+            var map = GetDbMap();
+            if (string.IsNullOrEmpty(map.Table)) return;
+
+            if (string.IsNullOrWhiteSpace(txtRecordName.Text))
+            {
+                MessageBox.Show("Please enter a name for the record.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string sql = $"INSERT INTO {map.Table} ({map.NameCol}, {map.DescCol}) VALUES (@name, @desc)";
+
+                using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@name", txtRecordName.Text.Trim());
+                    cmd.Parameters.AddWithValue("@desc", txtRecordDesc.Text.Trim());
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            MessageBox.Show("Record added successfully!");
+            txtRecordName.Clear();
+            txtRecordDesc.Clear();
+        }
+
+        private void btnDeleteRecord_Click(object sender, EventArgs e)
+        {
+            var map = GetDbMap();
+            if (string.IsNullOrEmpty(map.Table) || dgvMaintenanceValues.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Please select an entire row to delete.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Get the ID of the selected row (assuming ID is always the 1st column [0])
+            string selectedId = dgvMaintenanceValues.SelectedRows[0].Cells[0].Value.ToString();
+
+            DialogResult result = MessageBox.Show("Are you sure you want to permanently delete this record?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    conn.Open();
+                    string sql = $"DELETE FROM {map.Table} WHERE {map.IdCol} = @id";
+
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@id", selectedId);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                MessageBox.Show("Record deleted successfully!");
+                // Refresh your grid here
+                // Example: LoadMaintenanceGrid(); 
+            }
+        }
+        private void LoadMaintenanceGrid()
+        {
+            var map = GetDbMap();
+            if (string.IsNullOrEmpty(map.Table)) return;
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    // We use 'AS' to dynamically rename the headers so they always say "ID", "Name", and "Description"
+                    string sql = $"SELECT {map.IdCol} AS 'ID', {map.NameCol} AS 'Name', {map.DescCol} AS 'Description' FROM {map.Table}";
+
+                    MySqlDataAdapter adapter = new MySqlDataAdapter(sql, conn);
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+
+                    // 1. Clear any hardcoded columns from the designer
+                    dgvMaintenanceValues.Columns.Clear();
+
+                    // 2. Force the grid to accept the new data (even if it's 0 rows!)
+                    dgvMaintenanceValues.DataSource = dt;
+
+                    // 3. Optional: Make the Description column stretch to fill the empty space
+                    if (dgvMaintenanceValues.Columns["Description"] != null)
+                    {
+                        dgvMaintenanceValues.Columns["Description"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error loading data: " + ex.Message);
+                }
+            }
         }
     }
 }

@@ -123,7 +123,7 @@
             // 
             // btnInterviews
             // 
-            btnInterviews.Location = new Point(28, 298);
+            btnInterviews.Location = new Point(28, 210);
             btnInterviews.Name = "btnInterviews";
             btnInterviews.Size = new Size(228, 62);
             btnInterviews.TabIndex = 4;
@@ -132,7 +132,7 @@
             // 
             // btnApplicants
             // 
-            btnApplicants.Location = new Point(28, 212);
+            btnApplicants.Location = new Point(28, 129);
             btnApplicants.Name = "btnApplicants";
             btnApplicants.Size = new Size(228, 62);
             btnApplicants.TabIndex = 3;
@@ -141,11 +141,11 @@
             // 
             // btnJobs
             // 
-            btnJobs.Location = new Point(28, 129);
+            btnJobs.Location = new Point(28, 299);
             btnJobs.Name = "btnJobs";
             btnJobs.Size = new Size(228, 62);
             btnJobs.TabIndex = 2;
-            btnJobs.Text = "Jobs";
+            btnJobs.Text = "Jobs Vacancy Management";
             btnJobs.UseVisualStyleBackColor = true;
             btnJobs.Click += btnJobs_Click;
             // 
