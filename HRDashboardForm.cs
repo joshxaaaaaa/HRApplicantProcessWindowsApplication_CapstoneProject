@@ -12,7 +12,7 @@ namespace HRApplicantWindowSystem
 {
     public partial class HRDashboardForm : Form
     {
-        private string connectionString = "Server=localhost;Database=db_hrapplicantwindowsystem;User ID=root;Password=abalo_mysql;";
+        private string connectionString = "Server=localhost;Database=db_hrapplicantwindowsystem;User ID=root;Password=abalo_mysql ;";
         private int currentUserId;
         private string currentUserRole;
 
@@ -201,7 +201,7 @@ namespace HRApplicantWindowSystem
                              a.contact_number AS 'Contact', 
                              acc.email AS 'Email'
                       FROM Applicants a
-                      INNER JOIN ApplicantAccounts acc ON a.account_id = acc.account_id";
+                      INNER JOIN applicantaccounts acc ON a.account_id = acc.account_id";
                     break;
 
                 case "Pending Applications":

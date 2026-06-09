@@ -11,7 +11,7 @@ namespace HRApplicantWindowSystem
 {
     public partial class ApplicantRegisterForm : Form
     {
-        private string connectionString = "Server=localhost;Database=db_hrapplicantwindowsystem;User ID=root;Password=abalo_mysql;";
+        private string connectionString = "Server=localhost;Database=db_hrapplicantwindowsystem;User ID=root;Password=abalo_mysql ;";
         public ApplicantRegisterForm()
         {
             InitializeComponent();
@@ -44,7 +44,7 @@ namespace HRApplicantWindowSystem
                         try
                         {
                             string insertAccountQuery = @"
-                                INSERT INTO ApplicantAccounts (email, password_hash, account_status) 
+                               INSERT INTO applicantaccounts (email, password_hash, account_status) 
                                 VALUES (@email, @password, 'Active');
                                 SELECT LAST_INSERT_ID();";
 

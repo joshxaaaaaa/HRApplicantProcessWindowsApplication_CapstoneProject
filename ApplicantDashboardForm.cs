@@ -11,7 +11,7 @@ namespace HRApplicantWindowSystem
 {
     public partial class ApplicantDashboardForm : Form
     {
-        private string connectionString = "Server=localhost;Database=db_hrapplicantwindowsystem;User ID=root;Password=abalo_mysql;";
+        private string connectionString = "Server=localhost;Database=db_hrapplicantwindowsystem;User ID=root;Password=abalo_mysql ;";
   
         private int currentAccountId;
 
@@ -46,7 +46,7 @@ namespace HRApplicantWindowSystem
             int applicantId = 1; 
 
             int activeApplicationId = 0;
-            string connString = "Server=localhost;Database=db_hrapplicantwindowsystem;User ID=root;Password=abalo_mysql;";
+            string connString = "Server=localhost;Database=db_hrapplicantwindowsystem;User ID=root;Password=abalo_mysql ;";
 
             string query = "SELECT application_id FROM Applications WHERE applicant_id = @ApplicantID ORDER BY applied_date DESC LIMIT 1;";
 

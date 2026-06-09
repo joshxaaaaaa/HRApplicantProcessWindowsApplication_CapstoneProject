@@ -7,7 +7,7 @@ namespace HRApplicantWindowSystem
 {
     public partial class LoginForm : Form
     {
-        private string connectionString = "Server=localhost;Database=db_hrapplicantwindowsystem;User ID=root;Password=abalo_mysql;";
+        private string connectionString = "Server=localhost;Database=db_hrapplicantwindowsystem;User ID=root;Password=abalo_mysql ;";
 
         private string selectedRole = "";
         public LoginForm()
@@ -83,7 +83,7 @@ namespace HRApplicantWindowSystem
                     else if (selectedRole == "Applicant")
                     {
                         query = @"SELECT account_id, account_status 
-                                  FROM ApplicantAccounts 
+                                  FROM applicantaccounts
                                   WHERE email = @username AND password_hash = @password";
                     }
 

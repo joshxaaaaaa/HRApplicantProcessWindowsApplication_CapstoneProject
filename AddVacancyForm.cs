@@ -12,8 +12,7 @@ namespace HRApplicantWindowSystem
 {
     public partial class AddVacancyForm : Form
     {
-        private string connectionString = "Server=localhost;Database=db_hrapplicantwindowsystem;User ID=root;Password=abalo_mysql;";
-
+        private string connectionString = "Server=localhost;Database=db_hrapplicantwindowsystem;User ID=root;Password=abalo_mysql ;";
         public AddVacancyForm()
         {
             InitializeComponent();

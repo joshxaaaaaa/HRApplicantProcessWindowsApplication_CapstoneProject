@@ -87,7 +87,7 @@
             label15.Size = new Size(172, 17);
             label15.TabIndex = 11;
             label15.Text = "Educational Attainments:";
-            label15.Click += label15_Click;
+            
             // 
             // button1
             // 
@@ -260,6 +260,7 @@
             richTextBox3.Size = new Size(206, 376);
             richTextBox3.TabIndex = 12;
             richTextBox3.Text = "";
+            richTextBox3.TextChanged += richTextBox3_TextChanged;
             // 
             // button2
             // 
