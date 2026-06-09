@@ -122,7 +122,7 @@ namespace HRApplicantWindowSystem
             LoadDashboardStatistics();
 
 
-            btnAdminPanel.Visible = true;
+            
             LoadDashboardDetails();
             pnlReports.Visible = false;
         }
@@ -135,13 +135,7 @@ namespace HRApplicantWindowSystem
                 AdminSettingsForm adminForm = new AdminSettingsForm();
                 adminForm.ShowDialog();
             }
-            else
-            {
-                MessageBox.Show("Access Denied: This feature is restricted to HR Managers and Administrators only.",
-                                "Restricted Area",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Stop);
-            }
+            
         }
 
         private void HRDashboardForm_Load(object sender, EventArgs e)
@@ -149,12 +143,27 @@ namespace HRApplicantWindowSystem
 
             pnlWelcome.Visible = true;
             pnlDashboardSummary.Visible = false;
+            pnlReports.Visible = false;
 
             LoadDashboardStatistics();
             LoadDashboardDetails();
 
-            btnAdminPanel.Visible = true;
-            pnlReports.Visible = false;
+
+            if (currentUserRole == "HR Manager")
+            {
+                btnJobs.Visible = true;
+                btnReports.Visible = true;
+                btnAdminPanel.Visible = true;
+            }
+            else
+            {
+
+                btnJobs.Visible = false;
+                btnReports.Visible = false;
+                btnAdminPanel.Visible = false;
+            }
+
+
         }
 
         private void txtSearchApplicants_TextChanged(object sender, EventArgs e)

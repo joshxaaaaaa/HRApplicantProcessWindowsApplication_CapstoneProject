@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             label1 = new Label();
             AdminSettings = new TabControl();
             tabUserManagement = new TabPage();
@@ -44,8 +45,12 @@
             label2 = new Label();
             dgvUsers = new DataGridView();
             tabMaintenance = new TabPage();
-            btnAddRecord = new Button();
-            txtNewValue = new TextBox();
+            btnDeleteRecord = new Button();
+            btnSaveRecord = new Button();
+            txtRecordDesc = new TextBox();
+            label7 = new Label();
+            txtRecordName = new TextBox();
+            label6 = new Label();
             dgvMaintenanceValues = new DataGridView();
             cmbMaintenanceCategory = new ComboBox();
             AdminSettings.SuspendLayout();
@@ -130,7 +135,7 @@
             btnSaveUser.UseVisualStyleBackColor = true;
             btnSaveUser.Click += btnSaveUser_Click;
             // 
-            // cmbNewRole 
+            // cmbNewRole
             // 
             cmbNewRole.FormattingEnabled = true;
             cmbNewRole.Items.AddRange(new object[] { "HR Staff", "HR Manager" });
@@ -212,8 +217,12 @@
             // 
             tabMaintenance.AccessibleDescription = "";
             tabMaintenance.AccessibleName = "";
-            tabMaintenance.Controls.Add(btnAddRecord);
-            tabMaintenance.Controls.Add(txtNewValue);
+            tabMaintenance.Controls.Add(btnDeleteRecord);
+            tabMaintenance.Controls.Add(btnSaveRecord);
+            tabMaintenance.Controls.Add(txtRecordDesc);
+            tabMaintenance.Controls.Add(label7);
+            tabMaintenance.Controls.Add(txtRecordName);
+            tabMaintenance.Controls.Add(label6);
             tabMaintenance.Controls.Add(dgvMaintenanceValues);
             tabMaintenance.Controls.Add(cmbMaintenanceCategory);
             tabMaintenance.Location = new Point(4, 29);
@@ -224,36 +233,81 @@
             tabMaintenance.Text = "System Maintenance";
             tabMaintenance.UseVisualStyleBackColor = true;
             // 
-            // btnAddRecord
+            // btnDeleteRecord
             // 
-            btnAddRecord.Location = new Point(630, 376);
-            btnAddRecord.Name = "btnAddRecord";
-            btnAddRecord.Size = new Size(141, 27);
-            btnAddRecord.TabIndex = 3;
-            btnAddRecord.Text = "Add New Record";
-            btnAddRecord.UseVisualStyleBackColor = true;
-            btnAddRecord.Click += btnAddRecord_Click;
+            btnDeleteRecord.Location = new Point(703, 359);
+            btnDeleteRecord.Name = "btnDeleteRecord";
+            btnDeleteRecord.Size = new Size(83, 50);
+            btnDeleteRecord.TabIndex = 7;
+            btnDeleteRecord.Text = "Delete Selected";
+            btnDeleteRecord.UseVisualStyleBackColor = true;
+            btnDeleteRecord.Click += btnDeleteRecord_Click;
             // 
-            // txtNewValue
+            // btnSaveRecord
             // 
-            txtNewValue.Location = new Point(8, 376);
-            txtNewValue.Name = "txtNewValue";
-            txtNewValue.Size = new Size(616, 27);
-            txtNewValue.TabIndex = 2;
+            btnSaveRecord.Location = new Point(595, 359);
+            btnSaveRecord.Name = "btnSaveRecord";
+            btnSaveRecord.Size = new Size(102, 50);
+            btnSaveRecord.TabIndex = 6;
+            btnSaveRecord.Text = "Save Record";
+            btnSaveRecord.UseVisualStyleBackColor = true;
+            btnSaveRecord.Click += btnSaveRecord_Click;
+            // 
+            // txtRecordDesc
+            // 
+            txtRecordDesc.Location = new Point(198, 385);
+            txtRecordDesc.Multiline = true;
+            txtRecordDesc.Name = "txtRecordDesc";
+            txtRecordDesc.Size = new Size(391, 24);
+            txtRecordDesc.TabIndex = 5;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(198, 359);
+            label7.Name = "label7";
+            label7.Size = new Size(85, 20);
+            label7.TabIndex = 4;
+            label7.Text = "Description";
+            // 
+            // txtRecordName
+            // 
+            txtRecordName.Location = new Point(22, 382);
+            txtRecordName.Name = "txtRecordName";
+            txtRecordName.Size = new Size(170, 27);
+            txtRecordName.TabIndex = 3;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(22, 359);
+            label6.Name = "label6";
+            label6.Size = new Size(49, 20);
+            label6.TabIndex = 2;
+            label6.Text = "Name";
             // 
             // dgvMaintenanceValues
             // 
+            dgvMaintenanceValues.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dgvMaintenanceValues.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = SystemColors.Window;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle1.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dgvMaintenanceValues.DefaultCellStyle = dataGridViewCellStyle1;
             dgvMaintenanceValues.Location = new Point(8, 44);
             dgvMaintenanceValues.Name = "dgvMaintenanceValues";
             dgvMaintenanceValues.RowHeadersWidth = 51;
-            dgvMaintenanceValues.Size = new Size(776, 326);
+            dgvMaintenanceValues.Size = new Size(776, 309);
             dgvMaintenanceValues.TabIndex = 1;
             // 
             // cmbMaintenanceCategory
             // 
             cmbMaintenanceCategory.FormattingEnabled = true;
-            cmbMaintenanceCategory.Items.AddRange(new object[] { "Departments", "Requirement Types" });
+            cmbMaintenanceCategory.Items.AddRange(new object[] { "Departments", "Requirement Types", "Employment Types", "Positions", "Interview Types", "Assessment Types" });
             cmbMaintenanceCategory.Location = new Point(3, 2);
             cmbMaintenanceCategory.Name = "cmbMaintenanceCategory";
             cmbMaintenanceCategory.Size = new Size(280, 28);
@@ -301,8 +355,12 @@
         private Button btnSaveUser;
         private ComboBox cmbNewRole;
         private ComboBox cmbMaintenanceCategory;
-        private Button btnAddRecord;
-        private TextBox txtNewValue;
         private DataGridView dgvMaintenanceValues;
+        private TextBox txtRecordDesc;
+        private Label label7;
+        private TextBox txtRecordName;
+        private Label label6;
+        private Button btnDeleteRecord;
+        private Button btnSaveRecord;
     }
 }
