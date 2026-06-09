@@ -43,7 +43,45 @@ namespace HRApplicantWindowSystem
 
         private void btnDocuments_Click(object sender, EventArgs e)
         {
+            int applicantId = 1; 
 
+            int activeApplicationId = 0;
+            string connString = "Server=localhost;Database=db_hrapplicantwindowsystem;User ID=root;Password=Webarebears10;";
+
+            string query = "SELECT application_id FROM Applications WHERE applicant_id = @ApplicantID ORDER BY applied_date DESC LIMIT 1;";
+
+            using (MySqlConnection conn = new MySqlConnection(connString))
+            {
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@ApplicantID", applicantId);
+                    try
+                    {
+                        conn.Open();
+                        object result = cmd.ExecuteScalar();
+                        if (result != null && result != DBNull.Value)
+                        {
+                            activeApplicationId = Convert.ToInt32(result);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error retrieving application track: " + ex.Message, "System Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+            }
+
+            if (activeApplicationId > 0)
+            {
+                ApplicantDocumentsForm docsForm = new ApplicantDocumentsForm();
+                docsForm.CurrentApplicationID = activeApplicationId; 
+                docsForm.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("No active job application found for this account. Please submit an application before uploading documents.", "Application Required", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void btnStatusTracking_Click(object sender, EventArgs e)
