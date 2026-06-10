@@ -37,3 +37,10 @@ C:\Users\Cheliza Rose\source\repos\HRApplicantProcessWindowsApplication_Capstone
 C:\Users\Cheliza Rose\source\repos\HRApplicantProcessWindowsApplication_CapstoneProject\obj\Debug\net10.0-windows\HRApplicantWindowSystem.ApplicantProfileForm.resources
 C:\Users\Cheliza Rose\source\repos\HRApplicantProcessWindowsApplication_CapstoneProject\obj\Debug\net10.0-windows\HRApplicantWindowSystem.Properties.Resources.resources
 C:\Users\Cheliza Rose\source\repos\HRApplicantProcessWindowsApplication_CapstoneProject\obj\Debug\net10.0-windows\HRApplicantWindowSystem.MyApplicationForm.resources
+C:\Users\Cheliza Rose\source\repos\HRApplicantProcessWindowsApplication_CapstoneProject\obj\Debug\net10.0-windows\HRApplicantWindowSystem.ApplicantDocumentsForm.resources
+C:\Users\Cheliza Rose\source\repos\HRApplicantProcessWindowsApplication_CapstoneProject\obj\Debug\net10.0-windows\HRApplicantWindowSystem.ApplicantStatusForm.resources
+C:\Users\Cheliza Rose\source\repos\HRApplicantProcessWindowsApplication_CapstoneProject\obj\Debug\net10.0-windows\HRApplicantWindowSystem.Applicant.JobVacanciesForm.resources
+C:\Users\Cheliza Rose\source\repos\HRApplicantProcessWindowsApplication_CapstoneProject\obj\Debug\net10.0-windows\HRApplicantWindowSystem.AddVacancyForm.resources
+C:\Users\Cheliza Rose\source\repos\HRApplicantProcessWindowsApplication_CapstoneProject\obj\Debug\net10.0-windows\HRApplicantWindowSystem.ApplicantProcess.resources
+C:\Users\Cheliza Rose\source\repos\HRApplicantProcessWindowsApplication_CapstoneProject\obj\Debug\net10.0-windows\HRApplicantWindowSystem.Interviews.resources
+C:\Users\Cheliza Rose\source\repos\HRApplicantProcessWindowsApplication_CapstoneProject\obj\Debug\net10.0-windows\HRApplicantWindowSystem.JobOpenings.resources

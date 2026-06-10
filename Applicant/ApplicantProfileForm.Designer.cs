@@ -260,6 +260,7 @@
             richTextBox3.Size = new Size(206, 376);
             richTextBox3.TabIndex = 12;
             richTextBox3.Text = "";
+            richTextBox3.TextChanged += richTextBox3_TextChanged;
             // 
             // button2
             // 
@@ -309,7 +310,6 @@
             label11.Size = new Size(43, 17);
             label11.TabIndex = 12;
             label11.Text = "Email";
-            label11.Click += label11_Click;
             // 
             // label12
             // 
