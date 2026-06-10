@@ -30,32 +30,49 @@
         {
             label1 = new Label();
             panel1 = new Panel();
-            btnLogout = new Button();
-            btnDashboard = new Button();
-            lblWelcome = new Label();
-            button1 = new Button();
+            btnScreening = new Button();
+            btnInterviewScheduling = new Button();
             button2 = new Button();
-            button3 = new Button();
+            btnBack = new Button();
+            lblWelcome = new Label();
             label3 = new Label();
             label2 = new Label();
             label4 = new Label();
-            EntDescription = new TextBox();
+            txtRemarks = new TextBox();
             label5 = new Label();
             label6 = new Label();
             label7 = new Label();
-            btnAddVacancy = new Button();
-            button4 = new Button();
-            EntJobtitle = new TextBox();
-            textBox1 = new TextBox();
-            textBox2 = new TextBox();
+            btnQualified = new Button();
+            btnNotQualified = new Button();
+            txtAppID = new TextBox();
+            txtAppName = new TextBox();
+            txtAppPos = new TextBox();
+            dgvPendingApplicants = new DataGridView();
+            dgvDocs = new DataGridView();
+            label8 = new Label();
+            pnlScreening = new Panel();
+            pnlScheduling = new Panel();
+            btnSaveSchedule = new Button();
+            txtLocation = new TextBox();
+            cmbInterviewType = new ComboBox();
+            cmbInterviewer = new ComboBox();
+            dtpSchedTime = new DateTimePicker();
+            dtpSchedDate = new DateTimePicker();
+            txtSchedName = new TextBox();
+            dgvShortlisted = new DataGridView();
+            label9 = new Label();
             panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvPendingApplicants).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvDocs).BeginInit();
+            pnlScheduling.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvShortlisted).BeginInit();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(483, 31);
+            label1.Location = new Point(185, 31);
             label1.Name = "label1";
             label1.Size = new Size(212, 28);
             label1.TabIndex = 3;
@@ -64,78 +81,69 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.ControlDarkDark;
-            panel1.Controls.Add(button3);
+            panel1.Controls.Add(btnScreening);
+            panel1.Controls.Add(btnInterviewScheduling);
             panel1.Controls.Add(button2);
-            panel1.Controls.Add(button1);
-            panel1.Controls.Add(btnLogout);
-            panel1.Controls.Add(btnDashboard);
+            panel1.Controls.Add(btnBack);
             panel1.Controls.Add(lblWelcome);
-            panel1.Dock = DockStyle.Left;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(305, 649);
+            panel1.Size = new Size(138, 649);
             panel1.TabIndex = 4;
             // 
-            // btnLogout
+            // btnScreening
             // 
-            btnLogout.Location = new Point(28, 442);
-            btnLogout.Name = "btnLogout";
-            btnLogout.Size = new Size(228, 62);
-            btnLogout.TabIndex = 6;
-            btnLogout.Text = "Logout";
-            btnLogout.UseVisualStyleBackColor = true;
+            btnScreening.Location = new Point(12, 221);
+            btnScreening.Name = "btnScreening";
+            btnScreening.Size = new Size(99, 60);
+            btnScreening.TabIndex = 10;
+            btnScreening.Text = "Screening";
+            btnScreening.UseVisualStyleBackColor = true;
+            btnScreening.Click += btnScreening_Click;
             // 
-            // btnDashboard
+            // btnInterviewScheduling
             // 
-            btnDashboard.Location = new Point(28, 65);
-            btnDashboard.Name = "btnDashboard";
-            btnDashboard.Size = new Size(228, 62);
-            btnDashboard.TabIndex = 1;
-            btnDashboard.Text = "Dashboard";
-            btnDashboard.UseVisualStyleBackColor = true;
+            btnInterviewScheduling.Location = new Point(12, 287);
+            btnInterviewScheduling.Name = "btnInterviewScheduling";
+            btnInterviewScheduling.Size = new Size(99, 60);
+            btnInterviewScheduling.TabIndex = 9;
+            btnInterviewScheduling.Text = "Interview Scheduling";
+            btnInterviewScheduling.UseVisualStyleBackColor = true;
+            btnInterviewScheduling.Click += btnInterviewScheduling_Click;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(12, 353);
+            button2.Name = "button2";
+            button2.Size = new Size(99, 60);
+            button2.TabIndex = 8;
+            button2.Text = "Interview Evaluation";
+            button2.UseVisualStyleBackColor = true;
+            // 
+            // btnBack
+            // 
+            btnBack.Location = new Point(30, 585);
+            btnBack.Name = "btnBack";
+            btnBack.Size = new Size(81, 41);
+            btnBack.TabIndex = 6;
+            btnBack.Text = "Back";
+            btnBack.UseVisualStyleBackColor = true;
             // 
             // lblWelcome
             // 
             lblWelcome.AutoSize = true;
             lblWelcome.ForeColor = SystemColors.HighlightText;
-            lblWelcome.Location = new Point(51, 13);
+            lblWelcome.Location = new Point(12, 31);
             lblWelcome.Name = "lblWelcome";
             lblWelcome.Size = new Size(99, 20);
             lblWelcome.TabIndex = 0;
             lblWelcome.Text = "Welcome HR!";
             // 
-            // button1
-            // 
-            button1.Location = new Point(28, 144);
-            button1.Name = "button1";
-            button1.Size = new Size(228, 62);
-            button1.TabIndex = 7;
-            button1.Text = "Screening Module";
-            button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            button2.Location = new Point(28, 222);
-            button2.Name = "button2";
-            button2.Size = new Size(228, 62);
-            button2.TabIndex = 8;
-            button2.Text = "Interview Moduling";
-            button2.UseVisualStyleBackColor = true;
-            // 
-            // button3
-            // 
-            button3.Location = new Point(28, 303);
-            button3.Name = "button3";
-            button3.Size = new Size(228, 62);
-            button3.TabIndex = 9;
-            button3.Text = "Interview Evaluation";
-            button3.UseVisualStyleBackColor = true;
-            // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(324, 99);
+            label3.Location = new Point(144, 74);
             label3.Name = "label3";
             label3.Size = new Size(201, 25);
             label3.TabIndex = 8;
@@ -145,7 +153,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(324, 239);
+            label2.Location = new Point(145, 245);
             label2.Name = "label2";
             label2.Size = new Size(201, 25);
             label2.TabIndex = 9;
@@ -155,27 +163,27 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(324, 357);
+            label4.Location = new Point(154, 433);
             label4.Name = "label4";
             label4.Size = new Size(174, 25);
             label4.TabIndex = 10;
             label4.Text = "Screening Remarks";
             // 
-            // EntDescription
+            // txtRemarks
             // 
-            EntDescription.ForeColor = SystemColors.WindowFrame;
-            EntDescription.Location = new Point(327, 397);
-            EntDescription.Multiline = true;
-            EntDescription.Name = "EntDescription";
-            EntDescription.Size = new Size(515, 118);
-            EntDescription.TabIndex = 12;
-            EntDescription.Text = "Enter Remarks...";
+            txtRemarks.ForeColor = SystemColors.WindowFrame;
+            txtRemarks.Location = new Point(154, 473);
+            txtRemarks.Multiline = true;
+            txtRemarks.Name = "txtRemarks";
+            txtRemarks.Size = new Size(444, 118);
+            txtRemarks.TabIndex = 12;
+            txtRemarks.Text = "Enter Remarks...";
             // 
             // label5
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label5.Location = new Point(327, 133);
+            label5.Location = new Point(144, 119);
             label5.Name = "label5";
             label5.Size = new Size(95, 20);
             label5.TabIndex = 13;
@@ -185,7 +193,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label6.Location = new Point(327, 165);
+            label6.Location = new Point(145, 162);
             label6.Name = "label6";
             label6.Size = new Size(120, 20);
             label6.TabIndex = 14;
@@ -195,85 +203,224 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label7.Location = new Point(327, 197);
+            label7.Location = new Point(145, 204);
             label7.Name = "label7";
             label7.Size = new Size(121, 20);
             label7.TabIndex = 15;
             label7.Text = "Position Applied:";
             // 
-            // btnAddVacancy
+            // btnQualified
             // 
-            btnAddVacancy.BackColor = SystemColors.Highlight;
-            btnAddVacancy.FlatStyle = FlatStyle.Flat;
-            btnAddVacancy.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnAddVacancy.ForeColor = SystemColors.ButtonHighlight;
-            btnAddVacancy.Location = new Point(403, 563);
-            btnAddVacancy.Name = "btnAddVacancy";
-            btnAddVacancy.Size = new Size(148, 29);
-            btnAddVacancy.TabIndex = 16;
-            btnAddVacancy.Text = "Qualified";
-            btnAddVacancy.UseVisualStyleBackColor = false;
+            btnQualified.BackColor = SystemColors.Highlight;
+            btnQualified.FlatStyle = FlatStyle.Flat;
+            btnQualified.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnQualified.ForeColor = SystemColors.ButtonHighlight;
+            btnQualified.Location = new Point(154, 597);
+            btnQualified.Name = "btnQualified";
+            btnQualified.Size = new Size(148, 29);
+            btnQualified.TabIndex = 16;
+            btnQualified.Text = "Qualified";
+            btnQualified.UseVisualStyleBackColor = false;
+            btnQualified.Click += btnQualified_Click;
             // 
-            // button4
+            // btnNotQualified
             // 
-            button4.BackColor = SystemColors.ScrollBar;
-            button4.FlatStyle = FlatStyle.Flat;
-            button4.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button4.ForeColor = SystemColors.Desktop;
-            button4.Location = new Point(594, 563);
-            button4.Name = "button4";
-            button4.Size = new Size(148, 29);
-            button4.TabIndex = 17;
-            button4.Text = "Not Qualified";
-            button4.UseVisualStyleBackColor = false;
+            btnNotQualified.BackColor = SystemColors.ScrollBar;
+            btnNotQualified.FlatStyle = FlatStyle.Flat;
+            btnNotQualified.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnNotQualified.ForeColor = SystemColors.Desktop;
+            btnNotQualified.Location = new Point(339, 597);
+            btnNotQualified.Name = "btnNotQualified";
+            btnNotQualified.Size = new Size(148, 29);
+            btnNotQualified.TabIndex = 17;
+            btnNotQualified.Text = "Not Qualified";
+            btnNotQualified.UseVisualStyleBackColor = false;
+            btnNotQualified.Click += btnNotQualified_Click;
             // 
-            // EntJobtitle
+            // txtAppID
             // 
-            EntJobtitle.ForeColor = SystemColors.WindowFrame;
-            EntJobtitle.Location = new Point(483, 130);
-            EntJobtitle.Name = "EntJobtitle";
-            EntJobtitle.Size = new Size(326, 27);
-            EntJobtitle.TabIndex = 18;
+            txtAppID.ForeColor = SystemColors.WindowFrame;
+            txtAppID.Location = new Point(272, 119);
+            txtAppID.Name = "txtAppID";
+            txtAppID.Size = new Size(326, 27);
+            txtAppID.TabIndex = 18;
             // 
-            // textBox1
+            // txtAppName
             // 
-            textBox1.ForeColor = SystemColors.WindowFrame;
-            textBox1.Location = new Point(483, 162);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(326, 27);
-            textBox1.TabIndex = 19;
+            txtAppName.ForeColor = SystemColors.WindowFrame;
+            txtAppName.Location = new Point(271, 155);
+            txtAppName.Name = "txtAppName";
+            txtAppName.Size = new Size(326, 27);
+            txtAppName.TabIndex = 19;
             // 
-            // textBox2
+            // txtAppPos
             // 
-            textBox2.ForeColor = SystemColors.WindowFrame;
-            textBox2.Location = new Point(483, 194);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(326, 27);
-            textBox2.TabIndex = 20;
+            txtAppPos.ForeColor = SystemColors.WindowFrame;
+            txtAppPos.Location = new Point(272, 197);
+            txtAppPos.Name = "txtAppPos";
+            txtAppPos.Size = new Size(326, 27);
+            txtAppPos.TabIndex = 20;
             // 
-            // Screenings
+            // dgvPendingApplicants
+            // 
+            dgvPendingApplicants.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvPendingApplicants.Location = new Point(603, 31);
+            dgvPendingApplicants.Name = "dgvPendingApplicants";
+            dgvPendingApplicants.RowHeadersWidth = 51;
+            dgvPendingApplicants.Size = new Size(248, 618);
+            dgvPendingApplicants.TabIndex = 7;
+            // 
+            // dgvDocs
+            // 
+            dgvDocs.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvDocs.Location = new Point(144, 273);
+            dgvDocs.Name = "dgvDocs";
+            dgvDocs.RowHeadersWidth = 51;
+            dgvDocs.Size = new Size(453, 140);
+            dgvDocs.TabIndex = 21;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(603, 8);
+            label8.Name = "label8";
+            label8.Size = new Size(136, 20);
+            label8.TabIndex = 22;
+            label8.Text = "Pending Applicants";
+            // 
+            // pnlScreening
+            // 
+            pnlScreening.Location = new Point(145, 0);
+            pnlScreening.Name = "pnlScreening";
+            pnlScreening.Size = new Size(707, 649);
+            pnlScreening.TabIndex = 23;
+            // 
+            // pnlScheduling
+            // 
+            pnlScheduling.BackColor = SystemColors.AppWorkspace;
+            pnlScheduling.Controls.Add(btnSaveSchedule);
+            pnlScheduling.Controls.Add(txtLocation);
+            pnlScheduling.Controls.Add(cmbInterviewType);
+            pnlScheduling.Controls.Add(cmbInterviewer);
+            pnlScheduling.Controls.Add(dtpSchedTime);
+            pnlScheduling.Controls.Add(dtpSchedDate);
+            pnlScheduling.Controls.Add(txtSchedName);
+            pnlScheduling.Controls.Add(dgvShortlisted);
+            pnlScheduling.Controls.Add(label9);
+            pnlScheduling.Location = new Point(142, 0);
+            pnlScheduling.Name = "pnlScheduling";
+            pnlScheduling.Size = new Size(709, 649);
+            pnlScheduling.TabIndex = 0;
+            // 
+            // btnSaveSchedule
+            // 
+            btnSaveSchedule.Location = new Point(173, 499);
+            btnSaveSchedule.Name = "btnSaveSchedule";
+            btnSaveSchedule.Size = new Size(137, 42);
+            btnSaveSchedule.TabIndex = 8;
+            btnSaveSchedule.Text = "Save Schedule";
+            btnSaveSchedule.UseVisualStyleBackColor = true;
+            btnSaveSchedule.Click += btnSaveSchedule_Click;
+            // 
+            // txtLocation
+            // 
+            txtLocation.Location = new Point(94, 444);
+            txtLocation.Name = "txtLocation";
+            txtLocation.Size = new Size(301, 27);
+            txtLocation.TabIndex = 7;
+            // 
+            // cmbInterviewType
+            // 
+            cmbInterviewType.FormattingEnabled = true;
+            cmbInterviewType.Location = new Point(92, 385);
+            cmbInterviewType.Name = "cmbInterviewType";
+            cmbInterviewType.Size = new Size(303, 28);
+            cmbInterviewType.TabIndex = 6;
+            // 
+            // cmbInterviewer
+            // 
+            cmbInterviewer.FormattingEnabled = true;
+            cmbInterviewer.Location = new Point(98, 330);
+            cmbInterviewer.Name = "cmbInterviewer";
+            cmbInterviewer.Size = new Size(297, 28);
+            cmbInterviewer.TabIndex = 5;
+            // 
+            // dtpSchedTime
+            // 
+            dtpSchedTime.Format = DateTimePickerFormat.Time;
+            dtpSchedTime.Location = new Point(92, 273);
+            dtpSchedTime.Name = "dtpSchedTime";
+            dtpSchedTime.ShowUpDown = true;
+            dtpSchedTime.Size = new Size(303, 27);
+            dtpSchedTime.TabIndex = 4;
+            // 
+            // dtpSchedDate
+            // 
+            dtpSchedDate.Location = new Point(92, 215);
+            dtpSchedDate.Name = "dtpSchedDate";
+            dtpSchedDate.Size = new Size(303, 27);
+            dtpSchedDate.TabIndex = 3;
+            // 
+            // txtSchedName
+            // 
+            txtSchedName.Location = new Point(92, 155);
+            txtSchedName.Name = "txtSchedName";
+            txtSchedName.Size = new Size(303, 27);
+            txtSchedName.TabIndex = 2;
+            // 
+            // dgvShortlisted
+            // 
+            dgvShortlisted.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvShortlisted.Location = new Point(491, 31);
+            dgvShortlisted.Name = "dgvShortlisted";
+            dgvShortlisted.RowHeadersWidth = 51;
+            dgvShortlisted.Size = new Size(219, 618);
+            dgvShortlisted.TabIndex = 1;
+            dgvShortlisted.CellContentClick += dgvShortlisted_CellClick;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(26, 11);
+            label9.Name = "label9";
+            label9.Size = new Size(146, 20);
+            label9.TabIndex = 0;
+            label9.Text = "Interview Scheduling";
+            // 
+            // Interviews
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(854, 649);
-            Controls.Add(textBox2);
-            Controls.Add(textBox1);
-            Controls.Add(EntJobtitle);
-            Controls.Add(button4);
-            Controls.Add(btnAddVacancy);
-            Controls.Add(label7);
-            Controls.Add(label6);
+            Controls.Add(pnlScheduling);
+            Controls.Add(panel1);
+            Controls.Add(dgvPendingApplicants);
+            Controls.Add(label8);
+            Controls.Add(label1);
+            Controls.Add(label3);
             Controls.Add(label5);
-            Controls.Add(EntDescription);
+            Controls.Add(txtAppID);
+            Controls.Add(txtAppName);
+            Controls.Add(txtAppPos);
+            Controls.Add(dgvDocs);
+            Controls.Add(btnNotQualified);
+            Controls.Add(btnQualified);
+            Controls.Add(label7);
+            Controls.Add(txtRemarks);
             Controls.Add(label4);
             Controls.Add(label2);
-            Controls.Add(label3);
-            Controls.Add(panel1);
-            Controls.Add(label1);
-            Name = "Screenings";
-            Text = "Form1";
+            Controls.Add(label6);
+            Controls.Add(pnlScreening);
+            Name = "Interviews";
+            Text = "Interviews Module";
+            Load += Interviews_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvPendingApplicants).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvDocs).EndInit();
+            pnlScheduling.ResumeLayout(false);
+            pnlScheduling.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvShortlisted).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -282,23 +429,36 @@
 
         private Label label1;
         private Panel panel1;
-        private Button btnLogout;
-        private Button btnDashboard;
+        private Button btnBack;
         private Label lblWelcome;
-        private Button button3;
-        private Button button2;
-        private Button button1;
         private Label label3;
         private Label label2;
         private Label label4;
-        private TextBox EntDescription;
+        private TextBox txtRemarks;
         private Label label5;
         private Label label6;
         private Label label7;
-        private Button btnAddVacancy;
-        private Button button4;
-        private TextBox EntJobtitle;
-        private TextBox textBox1;
-        private TextBox textBox2;
+        private Button btnQualified;
+        private Button btnNotQualified;
+        private TextBox txtAppID;
+        private TextBox txtAppName;
+        private TextBox txtAppPos;
+        private DataGridView dgvPendingApplicants;
+        private DataGridView dgvDocs;
+        private Button btnInterviewScheduling;
+        private Button button2;
+        private Label label8;
+        private Panel pnlScreening;
+        private Panel pnlScheduling;
+        private DataGridView dgvShortlisted;
+        private Label label9;
+        private ComboBox cmbInterviewType;
+        private ComboBox cmbInterviewer;
+        private DateTimePicker dtpSchedTime;
+        private DateTimePicker dtpSchedDate;
+        private TextBox txtSchedName;
+        private Button btnScreening;
+        private Button btnSaveSchedule;
+        private TextBox txtLocation;
     }
 }
