@@ -44,7 +44,9 @@ namespace HRApplicantWindowSystem
 
         private void btnMyApplication_Click(object sender, EventArgs e)
         {
-
+            MyApplicationForm appForm = new MyApplicationForm(currentAccountId);
+            appForm.StartPosition = FormStartPosition.CenterScreen;
+            appForm.ShowDialog();
         }
 
         private void btnDocuments_Click(object sender, EventArgs e)
