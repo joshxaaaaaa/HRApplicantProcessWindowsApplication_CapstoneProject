@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
+            btnHiringDecision = new Button();
             btnAdminPanel = new Button();
             btnLogout = new Button();
             btnReports = new Button();
@@ -78,6 +79,7 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.ControlDarkDark;
+            panel1.Controls.Add(btnHiringDecision);
             panel1.Controls.Add(btnAdminPanel);
             panel1.Controls.Add(btnLogout);
             panel1.Controls.Add(btnReports);
@@ -91,9 +93,19 @@
             panel1.Size = new Size(305, 638);
             panel1.TabIndex = 0;
             // 
+            // btnHiringDecision
+            // 
+            btnHiringDecision.Location = new Point(28, 292);
+            btnHiringDecision.Name = "btnHiringDecision";
+            btnHiringDecision.Size = new Size(228, 62);
+            btnHiringDecision.TabIndex = 8;
+            btnHiringDecision.Text = "Hiring Decision";
+            btnHiringDecision.UseVisualStyleBackColor = true;
+            btnHiringDecision.Click += btnHiringDecision_Click;
+            // 
             // btnAdminPanel
             // 
-            btnAdminPanel.Location = new Point(28, 477);
+            btnAdminPanel.Location = new Point(28, 496);
             btnAdminPanel.Name = "btnAdminPanel";
             btnAdminPanel.Size = new Size(228, 62);
             btnAdminPanel.TabIndex = 7;
@@ -113,7 +125,7 @@
             // 
             // btnReports
             // 
-            btnReports.Location = new Point(28, 388);
+            btnReports.Location = new Point(28, 428);
             btnReports.Name = "btnReports";
             btnReports.Size = new Size(228, 62);
             btnReports.TabIndex = 5;
@@ -123,7 +135,7 @@
             // 
             // btnInterviews
             // 
-            btnInterviews.Location = new Point(28, 210);
+            btnInterviews.Location = new Point(28, 146);
             btnInterviews.Name = "btnInterviews";
             btnInterviews.Size = new Size(228, 62);
             btnInterviews.TabIndex = 4;
@@ -133,7 +145,7 @@
             // 
             // btnApplicants
             // 
-            btnApplicants.Location = new Point(28, 129);
+            btnApplicants.Location = new Point(28, 77);
             btnApplicants.Name = "btnApplicants";
             btnApplicants.Size = new Size(228, 62);
             btnApplicants.TabIndex = 3;
@@ -143,7 +155,7 @@
             // 
             // btnJobs
             // 
-            btnJobs.Location = new Point(28, 299);
+            btnJobs.Location = new Point(28, 360);
             btnJobs.Name = "btnJobs";
             btnJobs.Size = new Size(228, 62);
             btnJobs.TabIndex = 2;
@@ -153,7 +165,7 @@
             // 
             // btnDashboard
             // 
-            btnDashboard.Location = new Point(28, 46);
+            btnDashboard.Location = new Point(28, 9);
             btnDashboard.Name = "btnDashboard";
             btnDashboard.Size = new Size(228, 62);
             btnDashboard.TabIndex = 1;
@@ -494,5 +506,6 @@
         private Button btnExportReport;
         private ComboBox cmbReportType;
         private Label label6;
+        private Button btnHiringDecision;
     }
 }

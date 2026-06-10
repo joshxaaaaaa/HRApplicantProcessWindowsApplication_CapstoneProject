@@ -74,6 +74,7 @@
             tabPage2 = new TabPage();
             dgvDocuments = new DataGridView();
             label1 = new Label();
+            btnBack = new Button();
             pnlHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pnlHead).BeginInit();
             pnlCardHired.SuspendLayout();
@@ -93,6 +94,7 @@
             // pnlHeader
             // 
             pnlHeader.BackColor = Color.White;
+            pnlHeader.Controls.Add(btnBack);
             pnlHeader.Controls.Add(lblDashboard);
             pnlHeader.Controls.Add(lblHRApplicant);
             pnlHeader.Controls.Add(pnlHead);
@@ -150,7 +152,7 @@
             pnlCardHired.Controls.Add(label8);
             pnlCardHired.Controls.Add(lblHiredCount);
             pnlCardHired.Controls.Add(lblHired);
-            pnlCardHired.Location = new Point(832, 16);
+            pnlCardHired.Location = new Point(795, 16);
             pnlCardHired.Margin = new Padding(2);
             pnlCardHired.Name = "pnlCardHired";
             pnlCardHired.Size = new Size(112, 48);
@@ -194,7 +196,7 @@
             pnlCardInterview.Controls.Add(label7);
             pnlCardInterview.Controls.Add(lblInterviewCount);
             pnlCardInterview.Controls.Add(lblInterviewing);
-            pnlCardInterview.Location = new Point(708, 16);
+            pnlCardInterview.Location = new Point(679, 16);
             pnlCardInterview.Margin = new Padding(2);
             pnlCardInterview.Name = "pnlCardInterview";
             pnlCardInterview.Size = new Size(112, 48);
@@ -238,7 +240,7 @@
             pnlCardShortlist.Controls.Add(label6);
             pnlCardShortlist.Controls.Add(lblShortlistCount);
             pnlCardShortlist.Controls.Add(lblShortlisted);
-            pnlCardShortlist.Location = new Point(584, 16);
+            pnlCardShortlist.Location = new Point(563, 16);
             pnlCardShortlist.Margin = new Padding(2);
             pnlCardShortlist.Name = "pnlCardShortlist";
             pnlCardShortlist.Size = new Size(112, 48);
@@ -282,7 +284,7 @@
             pnlCardPending.Controls.Add(label5);
             pnlCardPending.Controls.Add(lblPendingCount);
             pnlCardPending.Controls.Add(lblPending);
-            pnlCardPending.Location = new Point(460, 16);
+            pnlCardPending.Location = new Point(447, 16);
             pnlCardPending.Margin = new Padding(2);
             pnlCardPending.Name = "pnlCardPending";
             pnlCardPending.Size = new Size(112, 48);
@@ -326,7 +328,7 @@
             pnlCardTotal.Controls.Add(label4);
             pnlCardTotal.Controls.Add(lblTotalCount);
             pnlCardTotal.Controls.Add(lblTotalApps);
-            pnlCardTotal.Location = new Point(336, 16);
+            pnlCardTotal.Location = new Point(331, 16);
             pnlCardTotal.Margin = new Padding(2);
             pnlCardTotal.Name = "pnlCardTotal";
             pnlCardTotal.Size = new Size(112, 48);
@@ -610,6 +612,16 @@
             label1.TabIndex = 4;
             label1.Text = "Document Information";
             // 
+            // btnBack
+            // 
+            btnBack.Location = new Point(912, 16);
+            btnBack.Name = "btnBack";
+            btnBack.Size = new Size(67, 48);
+            btnBack.TabIndex = 9;
+            btnBack.Text = "Back";
+            btnBack.UseVisualStyleBackColor = true;
+            btnBack.Click += btnBack_Click;
+            // 
             // ApplicantProcess
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -699,5 +711,6 @@
         private Label label6;
         private Label label5;
         private Label label4;
+        private Button btnBack;
     }
 }

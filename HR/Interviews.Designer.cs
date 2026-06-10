@@ -32,7 +32,7 @@
             panel1 = new Panel();
             btnScreening = new Button();
             btnInterviewScheduling = new Button();
-            button2 = new Button();
+            btnInterviewEvaluation = new Button();
             btnBack = new Button();
             lblWelcome = new Label();
             label3 = new Label();
@@ -61,11 +61,22 @@
             txtSchedName = new TextBox();
             dgvShortlisted = new DataGridView();
             label9 = new Label();
+            pnlEvaluation = new Panel();
+            btnSaveEvaluation = new Button();
+            txtEvalRemarks = new TextBox();
+            txtRecommendation = new TextBox();
+            cmbPassFail = new ComboBox();
+            nudScore = new NumericUpDown();
+            txtEvalName = new TextBox();
+            dgvInterviewees = new DataGridView();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvPendingApplicants).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvDocs).BeginInit();
             pnlScheduling.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvShortlisted).BeginInit();
+            pnlEvaluation.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)nudScore).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvInterviewees).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -83,7 +94,7 @@
             panel1.BackColor = SystemColors.ControlDarkDark;
             panel1.Controls.Add(btnScreening);
             panel1.Controls.Add(btnInterviewScheduling);
-            panel1.Controls.Add(button2);
+            panel1.Controls.Add(btnInterviewEvaluation);
             panel1.Controls.Add(btnBack);
             panel1.Controls.Add(lblWelcome);
             panel1.Location = new Point(0, 0);
@@ -111,14 +122,15 @@
             btnInterviewScheduling.UseVisualStyleBackColor = true;
             btnInterviewScheduling.Click += btnInterviewScheduling_Click;
             // 
-            // button2
+            // btnInterviewEvaluation
             // 
-            button2.Location = new Point(12, 353);
-            button2.Name = "button2";
-            button2.Size = new Size(99, 60);
-            button2.TabIndex = 8;
-            button2.Text = "Interview Evaluation";
-            button2.UseVisualStyleBackColor = true;
+            btnInterviewEvaluation.Location = new Point(12, 353);
+            btnInterviewEvaluation.Name = "btnInterviewEvaluation";
+            btnInterviewEvaluation.Size = new Size(99, 60);
+            btnInterviewEvaluation.TabIndex = 8;
+            btnInterviewEvaluation.Text = "Interview Evaluation";
+            btnInterviewEvaluation.UseVisualStyleBackColor = true;
+            btnInterviewEvaluation.Click += btnInterviewEvaluation_Click;
             // 
             // btnBack
             // 
@@ -128,6 +140,7 @@
             btnBack.TabIndex = 6;
             btnBack.Text = "Back";
             btnBack.UseVisualStyleBackColor = true;
+            btnBack.Click += btnBack_Click;
             // 
             // lblWelcome
             // 
@@ -314,7 +327,7 @@
             // 
             // btnSaveSchedule
             // 
-            btnSaveSchedule.Location = new Point(173, 499);
+            btnSaveSchedule.Location = new Point(103, 487);
             btnSaveSchedule.Name = "btnSaveSchedule";
             btnSaveSchedule.Size = new Size(137, 42);
             btnSaveSchedule.TabIndex = 8;
@@ -324,15 +337,15 @@
             // 
             // txtLocation
             // 
-            txtLocation.Location = new Point(94, 444);
+            txtLocation.Location = new Point(26, 403);
             txtLocation.Name = "txtLocation";
-            txtLocation.Size = new Size(301, 27);
+            txtLocation.Size = new Size(303, 27);
             txtLocation.TabIndex = 7;
             // 
             // cmbInterviewType
             // 
             cmbInterviewType.FormattingEnabled = true;
-            cmbInterviewType.Location = new Point(92, 385);
+            cmbInterviewType.Location = new Point(26, 353);
             cmbInterviewType.Name = "cmbInterviewType";
             cmbInterviewType.Size = new Size(303, 28);
             cmbInterviewType.TabIndex = 6;
@@ -340,15 +353,15 @@
             // cmbInterviewer
             // 
             cmbInterviewer.FormattingEnabled = true;
-            cmbInterviewer.Location = new Point(98, 330);
+            cmbInterviewer.Location = new Point(26, 304);
             cmbInterviewer.Name = "cmbInterviewer";
-            cmbInterviewer.Size = new Size(297, 28);
+            cmbInterviewer.Size = new Size(303, 28);
             cmbInterviewer.TabIndex = 5;
             // 
             // dtpSchedTime
             // 
             dtpSchedTime.Format = DateTimePickerFormat.Time;
-            dtpSchedTime.Location = new Point(92, 273);
+            dtpSchedTime.Location = new Point(26, 254);
             dtpSchedTime.Name = "dtpSchedTime";
             dtpSchedTime.ShowUpDown = true;
             dtpSchedTime.Size = new Size(303, 27);
@@ -356,25 +369,26 @@
             // 
             // dtpSchedDate
             // 
-            dtpSchedDate.Location = new Point(92, 215);
+            dtpSchedDate.Location = new Point(26, 204);
             dtpSchedDate.Name = "dtpSchedDate";
             dtpSchedDate.Size = new Size(303, 27);
             dtpSchedDate.TabIndex = 3;
             // 
             // txtSchedName
             // 
-            txtSchedName.Location = new Point(92, 155);
+            txtSchedName.Location = new Point(26, 159);
             txtSchedName.Name = "txtSchedName";
+            txtSchedName.ReadOnly = true;
             txtSchedName.Size = new Size(303, 27);
             txtSchedName.TabIndex = 2;
             // 
             // dgvShortlisted
             // 
             dgvShortlisted.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvShortlisted.Location = new Point(491, 31);
+            dgvShortlisted.Location = new Point(363, 31);
             dgvShortlisted.Name = "dgvShortlisted";
             dgvShortlisted.RowHeadersWidth = 51;
-            dgvShortlisted.Size = new Size(219, 618);
+            dgvShortlisted.Size = new Size(347, 618);
             dgvShortlisted.TabIndex = 1;
             dgvShortlisted.CellContentClick += dgvShortlisted_CellClick;
             // 
@@ -387,13 +401,88 @@
             label9.TabIndex = 0;
             label9.Text = "Interview Scheduling";
             // 
+            // pnlEvaluation
+            // 
+            pnlEvaluation.BackColor = SystemColors.ActiveCaption;
+            pnlEvaluation.Controls.Add(btnSaveEvaluation);
+            pnlEvaluation.Controls.Add(txtEvalRemarks);
+            pnlEvaluation.Controls.Add(txtRecommendation);
+            pnlEvaluation.Controls.Add(cmbPassFail);
+            pnlEvaluation.Controls.Add(nudScore);
+            pnlEvaluation.Controls.Add(txtEvalName);
+            pnlEvaluation.Controls.Add(dgvInterviewees);
+            pnlEvaluation.Location = new Point(142, 0);
+            pnlEvaluation.Name = "pnlEvaluation";
+            pnlEvaluation.Size = new Size(709, 649);
+            pnlEvaluation.TabIndex = 9;
+            // 
+            // btnSaveEvaluation
+            // 
+            btnSaveEvaluation.Location = new Point(420, 566);
+            btnSaveEvaluation.Name = "btnSaveEvaluation";
+            btnSaveEvaluation.Size = new Size(181, 60);
+            btnSaveEvaluation.TabIndex = 6;
+            btnSaveEvaluation.Text = "Submit Evaluation";
+            btnSaveEvaluation.UseVisualStyleBackColor = true;
+            btnSaveEvaluation.Click += btnSaveEvaluation_Click;
+            // 
+            // txtEvalRemarks
+            // 
+            txtEvalRemarks.Location = new Point(349, 444);
+            txtEvalRemarks.Multiline = true;
+            txtEvalRemarks.Name = "txtEvalRemarks";
+            txtEvalRemarks.Size = new Size(330, 96);
+            txtEvalRemarks.TabIndex = 5;
+            // 
+            // txtRecommendation
+            // 
+            txtRecommendation.Location = new Point(361, 385);
+            txtRecommendation.Name = "txtRecommendation";
+            txtRecommendation.Size = new Size(293, 27);
+            txtRecommendation.TabIndex = 4;
+            // 
+            // cmbPassFail
+            // 
+            cmbPassFail.FormattingEnabled = true;
+            cmbPassFail.Items.AddRange(new object[] { "Pass", "Fail" });
+            cmbPassFail.Location = new Point(333, 306);
+            cmbPassFail.Name = "cmbPassFail";
+            cmbPassFail.Size = new Size(346, 28);
+            cmbPassFail.TabIndex = 3;
+            // 
+            // nudScore
+            // 
+            nudScore.Location = new Point(363, 239);
+            nudScore.Name = "nudScore";
+            nudScore.Size = new Size(291, 27);
+            nudScore.TabIndex = 2;
+            // 
+            // txtEvalName
+            // 
+            txtEvalName.Location = new Point(376, 164);
+            txtEvalName.Name = "txtEvalName";
+            txtEvalName.ReadOnly = true;
+            txtEvalName.Size = new Size(278, 27);
+            txtEvalName.TabIndex = 1;
+            // 
+            // dgvInterviewees
+            // 
+            dgvInterviewees.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvInterviewees.Location = new Point(0, 0);
+            dgvInterviewees.Name = "dgvInterviewees";
+            dgvInterviewees.RowHeadersWidth = 51;
+            dgvInterviewees.Size = new Size(264, 649);
+            dgvInterviewees.TabIndex = 0;
+            dgvInterviewees.CellContentClick += dgvInterviewees_CellContentClick;
+            // 
             // Interviews
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(854, 649);
-            Controls.Add(pnlScheduling);
             Controls.Add(panel1);
+            Controls.Add(pnlEvaluation);
+            Controls.Add(pnlScheduling);
             Controls.Add(dgvPendingApplicants);
             Controls.Add(label8);
             Controls.Add(label1);
@@ -421,6 +510,10 @@
             pnlScheduling.ResumeLayout(false);
             pnlScheduling.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvShortlisted).EndInit();
+            pnlEvaluation.ResumeLayout(false);
+            pnlEvaluation.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)nudScore).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvInterviewees).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -446,7 +539,7 @@
         private DataGridView dgvPendingApplicants;
         private DataGridView dgvDocs;
         private Button btnInterviewScheduling;
-        private Button button2;
+        private Button btnInterviewEvaluation;
         private Label label8;
         private Panel pnlScreening;
         private Panel pnlScheduling;
@@ -460,5 +553,13 @@
         private Button btnScreening;
         private Button btnSaveSchedule;
         private TextBox txtLocation;
+        private Panel pnlEvaluation;
+        private TextBox txtEvalName;
+        private DataGridView dgvInterviewees;
+        private Button btnSaveEvaluation;
+        private TextBox txtEvalRemarks;
+        private TextBox txtRecommendation;
+        private ComboBox cmbPassFail;
+        private NumericUpDown nudScore;
     }
 }

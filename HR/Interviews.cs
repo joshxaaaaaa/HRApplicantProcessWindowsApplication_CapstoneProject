@@ -19,6 +19,11 @@ namespace HRApplicantWindowSystem
 
         private void Interviews_Load(object sender, EventArgs e)
         {
+
+            pnlScreening.Visible = true;
+            pnlScheduling.Visible = false;
+            pnlEvaluation.Visible = false;
+
             LoadPendingApplicants();
 
         }
@@ -58,7 +63,7 @@ namespace HRApplicantWindowSystem
             {
                 DataGridViewRow row = dgvPendingApplicants.Rows[e.RowIndex];
 
- 
+
                 txtAppID.Text = row.Cells["ID"].Value.ToString();
                 txtAppName.Text = row.Cells["Name"].Value.ToString();
                 txtAppPos.Text = row.Cells["Position"].Value.ToString();
@@ -150,6 +155,7 @@ namespace HRApplicantWindowSystem
         {
             pnlScheduling.Visible = false;
             pnlScreening.Visible = true;
+            pnlEvaluation.Visible = false;
 
             LoadPendingApplicants();
         }
@@ -158,10 +164,11 @@ namespace HRApplicantWindowSystem
         {
             pnlScreening.Visible = false;
             pnlScheduling.Visible = true;
+            pnlEvaluation.Visible = false;
 
             LoadSchedulingData();
         }
-      
+
         private int schedSelectedApplicationId = -1;
 
         private void LoadSchedulingData()
@@ -172,7 +179,7 @@ namespace HRApplicantWindowSystem
                 {
                     conn.Open();
 
-          
+
                     string sqlApps = @"SELECT ap.application_id AS 'App ID', CONCAT(a.first_name, ' ', a.last_name) AS 'Name', j.job_title AS 'Position'
                                FROM applicants a 
                                INNER JOIN applications ap ON a.applicant_id = ap.applicant_id 
@@ -183,8 +190,8 @@ namespace HRApplicantWindowSystem
                     adapter.Fill(dtApps);
                     dgvShortlisted.DataSource = dtApps;
 
-         
-                    string sqlUsers = "SELECT user_id, username FROM users WHERE role IN ('HR Manager', 'Admin')";
+
+                    string sqlUsers = "SELECT user_id, username FROM users WHERE role_id IN (1, 2)";
                     MySqlDataAdapter userAdapter = new MySqlDataAdapter(sqlUsers, conn);
                     DataTable dtUsers = new DataTable();
                     userAdapter.Fill(dtUsers);
@@ -192,7 +199,7 @@ namespace HRApplicantWindowSystem
                     cmbInterviewer.DisplayMember = "username";
                     cmbInterviewer.ValueMember = "user_id";
 
-            
+
                     string sqlTypes = "SELECT interview_type_id, interview_name FROM interview_types";
                     MySqlDataAdapter typeAdapter = new MySqlDataAdapter(sqlTypes, conn);
                     DataTable dtTypes = new DataTable();
@@ -269,6 +276,116 @@ namespace HRApplicantWindowSystem
                     MessageBox.Show("Error saving schedule: " + ex.Message);
                 }
             }
+        }
+
+        private void btnInterviewEvaluation_Click(object sender, EventArgs e)
+        {
+
+            pnlScreening.Visible = false;
+            pnlScheduling.Visible = false;
+            pnlEvaluation.Visible = true;
+
+            LoadEvaluationData();
+        }
+        private int evalSelectedApplicationId = -1;
+
+        private void LoadEvaluationData()
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+
+                    string sql = @"SELECT ap.application_id AS 'App ID', CONCAT(a.first_name, ' ', a.last_name) AS 'Name', j.job_title AS 'Position'
+                           FROM applicants a 
+                           INNER JOIN applications ap ON a.applicant_id = ap.applicant_id 
+                           INNER JOIN jobvacancies j ON ap.vacancy_id = j.vacancy_id
+                           WHERE ap.status = 'Interviewing'";
+
+                    MySqlDataAdapter adapter = new MySqlDataAdapter(sql, conn);
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+                    dgvInterviewees.DataSource = dt;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error loading evaluation data: " + ex.Message);
+                }
+            }
+        }
+
+        private void dgvInterviewees_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dgvInterviewees.Rows[e.RowIndex];
+                evalSelectedApplicationId = Convert.ToInt32(row.Cells["App ID"].Value);
+                txtEvalName.Text = row.Cells["Name"].Value.ToString();
+
+                nudScore.Value = 0;
+                cmbPassFail.SelectedIndex = -1;
+                txtRecommendation.Clear();
+                txtEvalRemarks.Clear();
+            }
+        }
+
+        private void btnSaveEvaluation_Click(object sender, EventArgs e)
+        {
+            if (evalSelectedApplicationId == -1 || cmbPassFail.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select an applicant and choose Pass/Fail.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+
+                    string sqlInsert = @"INSERT INTO interviewevaluations 
+                                 (application_id, score, pass_fail, recommendation, remarks) 
+                                 VALUES (@appId, @score, @passFail, @recommendation, @remarks)";
+
+                    using (MySqlCommand cmd = new MySqlCommand(sqlInsert, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@appId", evalSelectedApplicationId);
+                        cmd.Parameters.AddWithValue("@score", nudScore.Value);
+                        cmd.Parameters.AddWithValue("@passFail", cmbPassFail.SelectedItem.ToString());
+                        cmd.Parameters.AddWithValue("@recommendation", txtRecommendation.Text.Trim());
+                        cmd.Parameters.AddWithValue("@remarks", txtEvalRemarks.Text.Trim());
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    string newStatus = cmbPassFail.SelectedItem.ToString() == "Pass" ? "Hired" : "Rejected";
+                    string sqlUpdate = "UPDATE applications SET status = @status WHERE application_id = @appId";
+
+                    using (MySqlCommand cmdUpdate = new MySqlCommand(sqlUpdate, conn))
+                    {
+                        cmdUpdate.Parameters.AddWithValue("@status", newStatus);
+                        cmdUpdate.Parameters.AddWithValue("@appId", evalSelectedApplicationId);
+                        cmdUpdate.ExecuteNonQuery();
+                    }
+
+                    MessageBox.Show($"Evaluation saved! Applicant status updated to: {newStatus}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    txtEvalName.Clear();
+                    txtRecommendation.Clear();
+                    txtEvalRemarks.Clear();
+                    evalSelectedApplicationId = -1;
+                    LoadEvaluationData();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error saving evaluation: " + ex.Message);
+                }
+            }
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

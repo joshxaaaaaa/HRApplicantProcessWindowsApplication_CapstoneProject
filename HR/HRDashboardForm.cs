@@ -16,6 +16,8 @@ namespace HRApplicantWindowSystem
         private int currentUserId;
         private string currentUserRole;
 
+
+
         public HRDashboardForm(int userId, string role)
         {
             InitializeComponent();
@@ -154,6 +156,7 @@ namespace HRApplicantWindowSystem
                 btnJobs.Visible = true;
                 btnReports.Visible = true;
                 btnAdminPanel.Visible = true;
+                btnHiringDecision.Visible = true; 
             }
             else
             {
@@ -161,6 +164,7 @@ namespace HRApplicantWindowSystem
                 btnJobs.Visible = false;
                 btnReports.Visible = false;
                 btnAdminPanel.Visible = false;
+                btnHiringDecision.Visible = false; 
             }
 
 
@@ -357,6 +361,12 @@ namespace HRApplicantWindowSystem
         {
             Interviews interviewForm = new Interviews();
             interviewForm.ShowDialog();
+        }
+
+        private void btnHiringDecision_Click(object sender, EventArgs e)
+        {
+            FinalDecisionForm decisionForm = new FinalDecisionForm();
+            decisionForm.ShowDialog();
         }
     }
 }

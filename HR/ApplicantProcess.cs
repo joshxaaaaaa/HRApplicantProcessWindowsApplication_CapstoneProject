@@ -149,7 +149,7 @@ namespace HRApplicantWindowSystem
 
         private void dgvApplicantList_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0) 
+            if (e.RowIndex >= 0)
             {
 
                 selectedApplicantId = Convert.ToInt32(dgvApplicantList.Rows[e.RowIndex].Cells["ID"].Value);
@@ -256,13 +256,18 @@ namespace HRApplicantWindowSystem
                     docAdapter.SelectCommand.Parameters.AddWithValue("@id", applicantId);
                     DataTable docDt = new DataTable();
                     docAdapter.Fill(docDt);
-                    dgvDocuments.DataSource = docDt; 
+                    dgvDocuments.DataSource = docDt;
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("Details Error: " + ex.Message);
                 }
             }
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
