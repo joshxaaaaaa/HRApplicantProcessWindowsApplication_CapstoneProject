@@ -1,4 +1,4 @@
-﻿using HRApplicantWindowSystem.Applicant;
+using HRApplicantWindowSystem.Applicant;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -44,7 +44,9 @@ namespace HRApplicantWindowSystem
 
         private void btnMyApplication_Click(object sender, EventArgs e)
         {
-
+            MyApplicationForm appForm = new MyApplicationForm(currentAccountId);
+            appForm.StartPosition = FormStartPosition.CenterScreen;
+            appForm.ShowDialog();
         }
 
         private void btnDocuments_Click(object sender, EventArgs e)
