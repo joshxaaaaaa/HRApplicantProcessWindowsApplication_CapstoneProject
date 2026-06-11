@@ -1,4 +1,4 @@
-﻿namespace HRApplicantWindowSystem
+namespace HRApplicantWindowSystem
 {
     partial class ApplicantDashboardForm
     {
@@ -28,9 +28,7 @@
             btnProfile = new Button();
             panel1.SuspendLayout();
             SuspendLayout();
-            // 
-            // panel1
-            // 
+
             panel1.BackColor = SystemColors.ControlLight;
             panel1.Controls.Add(btnLogout);
             panel1.Controls.Add(btnStatusTracking);
@@ -43,9 +41,7 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(366, 613);
             panel1.TabIndex = 0;
-            // 
-            // btnLogout
-            // 
+
             btnLogout.Location = new Point(19, 467);
             btnLogout.Margin = new Padding(3, 4, 3, 4);
             btnLogout.Name = "btnLogout";
@@ -54,9 +50,7 @@
             btnLogout.Text = "Log Out";
             btnLogout.UseVisualStyleBackColor = true;
             btnLogout.Click += btnLogout_Click;
-            // 
-            // btnStatusTracking
-            // 
+
             btnStatusTracking.Location = new Point(19, 349);
             btnStatusTracking.Margin = new Padding(3, 4, 3, 4);
             btnStatusTracking.Name = "btnStatusTracking";
@@ -65,9 +59,7 @@
             btnStatusTracking.Text = "Applicant Status Tracking";
             btnStatusTracking.UseVisualStyleBackColor = true;
             btnStatusTracking.Click += btnStatusTracking_Click;
-            // 
-            // btnDocuments
-            // 
+
             btnDocuments.Location = new Point(19, 268);
             btnDocuments.Margin = new Padding(3, 4, 3, 4);
             btnDocuments.Name = "btnDocuments";
@@ -76,9 +68,7 @@
             btnDocuments.Text = "Applicant Documents";
             btnDocuments.UseVisualStyleBackColor = true;
             btnDocuments.Click += btnDocuments_Click;
-            // 
-            // btnMyApplication
-            // 
+
             btnMyApplication.Location = new Point(19, 187);
             btnMyApplication.Margin = new Padding(3, 4, 3, 4);
             btnMyApplication.Name = "btnMyApplication";
@@ -87,9 +77,7 @@
             btnMyApplication.Text = "My Application";
             btnMyApplication.UseVisualStyleBackColor = true;
             btnMyApplication.Click += btnMyApplication_Click;
-            // 
-            // btnJobVacancies
-            // 
+
             btnJobVacancies.Location = new Point(19, 105);
             btnJobVacancies.Margin = new Padding(3, 4, 3, 4);
             btnJobVacancies.Name = "btnJobVacancies";
@@ -98,9 +86,7 @@
             btnJobVacancies.Text = "Job Vacancies";
             btnJobVacancies.UseVisualStyleBackColor = true;
             btnJobVacancies.Click += btnJobVacancies_Click;
-            // 
-            // btnProfile
-            // 
+
             btnProfile.Location = new Point(19, 24);
             btnProfile.Margin = new Padding(3, 4, 3, 4);
             btnProfile.Name = "btnProfile";
@@ -109,9 +95,6 @@
             btnProfile.Text = "Applicant Profile";
             btnProfile.UseVisualStyleBackColor = true;
             btnProfile.Click += btnProfile_Click;
-            // 
-            // ApplicantDashboardForm
-            // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(914, 600);
