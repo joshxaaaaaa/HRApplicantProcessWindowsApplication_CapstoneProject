@@ -1,4 +1,4 @@
-﻿namespace HRApplicantWindowSystem
+namespace HRApplicantWindowSystem
 {
     partial class ApplicantStatusForm
     {
