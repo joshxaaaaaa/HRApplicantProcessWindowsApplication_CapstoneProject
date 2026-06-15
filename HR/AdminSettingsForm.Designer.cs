@@ -54,6 +54,8 @@
             label6 = new Label();
             dgvMaintenanceValues = new DataGridView();
             cmbMaintenanceCategory = new ComboBox();
+            tabAuditTrail = new TabPage();
+            dgvAuditTrail = new DataGridView();
             btnBack = new Button();
             AdminSettings.SuspendLayout();
             tabUserManagement.SuspendLayout();
@@ -61,6 +63,8 @@
             ((System.ComponentModel.ISupportInitialize)dgvUsers).BeginInit();
             tabMaintenance.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvMaintenanceValues).BeginInit();
+            tabAuditTrail.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvAuditTrail).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -76,11 +80,13 @@
             // 
             AdminSettings.Controls.Add(tabUserManagement);
             AdminSettings.Controls.Add(tabMaintenance);
+            AdminSettings.Controls.Add(tabAuditTrail);
             AdminSettings.Location = new Point(0, 0);
             AdminSettings.Name = "AdminSettings";
             AdminSettings.SelectedIndex = 0;
             AdminSettings.Size = new Size(800, 410);
             AdminSettings.TabIndex = 1;
+            AdminSettings.SelectedIndexChanged += AdminSettings_SelectedIndexChanged;
             // 
             // tabUserManagement
             // 
@@ -323,6 +329,25 @@
             cmbMaintenanceCategory.TabIndex = 0;
             cmbMaintenanceCategory.SelectedIndexChanged += cmbMaintenanceCategory_SelectedIndexChanged;
             // 
+            // tabAuditTrail
+            // 
+            tabAuditTrail.Controls.Add(dgvAuditTrail);
+            tabAuditTrail.Location = new Point(4, 29);
+            tabAuditTrail.Name = "tabAuditTrail";
+            tabAuditTrail.Size = new Size(792, 377);
+            tabAuditTrail.TabIndex = 2;
+            tabAuditTrail.Text = "Audit Trail";
+            tabAuditTrail.UseVisualStyleBackColor = true;
+            // 
+            // dgvAuditTrail
+            // 
+            dgvAuditTrail.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvAuditTrail.Location = new Point(36, 45);
+            dgvAuditTrail.Name = "dgvAuditTrail";
+            dgvAuditTrail.RowHeadersWidth = 51;
+            dgvAuditTrail.Size = new Size(701, 311);
+            dgvAuditTrail.TabIndex = 0;
+            // 
             // btnBack
             // 
             btnBack.Location = new Point(679, 416);
@@ -352,6 +377,8 @@
             tabMaintenance.ResumeLayout(false);
             tabMaintenance.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvMaintenanceValues).EndInit();
+            tabAuditTrail.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvAuditTrail).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -384,5 +411,7 @@
         private Button btnSaveRecord;
         private Label label8;
         private Button btnBack;
+        private TabPage tabAuditTrail;
+        private DataGridView dgvAuditTrail;
     }
 }

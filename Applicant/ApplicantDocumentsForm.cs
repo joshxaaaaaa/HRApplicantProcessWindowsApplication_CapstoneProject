@@ -30,6 +30,61 @@ namespace HRApplicantWindowSystem
         public ApplicantDocumentsForm()
         {
             InitializeComponent();
+
+            dgvDocuments.Visible = true;
+        }
+
+
+        private int currentApplicantId = 0;
+        private int activeApplicationId = 0;
+        private int currentVacancyId = 0;
+        private string currentApplicationStatus = string.Empty;
+
+        private void CheckActiveApplication()
+        {
+
+            if (CurrentApplicationID <= 0) return;
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    string sql = "SELECT application_id, applicant_id, vacancy_id, status, is_locked FROM Applications WHERE application_id = @AppId LIMIT 1;";
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@AppId", CurrentApplicationID);
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                activeApplicationId = Convert.ToInt32(reader["application_id"]);
+                                try { currentApplicantId = reader["applicant_id"] != DBNull.Value ? Convert.ToInt32(reader["applicant_id"]) : 0; } catch { currentApplicantId = 0; }
+                                try { currentVacancyId = reader["vacancy_id"] != DBNull.Value ? Convert.ToInt32(reader["vacancy_id"]) : 0; } catch { currentVacancyId = 0; }
+                                currentApplicationStatus = reader["status"] != DBNull.Value ? reader["status"].ToString() : string.Empty;
+                                bool isLocked = reader["is_locked"] != DBNull.Value && Convert.ToInt32(reader["is_locked"]) == 1;
+                                SetLocked(isLocked);
+                            }
+                            else
+                            {
+                                activeApplicationId = 0;
+                                currentApplicantId = 0;
+                                currentVacancyId = 0;
+                                currentApplicationStatus = string.Empty;
+                            }
+                        }
+                    }
+                }
+                catch { }
+            }
+        }
+
+
+        public void SetLocked(bool locked)
+        {
+            try { btnUpload.Enabled = !locked; } catch { }
+            try { btnSave.Enabled = !locked; } catch { }
+            try { lblRemarks.Text = locked ? "Application locked by HR: uploads disabled." : "Select a requirement to upload"; } catch { }
         }
 
         private void ApplicantDocumentsForm_Load(object sender, EventArgs e)
@@ -38,7 +93,27 @@ namespace HRApplicantWindowSystem
             {
                 ResolveFallbackLatestApplication();
             }
+
             RefreshGridFromDatabase();
+
+            try { CheckActiveApplication(); } catch { }
+
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    conn.Open();
+                    string sql = "SELECT is_locked FROM Applications WHERE application_id = @AppId LIMIT 1;";
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@AppId", CurrentApplicationID);
+                        object res = cmd.ExecuteScalar();
+                        bool isLocked = res != null && res != DBNull.Value && Convert.ToInt32(res) == 1;
+                        SetLocked(isLocked);
+                    }
+                }
+            }
+            catch { }
         }
 
         private void ResolveFallbackLatestApplication()
@@ -57,7 +132,7 @@ namespace HRApplicantWindowSystem
                             CurrentApplicationID = Convert.ToInt32(res);
                         }
                     }
-                    catch { /* Fallback fails silently */ }
+                    catch {  }
                 }
             }
         }
@@ -164,6 +239,8 @@ namespace HRApplicantWindowSystem
                                 cmd.ExecuteNonQuery();
                                 MessageBox.Show("Upload successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 RefreshGridFromDatabase();
+
+                                try { CheckActiveApplication(); } catch { }
                             }
                             catch (Exception ex)
                             {
@@ -175,35 +252,101 @@ namespace HRApplicantWindowSystem
             }
         }
 
-        private void btnAddNewType_Click(object sender, EventArgs e)
-        {
-            string newDocName = txtNewDocName.Text.Trim();
-            if (string.IsNullOrEmpty(newDocName)) return;
 
-            string insertQuery = "INSERT INTO RequirementTypes (requirement_name, description) VALUES (@ReqName, 'Custom User Upload Slot');";
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
-            {
-                using (MySqlCommand cmd = new MySqlCommand(insertQuery, conn))
-                {
-                    cmd.Parameters.AddWithValue("@ReqName", newDocName);
-                    try
-                    {
-                        conn.Open();
-                        cmd.ExecuteNonQuery();
-                        txtNewDocName.Clear();
-                        RefreshGridFromDatabase();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Failed to add type: " + ex.Message);
-                    }
-                }
-            }
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            this.Close();
+
+            string oldStatus = string.IsNullOrEmpty(currentApplicationStatus) ? null : currentApplicationStatus;
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+
+                    using (MySqlTransaction transaction = conn.BeginTransaction())
+                    {
+                        try
+                        {
+                            if (activeApplicationId == 0)
+                            {
+
+                                string insertAppQuery = "INSERT INTO Applications (applicant_id, vacancy_id, status) VALUES (@ApplicantID, @VacancyID, 'Submitted');";
+                                using (MySqlCommand cmd = new MySqlCommand(insertAppQuery, conn, transaction))
+                                {
+                                    cmd.Parameters.AddWithValue("@ApplicantID", currentApplicantId);
+                                    cmd.Parameters.AddWithValue("@VacancyID", currentVacancyId == 0 ? (object)DBNull.Value : currentVacancyId);
+
+                                    cmd.ExecuteNonQuery();
+                                    activeApplicationId = (int)cmd.LastInsertedId;
+                                }
+                            }
+                            else
+                            {
+
+                                string updateAppQuery = "UPDATE Applications SET vacancy_id = @VacancyID, status = 'Submitted' WHERE application_id = @ApplicationID;";
+                                using (MySqlCommand cmd = new MySqlCommand(updateAppQuery, conn, transaction))
+                                {
+                                    cmd.Parameters.AddWithValue("@VacancyID", currentVacancyId == 0 ? (object)DBNull.Value : currentVacancyId);
+                                    cmd.Parameters.AddWithValue("@ApplicationID", activeApplicationId);
+                                    cmd.ExecuteNonQuery();
+                                }
+                            }
+
+
+                            string historyQuery = @"
+                                    INSERT INTO ApplicationStatusHistory (application_id, old_status, new_status) 
+                                    VALUES (@AppID, @OldStatus, 'Submitted');";
+
+                            using (MySqlCommand cmdHistory = new MySqlCommand(historyQuery, conn, transaction))
+                            {
+                                cmdHistory.Parameters.AddWithValue("@AppID", activeApplicationId);
+                                cmdHistory.Parameters.AddWithValue("@OldStatus", (object)oldStatus ?? DBNull.Value);
+
+    
+                                cmdHistory.ExecuteNonQuery();
+                            }
+
+                            transaction.Commit();
+                            MessageBox.Show("Your job application details have been successfully saved and dispatched directly to HR recruitment streams!", "Submission Processed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            CheckActiveApplication();
+
+                            try
+                            {
+                                foreach (Form f in Application.OpenForms)
+                                {
+                                    if (f is ApplicantProcess hr)
+                                    {
+                                        hr.RefreshForApplicant(currentApplicantId);
+                                    }
+                                }
+                            }
+                            catch { }
+                        }
+                        catch (Exception transEx)
+                        {
+                            transaction.Rollback();
+                            throw transEx;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Failed saving details: " + ex.Message, "Execution Failure", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
+
+        private void dgvDocuments_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+
     }
 }

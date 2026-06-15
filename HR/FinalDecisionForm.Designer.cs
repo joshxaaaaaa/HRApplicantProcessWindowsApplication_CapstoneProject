@@ -30,51 +30,46 @@
         {
             dgvFinalReview = new DataGridView();
             txtDecisionName = new TextBox();
-            cmbFinalDecision = new ComboBox();
             txtFinalRemarks = new TextBox();
             btnSubmitDecision = new Button();
             btnBack = new Button();
+            label1 = new Label();
+            cmbFinalDecision = new ComboBox();
+            label2 = new Label();
+            label3 = new Label();
             ((System.ComponentModel.ISupportInitialize)dgvFinalReview).BeginInit();
             SuspendLayout();
             // 
             // dgvFinalReview
             // 
             dgvFinalReview.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvFinalReview.Location = new Point(59, 45);
+            dgvFinalReview.Location = new Point(51, 48);
             dgvFinalReview.Name = "dgvFinalReview";
             dgvFinalReview.RowHeadersWidth = 51;
-            dgvFinalReview.Size = new Size(689, 217);
+            dgvFinalReview.Size = new Size(689, 230);
             dgvFinalReview.TabIndex = 0;
-            dgvFinalReview.CellContentClick += dgvFinalReview_CellContentClick;
+            dgvFinalReview.CellClick += dgvFinalReview_CellClick;
+            dgvFinalReview.CellContentClick += dgvFinalReview_CellClick;
             // 
             // txtDecisionName
             // 
-            txtDecisionName.Location = new Point(59, 268);
+            txtDecisionName.Location = new Point(51, 304);
             txtDecisionName.Name = "txtDecisionName";
             txtDecisionName.ReadOnly = true;
-            txtDecisionName.Size = new Size(469, 27);
+            txtDecisionName.Size = new Size(356, 27);
             txtDecisionName.TabIndex = 1;
-            // 
-            // cmbFinalDecision
-            // 
-            cmbFinalDecision.FormattingEnabled = true;
-            cmbFinalDecision.Items.AddRange(new object[] { "Hired", "Rejected" });
-            cmbFinalDecision.Location = new Point(59, 301);
-            cmbFinalDecision.Name = "cmbFinalDecision";
-            cmbFinalDecision.Size = new Size(469, 28);
-            cmbFinalDecision.TabIndex = 2;
             // 
             // txtFinalRemarks
             // 
-            txtFinalRemarks.Location = new Point(59, 335);
+            txtFinalRemarks.Location = new Point(413, 304);
             txtFinalRemarks.Multiline = true;
             txtFinalRemarks.Name = "txtFinalRemarks";
-            txtFinalRemarks.Size = new Size(469, 98);
+            txtFinalRemarks.Size = new Size(234, 129);
             txtFinalRemarks.TabIndex = 3;
             // 
             // btnSubmitDecision
             // 
-            btnSubmitDecision.Location = new Point(534, 384);
+            btnSubmitDecision.Location = new Point(664, 304);
             btnSubmitDecision.Name = "btnSubmitDecision";
             btnSubmitDecision.Size = new Size(124, 49);
             btnSubmitDecision.TabIndex = 4;
@@ -92,11 +87,50 @@
             btnBack.UseVisualStyleBackColor = true;
             btnBack.Click += btnBack_Click;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(46, 281);
+            label1.Name = "label1";
+            label1.Size = new Size(117, 20);
+            label1.TabIndex = 6;
+            label1.Text = "Applicant Name";
+            // 
+            // cmbFinalDecision
+            // 
+            cmbFinalDecision.FormattingEnabled = true;
+            cmbFinalDecision.Items.AddRange(new object[] { "Hired", "Rejected" });
+            cmbFinalDecision.Location = new Point(51, 384);
+            cmbFinalDecision.Name = "cmbFinalDecision";
+            cmbFinalDecision.Size = new Size(356, 28);
+            cmbFinalDecision.TabIndex = 2;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(51, 346);
+            label2.Name = "label2";
+            label2.Size = new Size(101, 20);
+            label2.TabIndex = 8;
+            label2.Text = "Final Decision";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(413, 281);
+            label3.Name = "label3";
+            label3.Size = new Size(100, 20);
+            label3.TabIndex = 9;
+            label3.Text = "Final Remarks";
+            // 
             // FinalDecisionForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(label3);
+            Controls.Add(label2);
+            Controls.Add(label1);
             Controls.Add(btnBack);
             Controls.Add(btnSubmitDecision);
             Controls.Add(txtFinalRemarks);
@@ -115,9 +149,12 @@
 
         private DataGridView dgvFinalReview;
         private TextBox txtDecisionName;
-        private ComboBox cmbFinalDecision;
         private TextBox txtFinalRemarks;
         private Button btnSubmitDecision;
         private Button btnBack;
+        private Label label1;
+        private ComboBox cmbFinalDecision;
+        private Label label2;
+        private Label label3;
     }
 }

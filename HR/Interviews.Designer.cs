@@ -51,7 +51,14 @@
             dgvDocs = new DataGridView();
             label8 = new Label();
             pnlScreening = new Panel();
+            btnViewApplicantProfile = new Button();
             pnlScheduling = new Panel();
+            label15 = new Label();
+            label14 = new Label();
+            label13 = new Label();
+            label12 = new Label();
+            label11 = new Label();
+            label10 = new Label();
             btnSaveSchedule = new Button();
             txtLocation = new TextBox();
             cmbInterviewType = new ComboBox();
@@ -62,6 +69,13 @@
             dgvShortlisted = new DataGridView();
             label9 = new Label();
             pnlEvaluation = new Panel();
+            label21 = new Label();
+            label20 = new Label();
+            label19 = new Label();
+            label18 = new Label();
+            label17 = new Label();
+            label16 = new Label();
+            txtInterviewer = new TextBox();
             btnSaveEvaluation = new Button();
             txtEvalRemarks = new TextBox();
             txtRecommendation = new TextBox();
@@ -72,6 +86,7 @@
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvPendingApplicants).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvDocs).BeginInit();
+            pnlScreening.SuspendLayout();
             pnlScheduling.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvShortlisted).BeginInit();
             pnlEvaluation.SuspendLayout();
@@ -83,7 +98,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(185, 31);
+            label1.Location = new Point(9, 31);
             label1.Name = "label1";
             label1.Size = new Size(212, 28);
             label1.TabIndex = 3;
@@ -156,7 +171,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(144, 74);
+            label3.Location = new Point(9, 70);
             label3.Name = "label3";
             label3.Size = new Size(201, 25);
             label3.TabIndex = 8;
@@ -166,7 +181,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(145, 245);
+            label2.Location = new Point(3, 306);
             label2.Name = "label2";
             label2.Size = new Size(201, 25);
             label2.TabIndex = 9;
@@ -176,7 +191,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(154, 433);
+            label4.Location = new Point(9, 485);
             label4.Name = "label4";
             label4.Size = new Size(174, 25);
             label4.TabIndex = 10;
@@ -185,10 +200,10 @@
             // txtRemarks
             // 
             txtRemarks.ForeColor = SystemColors.WindowFrame;
-            txtRemarks.Location = new Point(154, 473);
+            txtRemarks.Location = new Point(154, 513);
             txtRemarks.Multiline = true;
             txtRemarks.Name = "txtRemarks";
-            txtRemarks.Size = new Size(444, 118);
+            txtRemarks.Size = new Size(444, 78);
             txtRemarks.TabIndex = 12;
             txtRemarks.Text = "Enter Remarks...";
             // 
@@ -196,7 +211,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label5.Location = new Point(144, 119);
+            label5.Location = new Point(9, 228);
             label5.Name = "label5";
             label5.Size = new Size(95, 20);
             label5.TabIndex = 13;
@@ -206,7 +221,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label6.Location = new Point(145, 162);
+            label6.Location = new Point(9, 254);
             label6.Name = "label6";
             label6.Size = new Size(120, 20);
             label6.TabIndex = 14;
@@ -216,7 +231,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label7.Location = new Point(145, 204);
+            label7.Location = new Point(8, 281);
             label7.Name = "label7";
             label7.Size = new Size(121, 20);
             label7.TabIndex = 15;
@@ -253,24 +268,27 @@
             // txtAppID
             // 
             txtAppID.ForeColor = SystemColors.WindowFrame;
-            txtAppID.Location = new Point(272, 119);
+            txtAppID.Location = new Point(130, 221);
             txtAppID.Name = "txtAppID";
+            txtAppID.ReadOnly = true;
             txtAppID.Size = new Size(326, 27);
             txtAppID.TabIndex = 18;
             // 
             // txtAppName
             // 
             txtAppName.ForeColor = SystemColors.WindowFrame;
-            txtAppName.Location = new Point(271, 155);
+            txtAppName.Location = new Point(130, 251);
             txtAppName.Name = "txtAppName";
+            txtAppName.ReadOnly = true;
             txtAppName.Size = new Size(326, 27);
             txtAppName.TabIndex = 19;
             // 
             // txtAppPos
             // 
             txtAppPos.ForeColor = SystemColors.WindowFrame;
-            txtAppPos.Location = new Point(272, 197);
+            txtAppPos.Location = new Point(130, 278);
             txtAppPos.Name = "txtAppPos";
+            txtAppPos.ReadOnly = true;
             txtAppPos.Size = new Size(326, 27);
             txtAppPos.TabIndex = 20;
             // 
@@ -282,15 +300,18 @@
             dgvPendingApplicants.RowHeadersWidth = 51;
             dgvPendingApplicants.Size = new Size(248, 618);
             dgvPendingApplicants.TabIndex = 7;
+            dgvPendingApplicants.CellClick += dgvPendingApplicants_CellClick;
+            dgvPendingApplicants.CellContentClick += dgvPendingApplicants_CellClick;
             // 
             // dgvDocs
             // 
             dgvDocs.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvDocs.Location = new Point(144, 273);
+            dgvDocs.Location = new Point(3, 342);
             dgvDocs.Name = "dgvDocs";
             dgvDocs.RowHeadersWidth = 51;
             dgvDocs.Size = new Size(453, 140);
             dgvDocs.TabIndex = 21;
+            dgvDocs.CellContentDoubleClick += dgvDocs_CellContentDoubleClick;
             // 
             // label8
             // 
@@ -303,14 +324,42 @@
             // 
             // pnlScreening
             // 
+            pnlScreening.Controls.Add(btnViewApplicantProfile);
+            pnlScreening.Controls.Add(label4);
+            pnlScreening.Controls.Add(dgvDocs);
+            pnlScreening.Controls.Add(label2);
+            pnlScreening.Controls.Add(label1);
+            pnlScreening.Controls.Add(label7);
+            pnlScreening.Controls.Add(label3);
+            pnlScreening.Controls.Add(label6);
+            pnlScreening.Controls.Add(txtAppID);
+            pnlScreening.Controls.Add(label5);
+            pnlScreening.Controls.Add(txtAppName);
+            pnlScreening.Controls.Add(txtAppPos);
             pnlScreening.Location = new Point(145, 0);
             pnlScreening.Name = "pnlScreening";
             pnlScreening.Size = new Size(707, 649);
             pnlScreening.TabIndex = 23;
             // 
+            // btnViewApplicantProfile
+            // 
+            btnViewApplicantProfile.Location = new Point(3, 164);
+            btnViewApplicantProfile.Name = "btnViewApplicantProfile";
+            btnViewApplicantProfile.Size = new Size(453, 36);
+            btnViewApplicantProfile.TabIndex = 22;
+            btnViewApplicantProfile.Text = "View Applicant Profile";
+            btnViewApplicantProfile.UseVisualStyleBackColor = true;
+            btnViewApplicantProfile.Click += btnViewApplicantProfile_Click;
+            // 
             // pnlScheduling
             // 
             pnlScheduling.BackColor = SystemColors.AppWorkspace;
+            pnlScheduling.Controls.Add(label15);
+            pnlScheduling.Controls.Add(label14);
+            pnlScheduling.Controls.Add(label13);
+            pnlScheduling.Controls.Add(label12);
+            pnlScheduling.Controls.Add(label11);
+            pnlScheduling.Controls.Add(label10);
             pnlScheduling.Controls.Add(btnSaveSchedule);
             pnlScheduling.Controls.Add(txtLocation);
             pnlScheduling.Controls.Add(cmbInterviewType);
@@ -325,9 +374,63 @@
             pnlScheduling.Size = new Size(709, 649);
             pnlScheduling.TabIndex = 0;
             // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Location = new Point(27, 507);
+            label15.Name = "label15";
+            label15.Size = new Size(130, 20);
+            label15.TabIndex = 14;
+            label15.Text = "Interview Location";
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new Point(26, 430);
+            label14.Name = "label14";
+            label14.Size = new Size(104, 20);
+            label14.TabIndex = 13;
+            label14.Text = "Interview Type";
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Location = new Point(26, 342);
+            label13.Name = "label13";
+            label13.Size = new Size(126, 20);
+            label13.TabIndex = 12;
+            label13.Text = "Interviewer Name";
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(22, 254);
+            label12.Name = "label12";
+            label12.Size = new Size(106, 20);
+            label12.TabIndex = 11;
+            label12.Text = "Interview Time";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(26, 155);
+            label11.Name = "label11";
+            label11.Size = new Size(105, 20);
+            label11.TabIndex = 10;
+            label11.Text = "Interview Date";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(26, 75);
+            label10.Name = "label10";
+            label10.Size = new Size(129, 20);
+            label10.TabIndex = 9;
+            label10.Text = "Interviewee Name";
+            // 
             // btnSaveSchedule
             // 
-            btnSaveSchedule.Location = new Point(103, 487);
+            btnSaveSchedule.Location = new Point(105, 585);
             btnSaveSchedule.Name = "btnSaveSchedule";
             btnSaveSchedule.Size = new Size(137, 42);
             btnSaveSchedule.TabIndex = 8;
@@ -337,7 +440,7 @@
             // 
             // txtLocation
             // 
-            txtLocation.Location = new Point(26, 403);
+            txtLocation.Location = new Point(26, 530);
             txtLocation.Name = "txtLocation";
             txtLocation.Size = new Size(303, 27);
             txtLocation.TabIndex = 7;
@@ -345,7 +448,7 @@
             // cmbInterviewType
             // 
             cmbInterviewType.FormattingEnabled = true;
-            cmbInterviewType.Location = new Point(26, 353);
+            cmbInterviewType.Location = new Point(26, 463);
             cmbInterviewType.Name = "cmbInterviewType";
             cmbInterviewType.Size = new Size(303, 28);
             cmbInterviewType.TabIndex = 6;
@@ -353,7 +456,7 @@
             // cmbInterviewer
             // 
             cmbInterviewer.FormattingEnabled = true;
-            cmbInterviewer.Location = new Point(26, 304);
+            cmbInterviewer.Location = new Point(26, 370);
             cmbInterviewer.Name = "cmbInterviewer";
             cmbInterviewer.Size = new Size(303, 28);
             cmbInterviewer.TabIndex = 5;
@@ -361,7 +464,7 @@
             // dtpSchedTime
             // 
             dtpSchedTime.Format = DateTimePickerFormat.Time;
-            dtpSchedTime.Location = new Point(26, 254);
+            dtpSchedTime.Location = new Point(26, 287);
             dtpSchedTime.Name = "dtpSchedTime";
             dtpSchedTime.ShowUpDown = true;
             dtpSchedTime.Size = new Size(303, 27);
@@ -369,14 +472,14 @@
             // 
             // dtpSchedDate
             // 
-            dtpSchedDate.Location = new Point(26, 204);
+            dtpSchedDate.Location = new Point(26, 188);
             dtpSchedDate.Name = "dtpSchedDate";
             dtpSchedDate.Size = new Size(303, 27);
             dtpSchedDate.TabIndex = 3;
             // 
             // txtSchedName
             // 
-            txtSchedName.Location = new Point(26, 159);
+            txtSchedName.Location = new Point(26, 107);
             txtSchedName.Name = "txtSchedName";
             txtSchedName.ReadOnly = true;
             txtSchedName.Size = new Size(303, 27);
@@ -390,6 +493,7 @@
             dgvShortlisted.RowHeadersWidth = 51;
             dgvShortlisted.Size = new Size(347, 618);
             dgvShortlisted.TabIndex = 1;
+            dgvShortlisted.CellClick += dgvShortlisted_CellClick;
             dgvShortlisted.CellContentClick += dgvShortlisted_CellClick;
             // 
             // label9
@@ -404,6 +508,13 @@
             // pnlEvaluation
             // 
             pnlEvaluation.BackColor = SystemColors.ActiveCaption;
+            pnlEvaluation.Controls.Add(label21);
+            pnlEvaluation.Controls.Add(label20);
+            pnlEvaluation.Controls.Add(label19);
+            pnlEvaluation.Controls.Add(label18);
+            pnlEvaluation.Controls.Add(label17);
+            pnlEvaluation.Controls.Add(label16);
+            pnlEvaluation.Controls.Add(txtInterviewer);
             pnlEvaluation.Controls.Add(btnSaveEvaluation);
             pnlEvaluation.Controls.Add(txtEvalRemarks);
             pnlEvaluation.Controls.Add(txtRecommendation);
@@ -416,9 +527,71 @@
             pnlEvaluation.Size = new Size(709, 649);
             pnlEvaluation.TabIndex = 9;
             // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.Location = new Point(313, 373);
+            label21.Name = "label21";
+            label21.Size = new Size(138, 20);
+            label21.TabIndex = 13;
+            label21.Text = "Evaluation Remarks";
+            // 
+            // label20
+            // 
+            label20.AutoSize = true;
+            label20.Location = new Point(313, 306);
+            label20.Name = "label20";
+            label20.Size = new Size(127, 20);
+            label20.TabIndex = 12;
+            label20.Text = "Recommendation";
+            // 
+            // label19
+            // 
+            label19.AutoSize = true;
+            label19.Location = new Point(301, 250);
+            label19.Name = "label19";
+            label19.Size = new Size(130, 20);
+            label19.TabIndex = 11;
+            label19.Text = "Interview Decision";
+            // 
+            // label18
+            // 
+            label18.AutoSize = true;
+            label18.Location = new Point(313, 188);
+            label18.Name = "label18";
+            label18.Size = new Size(110, 20);
+            label18.TabIndex = 10;
+            label18.Text = "Interview Score";
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Location = new Point(313, 114);
+            label17.Name = "label17";
+            label17.Size = new Size(85, 20);
+            label17.TabIndex = 9;
+            label17.Text = "Interviewee";
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.Location = new Point(313, 31);
+            label16.Name = "label16";
+            label16.Size = new Size(82, 20);
+            label16.TabIndex = 8;
+            label16.Text = "Interviewer";
+            // 
+            // txtInterviewer
+            // 
+            txtInterviewer.Location = new Point(349, 71);
+            txtInterviewer.Name = "txtInterviewer";
+            txtInterviewer.ReadOnly = true;
+            txtInterviewer.Size = new Size(278, 27);
+            txtInterviewer.TabIndex = 7;
+            // 
             // btnSaveEvaluation
             // 
-            btnSaveEvaluation.Location = new Point(420, 566);
+            btnSaveEvaluation.Location = new Point(405, 549);
             btnSaveEvaluation.Name = "btnSaveEvaluation";
             btnSaveEvaluation.Size = new Size(181, 60);
             btnSaveEvaluation.TabIndex = 6;
@@ -428,7 +601,7 @@
             // 
             // txtEvalRemarks
             // 
-            txtEvalRemarks.Location = new Point(349, 444);
+            txtEvalRemarks.Location = new Point(323, 411);
             txtEvalRemarks.Multiline = true;
             txtEvalRemarks.Name = "txtEvalRemarks";
             txtEvalRemarks.Size = new Size(330, 96);
@@ -436,30 +609,30 @@
             // 
             // txtRecommendation
             // 
-            txtRecommendation.Location = new Point(361, 385);
+            txtRecommendation.Location = new Point(349, 335);
             txtRecommendation.Name = "txtRecommendation";
-            txtRecommendation.Size = new Size(293, 27);
+            txtRecommendation.Size = new Size(278, 27);
             txtRecommendation.TabIndex = 4;
             // 
             // cmbPassFail
             // 
             cmbPassFail.FormattingEnabled = true;
             cmbPassFail.Items.AddRange(new object[] { "Pass", "Fail" });
-            cmbPassFail.Location = new Point(333, 306);
+            cmbPassFail.Location = new Point(349, 273);
             cmbPassFail.Name = "cmbPassFail";
-            cmbPassFail.Size = new Size(346, 28);
+            cmbPassFail.Size = new Size(278, 28);
             cmbPassFail.TabIndex = 3;
             // 
             // nudScore
             // 
-            nudScore.Location = new Point(363, 239);
+            nudScore.Location = new Point(349, 218);
             nudScore.Name = "nudScore";
-            nudScore.Size = new Size(291, 27);
+            nudScore.Size = new Size(278, 27);
             nudScore.TabIndex = 2;
             // 
             // txtEvalName
             // 
-            txtEvalName.Location = new Point(376, 164);
+            txtEvalName.Location = new Point(349, 148);
             txtEvalName.Name = "txtEvalName";
             txtEvalName.ReadOnly = true;
             txtEvalName.Size = new Size(278, 27);
@@ -473,6 +646,7 @@
             dgvInterviewees.RowHeadersWidth = 51;
             dgvInterviewees.Size = new Size(264, 649);
             dgvInterviewees.TabIndex = 0;
+            dgvInterviewees.CellClick += dgvInterviewees_CellContentClick;
             dgvInterviewees.CellContentClick += dgvInterviewees_CellContentClick;
             // 
             // Interviews
@@ -485,20 +659,9 @@
             Controls.Add(pnlScheduling);
             Controls.Add(dgvPendingApplicants);
             Controls.Add(label8);
-            Controls.Add(label1);
-            Controls.Add(label3);
-            Controls.Add(label5);
-            Controls.Add(txtAppID);
-            Controls.Add(txtAppName);
-            Controls.Add(txtAppPos);
-            Controls.Add(dgvDocs);
             Controls.Add(btnNotQualified);
             Controls.Add(btnQualified);
-            Controls.Add(label7);
             Controls.Add(txtRemarks);
-            Controls.Add(label4);
-            Controls.Add(label2);
-            Controls.Add(label6);
             Controls.Add(pnlScreening);
             Name = "Interviews";
             Text = "Interviews Module";
@@ -507,6 +670,8 @@
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvPendingApplicants).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvDocs).EndInit();
+            pnlScreening.ResumeLayout(false);
+            pnlScreening.PerformLayout();
             pnlScheduling.ResumeLayout(false);
             pnlScheduling.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvShortlisted).EndInit();
@@ -561,5 +726,19 @@
         private TextBox txtRecommendation;
         private ComboBox cmbPassFail;
         private NumericUpDown nudScore;
+        private Button btnViewApplicantProfile;
+        private Label label11;
+        private Label label10;
+        private Label label15;
+        private Label label14;
+        private Label label13;
+        private Label label12;
+        private Label label21;
+        private Label label20;
+        private Label label19;
+        private Label label18;
+        private Label label17;
+        private Label label16;
+        private TextBox txtInterviewer;
     }
 }

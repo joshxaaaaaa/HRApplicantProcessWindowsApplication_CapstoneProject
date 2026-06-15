@@ -332,9 +332,58 @@ namespace HRApplicantWindowSystem
             }
         }
 
+        private void LoadAuditTrail()
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+
+
+                    string sql = @"
+                            SELECT 
+                                a.audit_id AS 'Audit ID',
+                                u.username AS 'User Name', 
+                                a.action_type AS 'Action Type', 
+                                a.table_affected AS 'Table Affected',
+                                a.record_id AS 'Record ID',
+                                a.details AS 'Details', 
+                                a.action_timestamp AS 'Date & Time'
+                            FROM audittrail a
+                            LEFT JOIN users u ON a.user_id = u.user_id
+                            ORDER BY a.action_timestamp DESC";
+
+                    MySqlDataAdapter adapter = new MySqlDataAdapter(sql, conn);
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+
+                    dgvAuditTrail.DataSource = dt;
+
+                    dgvAuditTrail.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error loading audit logs: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        
+
+
         private void btnBack_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void AdminSettings_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            if (AdminSettings.SelectedIndex == 2)
+            {
+                LoadAuditTrail();
+            }
         }
     }
 }

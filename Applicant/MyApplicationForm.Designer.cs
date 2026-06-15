@@ -11,112 +11,155 @@ namespace HRApplicantWindowSystem
                 }
                 base.Dispose(disposing);
             }
-            #region Windows Form Designer generated code
-            private void InitializeComponent()
-            {
-                this.lblTitle = new System.Windows.Forms.Label();
-                this.lblJobSelect = new System.Windows.Forms.Label();
-                this.cboVacancies = new System.Windows.Forms.ComboBox();
-                this.lblStatusText = new System.Windows.Forms.Label();
-                this.lblLockNotice = new System.Windows.Forms.Label();
-                this.btnSubmit = new System.Windows.Forms.Button();
-                this.btnDeleteDraft = new System.Windows.Forms.Button();
-                this.btnCancel = new System.Windows.Forms.Button();
-                this.SuspendLayout();
+        #region Windows Form Designer generated code
+        private void InitializeComponent()
+        {
+            lblTitle = new Label();
+            lblStatusText = new Label();
+            lblLockState = new Label();
+            lblLockNotice = new Label();
+            btnDeleteDraft = new Button();
+            btnCancel = new Button();
+            dgvRequirements = new DataGridView();
+            lblJobTitle = new Label();
+            btnMyProfile = new Button();
+            ((System.ComponentModel.ISupportInitialize)dgvRequirements).BeginInit();
+            SuspendLayout();
+            // 
+            // lblTitle
+            // 
+            lblTitle.AutoSize = true;
+            lblTitle.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            lblTitle.ForeColor = Color.FromArgb(45, 52, 71);
+            lblTitle.Location = new Point(12, 9);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(288, 32);
+            lblTitle.TabIndex = 7;
+            lblTitle.Text = "Manage My Application";
+            // 
+            // lblStatusText
+            // 
+            lblStatusText.AutoSize = true;
+            lblStatusText.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            lblStatusText.ForeColor = Color.FromArgb(0, 102, 204);
+            lblStatusText.Location = new Point(12, 373);
+            lblStatusText.Name = "lblStatusText";
+            lblStatusText.Size = new Size(258, 25);
+            lblStatusText.TabIndex = 4;
+            lblStatusText.Text = "Status: Draft (Unsubmitted)";
+            // 
+            // lblLockState
+            // 
+            lblLockState.AutoSize = true;
+            lblLockState.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblLockState.ForeColor = Color.DarkGreen;
+            lblLockState.Location = new Point(35, 403);
+            lblLockState.Name = "lblLockState";
+            lblLockState.Size = new Size(74, 20);
+            lblLockState.TabIndex = 5;
+            lblLockState.Text = "Unlocked";
+            // 
+            // lblLockNotice
+            // 
+            lblLockNotice.AutoSize = true;
+            lblLockNotice.Font = new Font("Segoe UI", 9F, FontStyle.Italic);
+            lblLockNotice.ForeColor = Color.Gray;
+            lblLockNotice.Location = new Point(26, 428);
+            lblLockNotice.Name = "lblLockNotice";
+            lblLockNotice.Size = new Size(316, 20);
+            lblLockNotice.TabIndex = 3;
+            lblLockNotice.Text = "Checking database tracking permissions status...";
+            // 
+            // btnDeleteDraft
+            // 
+            btnDeleteDraft.Font = new Font("Segoe UI", 9F);
+            btnDeleteDraft.Location = new Point(278, 451);
+            btnDeleteDraft.Name = "btnDeleteDraft";
+            btnDeleteDraft.Size = new Size(140, 40);
+            btnDeleteDraft.TabIndex = 1;
+            btnDeleteDraft.Text = "Retract Submission";
+            btnDeleteDraft.UseVisualStyleBackColor = true;
+            btnDeleteDraft.Click += btnDeleteDraft_Click;
+            // 
+            // btnCancel
+            // 
+            btnCancel.Font = new Font("Segoe UI", 9F);
+            btnCancel.Location = new Point(581, 438);
+            btnCancel.Name = "btnCancel";
+            btnCancel.Size = new Size(140, 40);
+            btnCancel.TabIndex = 0;
+            btnCancel.Text = "Close Windows";
+            btnCancel.UseVisualStyleBackColor = true;
+            btnCancel.Click += btnCancel_Click;
+            // 
+            // dgvRequirements
+            // 
+            dgvRequirements.AllowUserToAddRows = false;
+            dgvRequirements.AllowUserToDeleteRows = false;
+            dgvRequirements.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvRequirements.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvRequirements.Location = new Point(12, 57);
+            dgvRequirements.Name = "dgvRequirements";
+            dgvRequirements.ReadOnly = true;
+            dgvRequirements.RowHeadersWidth = 51;
+            dgvRequirements.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvRequirements.Size = new Size(710, 297);
+            dgvRequirements.TabIndex = 11;
+            // 
+            // lblJobTitle
+            // 
+            lblJobTitle.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            lblJobTitle.Location = new Point(464, 13);
+            lblJobTitle.Name = "lblJobTitle";
+            lblJobTitle.Size = new Size(258, 28);
+            lblJobTitle.TabIndex = 10;
+            lblJobTitle.Click += lblJobTitle_Click;
+            // 
+            // btnMyProfile
+            // 
+            btnMyProfile.Location = new Point(546, 378);
+            btnMyProfile.Name = "btnMyProfile";
+            btnMyProfile.Size = new Size(175, 45);
+            btnMyProfile.TabIndex = 12;
+            btnMyProfile.Text = "My Profile";
+            btnMyProfile.UseVisualStyleBackColor = true;
+            // 
+            // MyApplicationForm
+            // 
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.FromArgb(245, 247, 250);
+            ClientSize = new Size(742, 510);
+            Controls.Add(btnMyProfile);
+            Controls.Add(lblJobTitle);
+            Controls.Add(dgvRequirements);
+            Controls.Add(btnCancel);
+            Controls.Add(btnDeleteDraft);
+            Controls.Add(lblLockNotice);
+            Controls.Add(lblLockState);
+            Controls.Add(lblStatusText);
+            Controls.Add(lblTitle);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "MyApplicationForm";
+            Text = "Job Application Portal";
+            Load += MyApplicationForm_Load;
+            ((System.ComponentModel.ISupportInitialize)dgvRequirements).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
+        }
 
-                this.lblTitle.AutoSize = true;
-                this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-                this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(52)))), ((int)(((byte)(71)))));
-                this.lblTitle.Location = new System.Drawing.Point(20, 20);
-                this.lblTitle.Name = "lblTitle";
-                this.lblTitle.Size = new System.Drawing.Size(262, 32);
-                this.lblTitle.Text = "Manage My Application";
+        #endregion
 
-                this.lblJobSelect.AutoSize = true;
-                this.lblJobSelect.Font = new System.Drawing.Font("Segoe UI", 10F);
-                this.lblJobSelect.Location = new System.Drawing.Point(22, 75);
-                this.lblJobSelect.Name = "lblJobSelect";
-                this.lblJobSelect.Size = new System.Drawing.Size(206, 23);
-                this.lblJobSelect.Text = "Select Target Open Vacancy:";
-
-                this.cboVacancies.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-                this.cboVacancies.Font = new System.Drawing.Font("Segoe UI", 10F);
-                this.cboVacancies.FormattingEnabled = true;
-                this.cboVacancies.Location = new System.Drawing.Point(22, 105);
-                this.cboVacancies.Name = "cboVacancies";
-                this.cboVacancies.Size = new System.Drawing.Size(440, 31);
-
-                this.lblStatusText.AutoSize = true;
-                this.lblStatusText.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-                this.lblStatusText.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
-                this.lblStatusText.Location = new System.Drawing.Point(22, 160);
-                this.lblStatusText.Name = "lblStatusText";
-                this.lblStatusText.Size = new System.Drawing.Size(227, 25);
-                this.lblStatusText.Text = "Status: Draft (Unsubmitted)";
-
-                this.lblLockNotice.AutoSize = true;
-                this.lblLockNotice.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic);
-                this.lblLockNotice.ForeColor = System.Drawing.Color.Gray;
-                this.lblLockNotice.Location = new System.Drawing.Point(22, 200);
-                this.lblLockNotice.Name = "lblLockNotice";
-                this.lblLockNotice.Size = new System.Drawing.Size(350, 20);
-                this.lblLockNotice.Text = "Checking database tracking permissions status...";
-
-                this.btnSubmit.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-                this.btnSubmit.Location = new System.Drawing.Point(22, 250);
-                this.btnSubmit.Name = "btnSubmit";
-                this.btnSubmit.Size = new System.Drawing.Size(140, 40);
-                this.btnSubmit.Text = "Save & Submit";
-                this.btnSubmit.UseVisualStyleBackColor = true;
-                this.btnSubmit.Click += new System.EventHandler(this.btnSubmit_Click);
-
-                this.btnDeleteDraft.Font = new System.Drawing.Font("Segoe UI", 9F);
-                this.btnDeleteDraft.Location = new System.Drawing.Point(175, 250);
-                this.btnDeleteDraft.Name = "btnDeleteDraft";
-                this.btnDeleteDraft.Size = new System.Drawing.Size(140, 40);
-                this.btnDeleteDraft.Text = "Retract Submission";
-                this.btnDeleteDraft.UseVisualStyleBackColor = true;
-                this.btnDeleteDraft.Click += new System.EventHandler(this.btnDeleteDraft_Click);
-
-                this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 9F);
-                this.btnCancel.Location = new System.Drawing.Point(322, 250);
-                this.btnCancel.Name = "btnCancel";
-                this.btnCancel.Size = new System.Drawing.Size(140, 40);
-                this.btnCancel.Text = "Close Windows";
-                this.btnCancel.UseVisualStyleBackColor = true;
-                this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-
-                this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-                this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-                this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
-                this.ClientSize = new System.Drawing.Size(489, 317);
-                this.Controls.Add(this.btnCancel);
-                this.Controls.Add(this.btnDeleteDraft);
-                this.Controls.Add(this.btnSubmit);
-                this.Controls.Add(this.lblLockNotice);
-                this.Controls.Add(this.lblStatusText);
-                this.Controls.Add(this.cboVacancies);
-                this.Controls.Add(this.lblJobSelect);
-                this.Controls.Add(this.lblTitle);
-                this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-                this.MaximizeBox = false;
-                this.MinimizeBox = false;
-                this.Name = "MyApplicationForm";
-                this.Text = "Job Application Portal";
-                this.Load += new System.EventHandler(this.MyApplicationForm_Load);
-                this.ResumeLayout(false);
-                this.PerformLayout();
-            }
-
-            #endregion
-
-            private System.Windows.Forms.Label lblTitle;
-            private System.Windows.Forms.Label lblJobSelect;
-            private System.Windows.Forms.ComboBox cboVacancies;
+        private System.Windows.Forms.Label lblTitle;
             private System.Windows.Forms.Label lblStatusText;
+            private System.Windows.Forms.Label lblLockState;
             private System.Windows.Forms.Label lblLockNotice;
-            private System.Windows.Forms.Button btnSubmit;
             private System.Windows.Forms.Button btnDeleteDraft;
             private System.Windows.Forms.Button btnCancel;
-        }
+        private System.Windows.Forms.DataGridView dgvRequirements;
+        private Label lblJobTitle;
+        private Button btnMyProfile;
+    }
     }

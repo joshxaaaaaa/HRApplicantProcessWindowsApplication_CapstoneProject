@@ -33,7 +33,7 @@
             label15 = new Label();
             button1 = new Button();
             pictureBox2 = new PictureBox();
-            richTextBox1 = new RichTextBox();
+            txtEducation = new RichTextBox();
             label6 = new Label();
             label2 = new Label();
             label3 = new Label();
@@ -45,10 +45,10 @@
             textBox4 = new TextBox();
             label4 = new Label();
             label5 = new Label();
-            richTextBox2 = new RichTextBox();
+            txtOtherDetails = new RichTextBox();
             label8 = new Label();
             label9 = new Label();
-            richTextBox3 = new RichTextBox();
+            txtWorkExp = new RichTextBox();
             button2 = new Button();
             button3 = new Button();
             label7 = new Label();
@@ -57,7 +57,7 @@
             label12 = new Label();
             label13 = new Label();
             label14 = new Label();
-            button4 = new Button();
+            buttonEdit = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -68,7 +68,7 @@
             panel1.Controls.Add(label15);
             panel1.Controls.Add(button1);
             panel1.Controls.Add(pictureBox2);
-            panel1.Controls.Add(richTextBox1);
+            panel1.Controls.Add(txtEducation);
             panel1.Controls.Add(label6);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(label3);
@@ -87,7 +87,6 @@
             label15.Size = new Size(172, 17);
             label15.TabIndex = 11;
             label15.Text = "Educational Attainments:";
-            label15.Click += label15_Click;
             // 
             // button1
             // 
@@ -110,14 +109,13 @@
             pictureBox2.TabStop = false;
             pictureBox2.Click += pictureBox2_Click;
             // 
-            // richTextBox1
+            // txtEducation
             // 
-            richTextBox1.Location = new Point(28, 359);
-            richTextBox1.Name = "richTextBox1";
-            richTextBox1.Size = new Size(376, 194);
-            richTextBox1.TabIndex = 7;
-            richTextBox1.Text = "";
-            richTextBox1.TextChanged += richTextBox1_TextChanged;
+            txtEducation.Location = new Point(28, 359);
+            txtEducation.Name = "txtEducation";
+            txtEducation.Size = new Size(376, 194);
+            txtEducation.TabIndex = 7;
+            txtEducation.Text = "";
             // 
             // label6
             // 
@@ -128,7 +126,6 @@
             label6.Size = new Size(186, 40);
             label6.TabIndex = 6;
             label6.Text = "Education";
-            label6.Click += label6_Click;
             // 
             // label2
             // 
@@ -138,7 +135,6 @@
             label2.Size = new Size(177, 17);
             label2.TabIndex = 2;
             label2.Text = "Network and Systems, Co.";
-            label2.Click += label2_Click_1;
             // 
             // label3
             // 
@@ -149,7 +145,6 @@
             label3.Size = new Size(100, 27);
             label3.TabIndex = 3;
             label3.Text = "PROFILE";
-            label3.Click += label3_Click;
             // 
             // pictureBox1
             // 
@@ -177,7 +172,6 @@
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(188, 23);
             textBox1.TabIndex = 3;
-            textBox1.TextChanged += textBox1_TextChanged;
             // 
             // textBox2
             // 
@@ -185,7 +179,6 @@
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(187, 23);
             textBox2.TabIndex = 4;
-            textBox2.TextChanged += textBox2_TextChanged;
             // 
             // textBox3
             // 
@@ -193,7 +186,6 @@
             textBox3.Name = "textBox3";
             textBox3.Size = new Size(188, 23);
             textBox3.TabIndex = 4;
-            textBox3.TextChanged += textBox3_TextChanged;
             // 
             // textBox4
             // 
@@ -201,7 +193,6 @@
             textBox4.Name = "textBox4";
             textBox4.Size = new Size(188, 23);
             textBox4.TabIndex = 0;
-            textBox4.TextChanged += textBox4_TextChanged;
             // 
             // label4
             // 
@@ -212,7 +203,6 @@
             label4.Size = new Size(163, 40);
             label4.TabIndex = 4;
             label4.Text = "Personal ";
-            label4.Click += label4_Click;
             // 
             // label5
             // 
@@ -224,14 +214,13 @@
             label5.TabIndex = 5;
             label5.Text = "Information ";
             // 
-            // richTextBox2
+            // txtOtherDetails
             // 
-            richTextBox2.Location = new Point(24, 399);
-            richTextBox2.Name = "richTextBox2";
-            richTextBox2.Size = new Size(193, 130);
-            richTextBox2.TabIndex = 8;
-            richTextBox2.Text = "";
-            richTextBox2.TextChanged += richTextBox2_TextChanged;
+            txtOtherDetails.Location = new Point(24, 399);
+            txtOtherDetails.Name = "txtOtherDetails";
+            txtOtherDetails.Size = new Size(193, 130);
+            txtOtherDetails.TabIndex = 8;
+            txtOtherDetails.Text = "";
             // 
             // label8
             // 
@@ -253,20 +242,19 @@
             label9.TabIndex = 11;
             label9.Text = "Work";
             // 
-            // richTextBox3
+            // txtWorkExp
             // 
-            richTextBox3.Location = new Point(716, 153);
-            richTextBox3.Name = "richTextBox3";
-            richTextBox3.Size = new Size(206, 376);
-            richTextBox3.TabIndex = 12;
-            richTextBox3.Text = "";
-            richTextBox3.TextChanged += richTextBox3_TextChanged;
+            txtWorkExp.Location = new Point(716, 153);
+            txtWorkExp.Name = "txtWorkExp";
+            txtWorkExp.Size = new Size(206, 354);
+            txtWorkExp.TabIndex = 12;
+            txtWorkExp.Text = "";
             // 
             // button2
             // 
-            button2.Location = new Point(868, 614);
+            button2.Location = new Point(812, 593);
             button2.Name = "button2";
-            button2.Size = new Size(70, 24);
+            button2.Size = new Size(110, 27);
             button2.TabIndex = 13;
             button2.Text = "Back";
             button2.UseVisualStyleBackColor = true;
@@ -274,9 +262,9 @@
             // 
             // button3
             // 
-            button3.Location = new Point(809, 567);
+            button3.Location = new Point(765, 525);
             button3.Name = "button3";
-            button3.Size = new Size(129, 22);
+            button3.Size = new Size(110, 27);
             button3.TabIndex = 14;
             button3.Text = "Save to Profile";
             button3.UseVisualStyleBackColor = true;
@@ -290,7 +278,6 @@
             label7.Size = new Size(57, 17);
             label7.TabIndex = 11;
             label7.Text = "Address";
-            label7.Click += label7_Click;
             // 
             // label10
             // 
@@ -300,7 +287,6 @@
             label10.Size = new Size(72, 17);
             label10.TabIndex = 12;
             label10.Text = "Full Name";
-            label10.Click += label10_Click;
             // 
             // label11
             // 
@@ -319,7 +305,6 @@
             label12.Size = new Size(90, 17);
             label12.TabIndex = 11;
             label12.Text = "Contact No.";
-            label12.Click += label12_Click;
             // 
             // label13
             // 
@@ -339,15 +324,15 @@
             label14.TabIndex = 11;
             label14.Text = "Enter work experiences:";
             // 
-            // button4
+            // buttonEdit
             // 
-            button4.Location = new Point(716, 565);
-            button4.Name = "button4";
-            button4.Size = new Size(79, 27);
-            button4.TabIndex = 15;
-            button4.Text = "Draft";
-            button4.UseVisualStyleBackColor = true;
-            button4.Click += button4_Click;
+            buttonEdit.Location = new Point(700, 593);
+            buttonEdit.Name = "buttonEdit";
+            buttonEdit.Size = new Size(112, 27);
+            buttonEdit.TabIndex = 16;
+            buttonEdit.Text = "Edit Profile";
+            buttonEdit.UseVisualStyleBackColor = true;
+            buttonEdit.Click += buttonEdit_Click;
             // 
             // ApplicantProfileForm
             // 
@@ -355,7 +340,6 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientInactiveCaption;
             ClientSize = new Size(950, 650);
-            Controls.Add(button4);
             Controls.Add(label14);
             Controls.Add(label13);
             Controls.Add(label12);
@@ -363,11 +347,12 @@
             Controls.Add(label11);
             Controls.Add(label10);
             Controls.Add(button3);
+            Controls.Add(buttonEdit);
             Controls.Add(button2);
-            Controls.Add(richTextBox3);
+            Controls.Add(txtWorkExp);
             Controls.Add(label9);
             Controls.Add(label8);
-            Controls.Add(richTextBox2);
+            Controls.Add(txtOtherDetails);
             Controls.Add(label5);
             Controls.Add(label4);
             Controls.Add(textBox4);
@@ -392,7 +377,6 @@
 
         private Panel panel1;
         private PictureBox pictureBox1;
-        private Label label1;
         private Label label2;
         private Label label3;
         private TextBox textBox4;
@@ -402,12 +386,12 @@
         private Label label4;
         private Label label5;
         private Label label6;
-        private RichTextBox richTextBox1;
-        private RichTextBox richTextBox2;
+        private RichTextBox txtEducation;
+        private RichTextBox txtOtherDetails;
         private Label label8;
         private Label label9;
         private PictureBox pictureBox2;
-        private RichTextBox richTextBox3;
+        private RichTextBox txtWorkExp;
         private Button button1;
         private Button button2;
         private Button button3;
@@ -418,6 +402,7 @@
         private Label label15;
         private Label label13;
         private Label label14;
-        private Button button4;
+        private Button buttonEdit;
+        private Label label1;
     }
 }

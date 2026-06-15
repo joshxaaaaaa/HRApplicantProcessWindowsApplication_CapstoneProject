@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             pnlHeader = new Panel();
+            btnBack = new Button();
             lblDashboard = new Label();
             lblHRApplicant = new Label();
             pnlHead = new PictureBox();
@@ -61,6 +62,12 @@
             label2 = new Label();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            label10 = new Label();
+            label9 = new Label();
+            label3 = new Label();
+            txtWorkExp = new TextBox();
+            txtEducation = new TextBox();
+            txtOtherDeteails = new TextBox();
             txtProfileName = new TextBox();
             txtProfileEmail = new TextBox();
             txtProfilePhone = new TextBox();
@@ -74,7 +81,6 @@
             tabPage2 = new TabPage();
             dgvDocuments = new DataGridView();
             label1 = new Label();
-            btnBack = new Button();
             pnlHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pnlHead).BeginInit();
             pnlCardHired.SuspendLayout();
@@ -109,6 +115,16 @@
             pnlHeader.Name = "pnlHeader";
             pnlHeader.Size = new Size(982, 80);
             pnlHeader.TabIndex = 0;
+            // 
+            // btnBack
+            // 
+            btnBack.Location = new Point(912, 16);
+            btnBack.Name = "btnBack";
+            btnBack.Size = new Size(67, 48);
+            btnBack.TabIndex = 9;
+            btnBack.Text = "Back";
+            btnBack.UseVisualStyleBackColor = true;
+            btnBack.Click += btnBack_Click;
             // 
             // lblDashboard
             // 
@@ -408,7 +424,8 @@
             dgvApplicantList.RowHeadersWidth = 62;
             dgvApplicantList.Size = new Size(449, 392);
             dgvApplicantList.TabIndex = 1;
-            dgvApplicantList.CellContentClick += dgvApplicantList_CellContentClick;
+            dgvApplicantList.CellClick += dgvApplicantList_CellClick;
+            dgvApplicantList.CellContentClick += dgvApplicantList_CellClick;
             // 
             // panel2
             // 
@@ -460,6 +477,12 @@
             // 
             // tabPage1
             // 
+            tabPage1.Controls.Add(label10);
+            tabPage1.Controls.Add(label9);
+            tabPage1.Controls.Add(label3);
+            tabPage1.Controls.Add(txtWorkExp);
+            tabPage1.Controls.Add(txtEducation);
+            tabPage1.Controls.Add(txtOtherDeteails);
             tabPage1.Controls.Add(txtProfileName);
             tabPage1.Controls.Add(txtProfileEmail);
             tabPage1.Controls.Add(txtProfilePhone);
@@ -479,12 +502,67 @@
             tabPage1.Text = "Profile Summary";
             tabPage1.UseVisualStyleBackColor = true;
             // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(353, 253);
+            label10.Name = "label10";
+            label10.Size = new Size(119, 20);
+            label10.TabIndex = 15;
+            label10.Text = "Work Experience";
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(214, 253);
+            label9.Name = "label9";
+            label9.Size = new Size(75, 20);
+            label9.TabIndex = 14;
+            label9.Text = "Education";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(19, 253);
+            label3.Name = "label3";
+            label3.Size = new Size(96, 20);
+            label3.TabIndex = 13;
+            label3.Text = "Other Details";
+            // 
+            // txtWorkExp
+            // 
+            txtWorkExp.Location = new Point(329, 276);
+            txtWorkExp.Multiline = true;
+            txtWorkExp.Name = "txtWorkExp";
+            txtWorkExp.ReadOnly = true;
+            txtWorkExp.Size = new Size(155, 112);
+            txtWorkExp.TabIndex = 12;
+            // 
+            // txtEducation
+            // 
+            txtEducation.Location = new Point(170, 276);
+            txtEducation.Multiline = true;
+            txtEducation.Name = "txtEducation";
+            txtEducation.ReadOnly = true;
+            txtEducation.Size = new Size(155, 112);
+            txtEducation.TabIndex = 11;
+            // 
+            // txtOtherDeteails
+            // 
+            txtOtherDeteails.Location = new Point(9, 276);
+            txtOtherDeteails.Multiline = true;
+            txtOtherDeteails.Name = "txtOtherDeteails";
+            txtOtherDeteails.ReadOnly = true;
+            txtOtherDeteails.Size = new Size(155, 112);
+            txtOtherDeteails.TabIndex = 10;
+            // 
             // txtProfileName
             // 
             txtProfileName.Location = new Point(73, 25);
             txtProfileName.Margin = new Padding(2);
             txtProfileName.Multiline = true;
             txtProfileName.Name = "txtProfileName";
+            txtProfileName.ReadOnly = true;
             txtProfileName.Size = new Size(412, 26);
             txtProfileName.TabIndex = 9;
             // 
@@ -494,6 +572,7 @@
             txtProfileEmail.Margin = new Padding(2);
             txtProfileEmail.Multiline = true;
             txtProfileEmail.Name = "txtProfileEmail";
+            txtProfileEmail.ReadOnly = true;
             txtProfileEmail.Size = new Size(412, 26);
             txtProfileEmail.TabIndex = 8;
             // 
@@ -503,6 +582,7 @@
             txtProfilePhone.Margin = new Padding(2);
             txtProfilePhone.Multiline = true;
             txtProfilePhone.Name = "txtProfilePhone";
+            txtProfilePhone.ReadOnly = true;
             txtProfilePhone.Size = new Size(412, 26);
             txtProfilePhone.TabIndex = 7;
             // 
@@ -512,6 +592,7 @@
             txtProfilePosition.Margin = new Padding(2);
             txtProfilePosition.Multiline = true;
             txtProfilePosition.Name = "txtProfilePosition";
+            txtProfilePosition.ReadOnly = true;
             txtProfilePosition.Size = new Size(412, 26);
             txtProfilePosition.TabIndex = 6;
             // 
@@ -521,6 +602,7 @@
             txtProfileStatus.Margin = new Padding(2);
             txtProfileStatus.Multiline = true;
             txtProfileStatus.Name = "txtProfileStatus";
+            txtProfileStatus.ReadOnly = true;
             txtProfileStatus.Size = new Size(412, 26);
             txtProfileStatus.TabIndex = 5;
             // 
@@ -612,16 +694,6 @@
             label1.TabIndex = 4;
             label1.Text = "Document Information";
             // 
-            // btnBack
-            // 
-            btnBack.Location = new Point(912, 16);
-            btnBack.Name = "btnBack";
-            btnBack.Size = new Size(67, 48);
-            btnBack.TabIndex = 9;
-            btnBack.Text = "Back";
-            btnBack.UseVisualStyleBackColor = true;
-            btnBack.Click += btnBack_Click;
-            // 
             // ApplicantProcess
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -712,5 +784,11 @@
         private Label label5;
         private Label label4;
         private Button btnBack;
+        private TextBox txtWorkExp;
+        private TextBox txtEducation;
+        private TextBox txtOtherDeteails;
+        private Label label10;
+        private Label label9;
+        private Label label3;
     }
 }

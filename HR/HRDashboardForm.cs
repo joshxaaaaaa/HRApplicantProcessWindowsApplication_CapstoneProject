@@ -80,10 +80,12 @@ namespace HRApplicantWindowSystem
                         dgvRecentApplicants.DataSource = dtApp;
                     }
 
-                    string queryJobs = @"SELECT job_title AS 'Title' 
-                                 FROM JobVacancies 
-                                 WHERE status = 'Open' 
-                                 ORDER BY posted_date DESC";
+
+                    string queryJobs = @"SELECT p.position_name AS 'Title' 
+                                 FROM JobVacancies v
+                                 INNER JOIN positions p ON v.position_id = p.position_id
+                                 WHERE v.status = 'Open' 
+                                 ORDER BY v.posted_date DESC";
                     using (MySqlDataAdapter adapterJobs = new MySqlDataAdapter(queryJobs, conn))
                     {
                         DataTable dtJobs = new DataTable();
@@ -105,7 +107,8 @@ namespace HRApplicantWindowSystem
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Error loading grid details: " + ex.Message);
+
+                    MessageBox.Show("Error loading grid details: " + ex.Message, "Dashboard Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -219,24 +222,25 @@ namespace HRApplicantWindowSystem
 
                 case "Pending Applications":
                     query = @"SELECT app.application_id AS 'App ID', 
-                             CONCAT(a.first_name, ' ', a.last_name) AS 'Applicant Name', 
-                             jv.job_title AS 'Job Title', 
-                             app.status AS 'Current Status', 
-                             app.applied_date AS 'Date Applied'
-                      FROM Applications app
-                      INNER JOIN Applicants a ON app.applicant_id = a.applicant_id
-                      INNER JOIN JobVacancies jv ON app.vacancy_id = jv.vacancy_id
-                      WHERE app.status IN ('Submitted', 'Screening')";
+                                CONCAT(a.first_name, ' ', a.last_name) AS 'Applicant Name', 
+                                p.position_name AS 'Job Title', -- <-- NEW: Pulling from the positions table!
+                                app.status AS 'Current Status', 
+                                app.applied_date AS 'Date Applied'
+                        FROM Applications app
+                        INNER JOIN Applicants a ON app.applicant_id = a.applicant_id
+                        INNER JOIN JobVacancies jv ON app.vacancy_id = jv.vacancy_id
+                        INNER JOIN positions p ON jv.position_id = p.position_id -- <-- NEW: The JOIN that connects them!
+                        WHERE app.status IN ('Submitted', 'Screening')";
                     break;
 
                 case "Interview Schedules":
                     query = @"SELECT i.schedule_id AS 'Schedule ID', 
-                             CONCAT(a.first_name, ' ', a.last_name) AS 'Applicant', 
-                             i.interview_date AS 'Date & Time', 
-                             i.location_mode AS 'Location/Mode'
-                      FROM InterviewSchedules i
-                      INNER JOIN Applications app ON i.application_id = app.application_id
-                      INNER JOIN Applicants a ON app.applicant_id = a.applicant_id";
+                                CONCAT(a.first_name, ' ', a.last_name) AS 'Applicant', 
+                                i.interview_date AS 'Date & Time', 
+                                i.location AS 'Location'
+                        FROM InterviewSchedules i
+                        INNER JOIN Applications app ON i.application_id = app.application_id
+                        INNER JOIN Applicants a ON app.applicant_id = a.applicant_id";
                     break;
 
                 case "Accepted/Rejected Applicants":
@@ -353,19 +357,19 @@ namespace HRApplicantWindowSystem
         private void btnApplicants_Click(object sender, EventArgs e)
         {
 
-            ApplicantProcess applicantForm = new ApplicantProcess();
+            ApplicantProcess applicantForm = new ApplicantProcess(currentUserId);
             applicantForm.ShowDialog();
         }
 
         private void btnInterviews_Click(object sender, EventArgs e)
         {
-            Interviews interviewForm = new Interviews();
+            Interviews interviewForm = new Interviews(currentUserId);
             interviewForm.ShowDialog();
         }
 
         private void btnHiringDecision_Click(object sender, EventArgs e)
         {
-            FinalDecisionForm decisionForm = new FinalDecisionForm();
+            FinalDecisionForm decisionForm = new FinalDecisionForm(currentUserId);
             decisionForm.ShowDialog();
         }
     }

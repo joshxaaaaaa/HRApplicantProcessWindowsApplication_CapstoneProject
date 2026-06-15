@@ -13,13 +13,16 @@ namespace HRApplicantWindowSystem
     {
         private string connectionString = "Server=localhost;Database=db_hrapplicantwindowsystem;User ID=root;Password=abalo_mysql;";
 
+
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public int CurrentApplicationID { get; set; } = 1; 
+        public int CurrentApplicationID { get; set; } = 0;
 
         public ApplicantStatusForm()
         {
             InitializeComponent();
         }
+
+        
 
         private void ApplicantStatusForm_Load(object sender, EventArgs e)
         {
@@ -29,22 +32,27 @@ namespace HRApplicantWindowSystem
         private void LoadApplicantProgress()
         {
             string query = @"
-                SELECT 
-                    a.status AS MainStatus,
-                    j.job_title AS JobTitle,
-                    COALESCE(sr.remarks, 'No screening remarks available yet.') AS ScreeningRemarks,
-                    COALESCE(CAST(isch.interview_date AS CHAR), 'Not yet scheduled') AS InterviewDate,
-                    COALESCE(isch.location_mode, 'TBD') AS InterviewLocation,
-                    COALESCE(hd.final_decision, 'Pending') AS FinalDecision,
-                    COALESCE(hd.remarks, 'Final evaluation pending.') AS FinalRemarks
-                FROM Applications a
-                INNER JOIN JobVacancies j ON a.vacancy_id = j.vacancy_id
-                LEFT JOIN ScreeningResults sr ON a.application_id = sr.application_id
-                LEFT JOIN InterviewSchedules isch ON a.application_id = isch.application_id
-                LEFT JOIN HiringDecisions hd ON a.application_id = hd.application_id
-                WHERE a.application_id = @ApplicationID
-                ORDER BY sr.screened_at DESC, isch.interview_date DESC 
-                LIMIT 1;";
+                        SELECT 
+                            a.status AS MainStatus,
+                            p.position_name AS JobTitle, 
+                            COALESCE(sr.remarks, 'No screening remarks available yet.') AS ScreeningRemarks,
+                            COALESCE(CAST(isch.interview_date AS CHAR), 'Not yet scheduled') AS InterviewDate, 
+                            COALESCE(isch.location, 'TBD') AS InterviewLocation,
+                            COALESCE(ie.recommendation, 'No recommendation.') AS InterviewRecommendation,
+                            COALESCE(ie.remarks, 'No remarks.') AS InterviewRemarks,
+                            COALESCE(hd.final_decision, 'Pending') AS FinalDecision,
+                            COALESCE(hd.remarks, 'Final evaluation pending.') AS FinalRemarks,  
+                            COALESCE(ie.pass_fail, 'Pending') AS InterviewStatus
+                            FROM Applications a
+                        INNER JOIN JobVacancies j ON a.vacancy_id = j.vacancy_id
+                        INNER JOIN positions p ON j.position_id = p.position_id 
+                        LEFT JOIN ScreeningResults sr ON a.application_id = sr.application_id
+                        LEFT JOIN InterviewSchedules isch ON a.application_id = isch.application_id
+                        LEFT JOIN HiringDecisions hd ON a.application_id = hd.application_id
+                        LEFT JOIN interviewevaluations ie ON a.application_id = ie.application_id
+                        WHERE a.application_id = @ApplicationID
+                        ORDER BY sr.screened_at DESC, isch.interview_date DESC
+                        LIMIT 1;";
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
@@ -61,8 +69,23 @@ namespace HRApplicantWindowSystem
                             {
                                 lblJobTitle.Text = $"Applying For: {reader["JobTitle"]}";
                                 lblCurrentStage.Text = $"Current Pipeline Stage: {reader["MainStatus"]}";
-                                txtHRRemarks.Text = $"[Screening Remarks]\r\n{reader["ScreeningRemarks"]}\r\n\r\n[Final Decision Remarks]\r\n{reader["FinalRemarks"]}";
-                                lblInterviewSchedule.Text = $"Interview Schedule: {reader["InterviewDate"]} ({reader["InterviewLocation"]})";
+                                txtHRRemarks.Text = $"[Screening Remarks]\r\n{reader["ScreeningRemarks"]}\r\n\r\n" +
+                                                    $"[Interview Recommendation]\r\n{reader["InterviewRecommendation"]}\r\n\r\n" +
+                                                    $"[Interview Remarks]\r\n{reader["InterviewRemarks"]}\r\n\r\n" +
+                                                    $"[Final Decision Remarks]\r\n{reader["FinalRemarks"]}\r\n\r\n";
+                                string interviewStatus = reader["InterviewStatus"].ToString();
+
+
+                                if (interviewStatus == "Pass" || interviewStatus == "Passed")
+                                {
+                                    lblInterviewSchedule.Text = "Interview Schedule: Interview Passed";
+                                }
+                                else
+                                {
+
+                                    lblInterviewSchedule.Text = $"Interview Schedule: {reader["InterviewDate"]} ({reader["InterviewLocation"]})";
+                                }
+
                                 lblFinalResult.Text = $"Final Decision: {reader["FinalDecision"]}";
 
                                 StyleStatusLabel(reader["MainStatus"].ToString(), reader["FinalDecision"].ToString());
@@ -106,5 +129,7 @@ namespace HRApplicantWindowSystem
         {
             this.Close();
         }
+
+
     }
 }

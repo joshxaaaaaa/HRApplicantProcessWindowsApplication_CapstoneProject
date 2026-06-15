@@ -14,6 +14,8 @@ namespace HRApplicantWindowSystem
     {
         private string connectionString = "Server=localhost;Database=db_hrapplicantwindowsystem;User ID=root;Password=abalo_mysql;";
 
+        private string descriptionField = string.Empty;
+
         public AddVacancyForm()
         {
             InitializeComponent();
@@ -21,9 +23,13 @@ namespace HRApplicantWindowSystem
         public void SetValues(int deptId, string jobTitle, string description, string requirements)
         {
             cmbDepartment.SelectedValue = deptId;
-            EntJobtitle.Text = jobTitle;
-            EntJobtitle.ForeColor = Color.Black;
-            EntDescription.Text = description;
+
+
+            try { cmbPosition.Text = jobTitle ?? string.Empty; } catch { }
+
+
+            descriptionField = description ?? string.Empty;
+            
 
 
             for (int i = 0; i < clbRequirements.Items.Count; i++)
@@ -44,8 +50,8 @@ namespace HRApplicantWindowSystem
                 }
             }
         }
-        public string JobTitle => EntJobtitle.Text;
-        public string Description => EntDescription.Text;
+        
+        
         public string Requirements
         {
             get
@@ -64,13 +70,115 @@ namespace HRApplicantWindowSystem
         }
         public int DepartmentId => Convert.ToInt32(cmbDepartment.SelectedValue);
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        [Browsable(false)]
+        public string JobTitle
+        {
+            get
+            {
+                try { return cmbPosition?.Text ?? string.Empty; } catch { return string.Empty; }
+            }
+            set
+            {
+                try { if (cmbPosition != null) cmbPosition.Text = value ?? string.Empty; } catch { }
+            }
+        }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        [Browsable(false)]
+        public string Description
+        {
+            get => descriptionField ?? string.Empty;
+            set => descriptionField = value ?? string.Empty;
+        }
+
         private void AddVacancyForm_Load(object sender, EventArgs e)
         {
 
-            EntJobtitle.Text = "Enter job title...";
-            EntJobtitle.ForeColor = Color.Gray;
-            EntDescription.Text = "Enter description...";
-            EntDescription.ForeColor = Color.Gray;
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+
+
+                    string deptQuery = "SELECT department_id, department_name FROM departments";
+                    MySqlDataAdapter deptAdapter = new MySqlDataAdapter(deptQuery, conn);
+                    DataTable deptDt = new DataTable();
+                    deptAdapter.Fill(deptDt);
+                    cmbDepartment.DataSource = deptDt;
+                    cmbDepartment.DisplayMember = "department_name";
+                    cmbDepartment.ValueMember = "department_id";
+                    cmbDepartment.SelectedIndex = -1;
+
+
+                    string posQuery = "SELECT position_id, position_name FROM positions";
+                    MySqlDataAdapter posAdapter = new MySqlDataAdapter(posQuery, conn);
+                    DataTable posDt = new DataTable();
+                    posAdapter.Fill(posDt);
+                    cmbPosition.DataSource = posDt;
+                    cmbPosition.DisplayMember = "position_name";
+                    cmbPosition.ValueMember = "position_id";
+                    cmbPosition.SelectedIndex = -1;
+
+
+                    string empQuery = "SELECT employment_type_id, employment_name FROM employment_types";
+                    MySqlDataAdapter empAdapter = new MySqlDataAdapter(empQuery, conn);
+                    DataTable empDt = new DataTable();
+                    empAdapter.Fill(empDt);
+                    cmbEmploymentType.DataSource = empDt;
+                    cmbEmploymentType.DisplayMember = "employment_name";
+                    cmbEmploymentType.ValueMember = "employment_type_id";
+                    cmbEmploymentType.SelectedIndex = -1;
+
+
+                    string assmtQuery = "SELECT assessment_type_id, assessment_name FROM assessment_types";
+                    MySqlDataAdapter assmtAdapter = new MySqlDataAdapter(assmtQuery, conn);
+                    DataTable assmtDt = new DataTable();
+                    assmtAdapter.Fill(assmtDt);
+                    cmbAssessmentType.DataSource = assmtDt;
+                    cmbAssessmentType.DisplayMember = "assessment_name";
+                    cmbAssessmentType.ValueMember = "assessment_type_id";
+                    cmbAssessmentType.SelectedIndex = -1;
+
+
+                    string intQuery = "SELECT interview_type_id, interview_name FROM interview_types";
+                    MySqlDataAdapter intAdapter = new MySqlDataAdapter(intQuery, conn);
+                    DataTable intDt = new DataTable();
+                    intAdapter.Fill(intDt);
+                    cmbInterviewType.DataSource = intDt;
+                    cmbInterviewType.DisplayMember = "interview_name";
+                    cmbInterviewType.ValueMember = "interview_type_id";
+                    cmbInterviewType.SelectedIndex = -1;
+
+
+                    string reqQuery = "SELECT requirement_type_id, requirement_name FROM requirementtypes";
+                    MySqlDataAdapter reqAdapter = new MySqlDataAdapter(reqQuery, conn);
+                    DataTable reqDt = new DataTable();
+                    reqAdapter.Fill(reqDt);
+                    ((ListBox)clbRequirements).DataSource = reqDt;
+                    ((ListBox)clbRequirements).DisplayMember = "requirement_name";
+                    ((ListBox)clbRequirements).ValueMember = "requirement_type_id";
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error loading dropdown data: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+
+
+        private void btnSaveVacancy_Click_1(object sender, EventArgs e)
+        {
+
+            if (cmbDepartment.SelectedIndex == -1 || cmbPosition.SelectedIndex == -1 ||
+                cmbEmploymentType.SelectedIndex == -1 || cmbAssessmentType.SelectedIndex == -1 ||
+                cmbInterviewType.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select an option for all dropdown fields.", "Validation Required", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -79,124 +187,41 @@ namespace HRApplicantWindowSystem
                 {
                     conn.Open();
 
-                    string deptQuery = "SELECT department_id, department_name FROM departments";
-                    MySqlDataAdapter deptAdapter = new MySqlDataAdapter(deptQuery, conn);
-                    DataTable deptDt = new DataTable();
-                    deptAdapter.Fill(deptDt);
 
-                    cmbDepartment.DataSource = deptDt;
-                    cmbDepartment.DisplayMember = "department_name";
-                    cmbDepartment.ValueMember = "department_id";
-                    cmbDepartment.SelectedIndex = -1;
+                    string insertSql = @"INSERT INTO jobvacancies 
+                                 (department_id, position_id, employment_type_id, assessment_type_id, interview_type_id, requirements, status, posted_date) 
+                                 VALUES 
+                                 (@deptId, @posId, @empId, @assmtId, @intId, @reqs, 'Open', @date)";
+
+                    using (MySqlCommand cmd = new MySqlCommand(insertSql, conn))
+                    {
+
+                        cmd.Parameters.AddWithValue("@deptId", cmbDepartment.SelectedValue);
+                        cmd.Parameters.AddWithValue("@posId", cmbPosition.SelectedValue);
+                        cmd.Parameters.AddWithValue("@empId", cmbEmploymentType.SelectedValue);
+                        cmd.Parameters.AddWithValue("@assmtId", cmbAssessmentType.SelectedValue);
+                        cmd.Parameters.AddWithValue("@intId", cmbInterviewType.SelectedValue);
 
 
-                    string reqQuery = "SELECT requirement_type_id, requirement_name FROM requirementtypes";
-                    MySqlDataAdapter reqAdapter = new MySqlDataAdapter(reqQuery, conn);
-                    DataTable reqDt = new DataTable();
-                    reqAdapter.Fill(reqDt);
+                        cmd.Parameters.AddWithValue("@reqs", this.Requirements);
+
+                        cmd.Parameters.AddWithValue("@date", DateTime.Now);
+
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    MessageBox.Show("Job vacancy successfully posted!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 
-                    ((ListBox)clbRequirements).DataSource = reqDt;
-                    ((ListBox)clbRequirements).DisplayMember = "requirement_name";
-                    ((ListBox)clbRequirements).ValueMember = "requirement_type_id";
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error loading departments: " + ex.Message);
+                    MessageBox.Show("Error saving vacancy: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-        }
 
-        private void EntJobtitle_Enter(object sender, EventArgs e)
-        {
-            if (EntJobtitle.Text == "Enter job title...")
-            {
-                EntJobtitle.Text = "";
-                EntJobtitle.ForeColor = Color.Black;
-            }
-        }
-
-        private void EntJobtitle_Leave(object sender, EventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(EntJobtitle.Text))
-            {
-                EntJobtitle.Text = "Enter job title...";
-                EntJobtitle.ForeColor = Color.Gray;
-            }
-        }
-
-        private void EntJobtitle_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                string jobTitle = EntJobtitle.Text.Trim();
-
-                if (jobTitle == "Enter job title..." || string.IsNullOrWhiteSpace(jobTitle))
-                {
-                    MessageBox.Show("Please enter a valid job title.");
-                }
-                else
-                {
-
-                    MessageBox.Show("Job Title added: " + jobTitle);
-                }
-
-                e.SuppressKeyPress = true;
-                btnSaveVacancy.Focus();
-            }
-        }
-
-        private void EntDescription_Enter(object sender, EventArgs e)
-        {
-            if (EntDescription.Text == "Enter description...")
-            {
-                EntDescription.Text = "";
-                EntDescription.ForeColor = Color.Black;
-            }
-        }
-
-        
-        private void EntDescription_Leave(object sender, EventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(EntJobtitle.Text))
-            {
-                EntDescription.Text = "Enter description...";
-                EntDescription.ForeColor = Color.Gray;
-            }
-        }
-        
-
-        private void EntDescription_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                string description = EntDescription.Text.Trim();
-
-                if (description == "Enter description..." || string.IsNullOrWhiteSpace(description))
-                {
-                    MessageBox.Show("Please enter a valid description.");
-                }
-                else
-                {
-
-                    MessageBox.Show("Description added: " + description);
-
-                }
-
-                e.SuppressKeyPress = true;
-                btnSaveVacancy.Focus();
-            }
-        }
-        
-
-        private void btnSaveVacancy_Click_1(object sender, EventArgs e)
-        {
-
-            if (string.IsNullOrWhiteSpace(EntJobtitle.Text) || EntJobtitle.Text == "Enter job title..." || cmbDepartment.SelectedIndex == -1)
-            {
-                MessageBox.Show("Please enter a valid job title and select a department.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
 
             this.DialogResult = DialogResult.OK;
             this.Close();
@@ -208,6 +233,11 @@ namespace HRApplicantWindowSystem
         }
 
         private void clbRequirements_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmbDepartment_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

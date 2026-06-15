@@ -12,9 +12,11 @@ namespace HRApplicantWindowSystem
     public partial class Interviews : Form
     {
         private string connectionString = "Server=localhost;Database=db_hrapplicantwindowsystem;User ID=root;Password=abalo_mysql;";
-        public Interviews()
+        private int currentUserId;
+        public Interviews(int userId)
         {
             InitializeComponent();
+            currentUserId = userId;
         }
 
         private void Interviews_Load(object sender, EventArgs e)
@@ -36,18 +38,24 @@ namespace HRApplicantWindowSystem
                 {
                     conn.Open();
 
+
                     string sql = @"SELECT a.applicant_id AS 'ID', 
-                                  CONCAT(a.first_name, ' ', a.last_name) AS 'Name', 
-                                  j.job_title AS 'Position'
-                           FROM applicants a 
-                           INNER JOIN applications ap ON a.applicant_id = ap.applicant_id 
-                           INNER JOIN jobvacancies j ON ap.vacancy_id = j.vacancy_id
-                           WHERE ap.status IN ('Pending', 'Under Review')";
+                                    CONCAT(a.first_name, ' ', a.last_name) AS 'Name', 
+                                    p.position_name AS 'Position'
+                            FROM applicants a 
+                            INNER JOIN applications ap ON a.applicant_id = ap.applicant_id 
+                            INNER JOIN jobvacancies j ON ap.vacancy_id = j.vacancy_id
+                            INNER JOIN positions p ON j.position_id = p.position_id
+                            WHERE ap.status = 'Screening'";
 
                     MySqlDataAdapter adapter = new MySqlDataAdapter(sql, conn);
                     DataTable dt = new DataTable();
                     adapter.Fill(dt);
+
                     dgvPendingApplicants.DataSource = dt;
+
+
+                    dgvPendingApplicants.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 }
                 catch (Exception ex)
                 {
@@ -75,12 +83,31 @@ namespace HRApplicantWindowSystem
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     conn.Open();
-                    string docSql = "SELECT document_name AS 'Document', file_path AS 'File' FROM applicantdocuments WHERE applicant_id = @id";
-                    MySqlDataAdapter docAdapter = new MySqlDataAdapter(docSql, conn);
-                    docAdapter.SelectCommand.Parameters.AddWithValue("@id", txtAppID.Text);
-                    DataTable docDt = new DataTable();
-                    docAdapter.Fill(docDt);
-                    dgvDocs.DataSource = docDt;
+
+                    string appLookup = "SELECT application_id FROM applications WHERE applicant_id = @id ORDER BY applied_date DESC LIMIT 1";
+                    int appId = 0;
+                    using (MySqlCommand appCmd = new MySqlCommand(appLookup, conn))
+                    {
+                        appCmd.Parameters.AddWithValue("@id", txtAppID.Text);
+                        object resApp = appCmd.ExecuteScalar();
+                        if (resApp != null && resApp != DBNull.Value) appId = Convert.ToInt32(resApp);
+                    }
+
+                    if (appId == 0)
+                    {
+                        dgvDocs.DataSource = null;
+                    }
+                    else
+                    {
+                        string docSql = @"SELECT rt.requirement_name AS 'Document', ad.file_path AS 'File' 
+                                          FROM RequirementTypes rt 
+                                          LEFT JOIN ApplicantDocuments ad ON rt.requirement_type_id = ad.requirement_type_id AND ad.application_id = @appId";
+                        MySqlDataAdapter docAdapter = new MySqlDataAdapter(docSql, conn);
+                        docAdapter.SelectCommand.Parameters.AddWithValue("@appId", appId);
+                        DataTable docDt = new DataTable();
+                        docAdapter.Fill(docDt);
+                        dgvDocs.DataSource = docDt;
+                    }
                 }
             }
         }
@@ -105,25 +132,30 @@ namespace HRApplicantWindowSystem
                     conn.Open();
 
 
-                    string updateStatusSql = "UPDATE applications SET status = @status WHERE applicant_id = @id";
+
+                    string updateStatusSql = @"UPDATE applications SET status = @status WHERE application_id = 
+                                              (SELECT application_id FROM (SELECT application_id FROM applications WHERE applicant_id = @id ORDER BY applied_date DESC LIMIT 1) AS t)";
                     using (MySqlCommand cmdStatus = new MySqlCommand(updateStatusSql, conn))
                     {
-                        cmdStatus.Parameters.AddWithValue("@status", decisionStatus == "Qualified" ? "Shortlisted" : "Rejected");
+                        string newStatus = decisionStatus == "Qualified" ? "Shortlisted" : "Rejected";
+                        cmdStatus.Parameters.AddWithValue("@status", newStatus);
                         cmdStatus.Parameters.AddWithValue("@id", txtAppID.Text);
                         cmdStatus.ExecuteNonQuery();
                     }
 
 
-                    string insertRemarksSql = @"INSERT INTO screeningresults (application_id, remarks, result) 
-                                        VALUES ((SELECT application_id FROM applications WHERE applicant_id = @id LIMIT 1), @remarks, @result)";
+                    string insertRemarksSql = @"INSERT INTO screeningresults (application_id, screened_by, remarks, result) 
+                            VALUES ((SELECT application_id FROM (SELECT application_id FROM applications WHERE applicant_id = @id ORDER BY applied_date DESC LIMIT 1) AS t), @screenedBy, @remarks, @result)";
                     using (MySqlCommand cmdRemarks = new MySqlCommand(insertRemarksSql, conn))
                     {
                         cmdRemarks.Parameters.AddWithValue("@id", txtAppID.Text);
+                        cmdRemarks.Parameters.AddWithValue("@screenedBy", currentUserId); 
                         cmdRemarks.Parameters.AddWithValue("@remarks", txtRemarks.Text.Trim());
                         cmdRemarks.Parameters.AddWithValue("@result", decisionStatus);
                         cmdRemarks.ExecuteNonQuery();
                     }
-
+                    LogAuditAction(currentUserId, "Screening", "screeningresults", Convert.ToInt32(txtAppID.Text),
+                    $"Applicant screening completed. Decision: {decisionStatus}. Remarks: {txtRemarks.Text.Trim()}");
                     MessageBox.Show($"Applicant successfully marked as {decisionStatus}!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 
@@ -132,6 +164,7 @@ namespace HRApplicantWindowSystem
                     txtAppPos.Clear();
                     txtRemarks.Clear();
                     dgvDocs.DataSource = null;
+
                     LoadPendingApplicants();
                 }
                 catch (Exception ex)
@@ -180,11 +213,14 @@ namespace HRApplicantWindowSystem
                     conn.Open();
 
 
-                    string sqlApps = @"SELECT ap.application_id AS 'App ID', CONCAT(a.first_name, ' ', a.last_name) AS 'Name', j.job_title AS 'Position'
-                               FROM applicants a 
-                               INNER JOIN applications ap ON a.applicant_id = ap.applicant_id 
-                               INNER JOIN jobvacancies j ON ap.vacancy_id = j.vacancy_id
-                               WHERE ap.status = 'Shortlisted'";
+                    string sqlApps = @"SELECT ap.application_id AS 'App ID', 
+                                    CONCAT(a.first_name, ' ', a.last_name) AS 'Name', 
+                                    p.position_name AS 'Position'
+                            FROM applicants a 
+                            INNER JOIN applications ap ON a.applicant_id = ap.applicant_id 
+                            INNER JOIN jobvacancies j ON ap.vacancy_id = j.vacancy_id
+                            INNER JOIN positions p ON j.position_id = p.position_id
+                            WHERE ap.status = 'Shortlisted'";
                     MySqlDataAdapter adapter = new MySqlDataAdapter(sqlApps, conn);
                     DataTable dtApps = new DataTable();
                     adapter.Fill(dtApps);
@@ -228,10 +264,21 @@ namespace HRApplicantWindowSystem
 
         private void btnSaveSchedule_Click(object sender, EventArgs e)
         {
+
             if (schedSelectedApplicationId == -1)
             {
                 MessageBox.Show("Please select a shortlisted applicant to schedule.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
+            }
+
+            DateTime scheduledDateTime = dtpSchedDate.Value.Date + dtpSchedTime.Value.TimeOfDay;
+
+            if (scheduledDateTime < DateTime.Now)
+            {
+                MessageBox.Show("You cannot schedule an interview in the past. Please select a valid future date and time.", "Invalid Schedule", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                dtpSchedDate.Value = DateTime.Now;
+                return; 
             }
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -242,8 +289,8 @@ namespace HRApplicantWindowSystem
 
 
                     string sqlInsert = @"INSERT INTO interviewschedules 
-                                 (application_id, interview_date, interview_time, interviewer_id, interview_type_id, location, status) 
-                                 VALUES (@appId, @date, @time, @interviewer, @type, @location, 'Scheduled')";
+                     (application_id, interview_date, interview_time, interviewer_id, interview_type_id, location, status) 
+                     VALUES (@appId, @date, @time, @interviewer, @type, @location, 'Scheduled')"; 
 
                     using (MySqlCommand cmd = new MySqlCommand(sqlInsert, conn))
                     {
@@ -297,11 +344,14 @@ namespace HRApplicantWindowSystem
                 {
                     conn.Open();
 
-                    string sql = @"SELECT ap.application_id AS 'App ID', CONCAT(a.first_name, ' ', a.last_name) AS 'Name', j.job_title AS 'Position'
-                           FROM applicants a 
-                           INNER JOIN applications ap ON a.applicant_id = ap.applicant_id 
-                           INNER JOIN jobvacancies j ON ap.vacancy_id = j.vacancy_id
-                           WHERE ap.status = 'Interviewing'";
+                    string sql = @"SELECT ap.application_id AS 'App ID', 
+                                CONCAT(a.first_name, ' ', a.last_name) AS 'Name', 
+                                p.position_name AS 'Position'
+                        FROM applicants a 
+                        INNER JOIN applications ap ON a.applicant_id = ap.applicant_id 
+                        INNER JOIN jobvacancies j ON ap.vacancy_id = j.vacancy_id
+                        INNER JOIN positions p ON j.position_id = p.position_id
+                        WHERE ap.status = 'Interviewing'";
 
                     MySqlDataAdapter adapter = new MySqlDataAdapter(sql, conn);
                     DataTable dt = new DataTable();
@@ -321,7 +371,45 @@ namespace HRApplicantWindowSystem
             {
                 DataGridViewRow row = dgvInterviewees.Rows[e.RowIndex];
                 evalSelectedApplicationId = Convert.ToInt32(row.Cells["App ID"].Value);
+
+
                 txtEvalName.Text = row.Cells["Name"].Value.ToString();
+
+
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    try
+                    {
+                        conn.Open();
+
+                        string getInterviewerSql = @"SELECT u.username 
+                                             FROM interviewschedules i
+                                             INNER JOIN users u ON i.interviewer_id = u.user_id
+                                             WHERE i.application_id = @appId
+                                             ORDER BY i.interview_date DESC LIMIT 1";
+
+                        using (MySqlCommand cmd = new MySqlCommand(getInterviewerSql, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@appId", evalSelectedApplicationId);
+                            object result = cmd.ExecuteScalar();
+
+                            if (result != null && result != DBNull.Value)
+                            {
+
+                                txtInterviewer.Text = result.ToString();
+                            }
+                            else
+                            {
+                                txtInterviewer.Text = "Not Assigned";
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error fetching interviewer: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+
 
                 nudScore.Value = 0;
                 cmbPassFail.SelectedIndex = -1;
@@ -344,13 +432,23 @@ namespace HRApplicantWindowSystem
                 {
                     conn.Open();
 
+                    int matchingScheduleId = 0;
+                    string getSchedSql = "SELECT schedule_id FROM interviewschedules WHERE application_id = @appId ORDER BY interview_date DESC LIMIT 1";
+                    using (MySqlCommand cmdSched = new MySqlCommand(getSchedSql, conn))
+                    {
+                        cmdSched.Parameters.AddWithValue("@appId", evalSelectedApplicationId);
+                        object res = cmdSched.ExecuteScalar();
+                        if (res != null && res != DBNull.Value) matchingScheduleId = Convert.ToInt32(res);
+                    }
+
                     string sqlInsert = @"INSERT INTO interviewevaluations 
-                                 (application_id, score, pass_fail, recommendation, remarks) 
-                                 VALUES (@appId, @score, @passFail, @recommendation, @remarks)";
+                                 (application_id, schedule_id, score, pass_fail, recommendation, remarks) 
+                                 VALUES (@appId, @schedId, @score, @passFail, @recommendation, @remarks)";
 
                     using (MySqlCommand cmd = new MySqlCommand(sqlInsert, conn))
                     {
                         cmd.Parameters.AddWithValue("@appId", evalSelectedApplicationId);
+                        cmd.Parameters.AddWithValue("@schedId", matchingScheduleId);
                         cmd.Parameters.AddWithValue("@score", nudScore.Value);
                         cmd.Parameters.AddWithValue("@passFail", cmbPassFail.SelectedItem.ToString());
                         cmd.Parameters.AddWithValue("@recommendation", txtRecommendation.Text.Trim());
@@ -358,7 +456,7 @@ namespace HRApplicantWindowSystem
                         cmd.ExecuteNonQuery();
                     }
 
-                    string newStatus = cmbPassFail.SelectedItem.ToString() == "Pass" ? "Hired" : "Rejected";
+                    string newStatus = cmbPassFail.SelectedItem.ToString() == "Pass" ? "Offered" : "Rejected";
                     string sqlUpdate = "UPDATE applications SET status = @status WHERE application_id = @appId";
 
                     using (MySqlCommand cmdUpdate = new MySqlCommand(sqlUpdate, conn))
@@ -367,6 +465,7 @@ namespace HRApplicantWindowSystem
                         cmdUpdate.Parameters.AddWithValue("@appId", evalSelectedApplicationId);
                         cmdUpdate.ExecuteNonQuery();
                     }
+                    LogAuditAction(currentUserId, "Interview Evaluation", "interviewevaluations", evalSelectedApplicationId, "Applicant passed/failed interview.");
 
                     MessageBox.Show($"Evaluation saved! Applicant status updated to: {newStatus}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -386,6 +485,83 @@ namespace HRApplicantWindowSystem
         private void btnBack_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void btnViewApplicantProfile_Click(object sender, EventArgs e)
+        {
+
+            if (string.IsNullOrWhiteSpace(txtAppID.Text))
+            {
+                MessageBox.Show("Please select an applicant from the Pending list first.", "Validation Required", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            int selectedAppId = Convert.ToInt32(txtAppID.Text);
+
+
+            ApplicantProfileForm profileForm = new ApplicantProfileForm(selectedAppId, true);
+            profileForm.ShowDialog();
+        }
+
+        private void dgvDocs_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+            if (e.RowIndex >= 0)
+            {
+
+                string filePath = dgvDocs.Rows[e.RowIndex].Cells["File"].Value.ToString();
+
+                try
+                {
+
+                    if (System.IO.File.Exists(filePath))
+                    {
+
+                        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
+                        {
+                            FileName = filePath,
+                            UseShellExecute = true
+                        });
+                    }
+                    else
+                    {
+                        MessageBox.Show("Cannot open file. The file path might be incorrect or the file was moved.", "File Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error opening file: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+        private void LogAuditAction(int userId, string actionType, string tableAffected, int recordId, string details)
+        {
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+
+                    string sql = @"INSERT INTO audittrail 
+                           (user_id, action_type, table_affected, record_id, details, action_timestamp) 
+                           VALUES (@userId, @actionType, @tableAffected, @recordId, @details, NOW())";
+
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@userId", currentUserId);
+                        cmd.Parameters.AddWithValue("@actionType", actionType);
+                        cmd.Parameters.AddWithValue("@tableAffected", tableAffected);
+                        cmd.Parameters.AddWithValue("@recordId", recordId);
+                        cmd.Parameters.AddWithValue("@details", details);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Audit Log Error: " + ex.Message);
+                }
+            }
         }
     }
 }
