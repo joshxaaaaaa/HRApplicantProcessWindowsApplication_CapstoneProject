@@ -44,3 +44,4 @@ C:\Users\Cheliza Rose\source\repos\HRApplicantProcessWindowsApplication_Capstone
 C:\Users\Cheliza Rose\source\repos\HRApplicantProcessWindowsApplication_CapstoneProject\obj\Debug\net10.0-windows\HRApplicantWindowSystem.ApplicantProcess.resources
 C:\Users\Cheliza Rose\source\repos\HRApplicantProcessWindowsApplication_CapstoneProject\obj\Debug\net10.0-windows\HRApplicantWindowSystem.Interviews.resources
 C:\Users\Cheliza Rose\source\repos\HRApplicantProcessWindowsApplication_CapstoneProject\obj\Debug\net10.0-windows\HRApplicantWindowSystem.JobOpenings.resources
+C:\Users\Cheliza Rose\source\repos\HRApplicantProcessWindowsApplication_CapstoneProject\obj\Debug\net10.0-windows\HRApplicantWindowSystem.FinalDecisionForm.resources

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
             btnLogin = new Button();
             label1 = new Label();
             label2 = new Label();
@@ -38,12 +39,22 @@
             pnlRoleSelection = new Panel();
             btnRoleHR = new Button();
             btnRoleApplicant = new Button();
+            pictureBox3 = new PictureBox();
             label5 = new Label();
-            label3 = new Label();
             pnlLoginInputs = new Panel();
             btnBack = new Button();
+            pictureBox4 = new PictureBox();
+            pictureBox2 = new PictureBox();
+            label3 = new Label();
+            label4 = new Label();
+            label6 = new Label();
+            pictureBox1 = new PictureBox();
             pnlRoleSelection.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             pnlLoginInputs.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // btnLogin
@@ -59,15 +70,18 @@
             // label1
             // 
             label1.AutoSize = true;
+            label1.BackColor = SystemColors.GradientInactiveCaption;
             label1.Location = new Point(29, 258);
             label1.Name = "label1";
             label1.Size = new Size(121, 20);
             label1.TabIndex = 2;
             label1.Text = "Username/Email:";
+            label1.Click += label1_Click;
             // 
             // label2
             // 
             label2.AutoSize = true;
+            label2.BackColor = SystemColors.GradientInactiveCaption;
             label2.Location = new Point(29, 311);
             label2.Name = "label2";
             label2.Size = new Size(73, 20);
@@ -112,10 +126,11 @@
             pnlRoleSelection.BackColor = SystemColors.Info;
             pnlRoleSelection.Controls.Add(btnRoleHR);
             pnlRoleSelection.Controls.Add(btnRoleApplicant);
+            pnlRoleSelection.Controls.Add(pictureBox3);
             pnlRoleSelection.Dock = DockStyle.Right;
-            pnlRoleSelection.Location = new Point(862, 0);
+            pnlRoleSelection.Location = new Point(441, 0);
             pnlRoleSelection.Name = "pnlRoleSelection";
-            pnlRoleSelection.Size = new Size(307, 622);
+            pnlRoleSelection.Size = new Size(307, 650);
             pnlRoleSelection.TabIndex = 9;
             pnlRoleSelection.Paint += pnlRoleSelection_Paint;
             // 
@@ -139,6 +154,17 @@
             btnRoleApplicant.UseVisualStyleBackColor = true;
             btnRoleApplicant.Click += btnRoleApplicant_Click;
             // 
+            // pictureBox3
+            // 
+            pictureBox3.BackColor = SystemColors.GradientActiveCaption;
+            pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
+            pictureBox3.Location = new Point(-10, -28);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(335, 716);
+            pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox3.TabIndex = 0;
+            pictureBox3.TabStop = false;
+            // 
             // label5
             // 
             label5.AutoSize = true;
@@ -147,18 +173,9 @@
             label5.Size = new Size(0, 20);
             label5.TabIndex = 10;
             // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(172, 126);
-            label3.Name = "label3";
-            label3.Size = new Size(194, 20);
-            label3.TabIndex = 10;
-            label3.Text = "Welcome to Big 5 Company";
-            // 
             // pnlLoginInputs
             // 
-            pnlLoginInputs.BackColor = SystemColors.Info;
+            pnlLoginInputs.BackColor = SystemColors.GradientActiveCaption;
             pnlLoginInputs.Controls.Add(btnBack);
             pnlLoginInputs.Controls.Add(label1);
             pnlLoginInputs.Controls.Add(label5);
@@ -167,10 +184,11 @@
             pnlLoginInputs.Controls.Add(label2);
             pnlLoginInputs.Controls.Add(btnLogin);
             pnlLoginInputs.Controls.Add(txtPassword);
+            pnlLoginInputs.Controls.Add(pictureBox4);
             pnlLoginInputs.Dock = DockStyle.Right;
-            pnlLoginInputs.Location = new Point(531, 0);
+            pnlLoginInputs.Location = new Point(123, 0);
             pnlLoginInputs.Name = "pnlLoginInputs";
-            pnlLoginInputs.Size = new Size(331, 622);
+            pnlLoginInputs.Size = new Size(318, 650);
             pnlLoginInputs.TabIndex = 11;
             // 
             // btnBack
@@ -183,22 +201,94 @@
             btnBack.UseVisualStyleBackColor = true;
             btnBack.Click += btnBack_Click;
             // 
+            // pictureBox4
+            // 
+            pictureBox4.Image = (Image)resources.GetObject("pictureBox4.Image");
+            pictureBox4.Location = new Point(-15, -28);
+            pictureBox4.Name = "pictureBox4";
+            pictureBox4.Size = new Size(333, 716);
+            pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox4.TabIndex = 12;
+            pictureBox4.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
+            pictureBox2.Location = new Point(20, 12);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(113, 96);
+            pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox2.TabIndex = 13;
+            pictureBox2.TabStop = false;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.BackColor = SystemColors.GradientActiveCaption;
+            label3.Font = new Font("Century Gothic", 25.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label3.Location = new Point(141, 9);
+            label3.Name = "label3";
+            label3.Size = new Size(284, 55);
+            label3.TabIndex = 14;
+            label3.Text = "PENTANODE";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.BackColor = SystemColors.GradientActiveCaption;
+            label4.Location = new Point(151, 67);
+            label4.Name = "label4";
+            label4.Size = new Size(179, 20);
+            label4.TabIndex = 15;
+            label4.Text = "Network and Systems, Co.";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.BackColor = SystemColors.ActiveCaption;
+            label6.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label6.Location = new Point(39, 571);
+            label6.Name = "label6";
+            label6.Size = new Size(357, 25);
+            label6.TabIndex = 16;
+            label6.Text = "Welcome to Pentanode Window System!";
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(-5, 0);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(452, 647);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 17;
+            pictureBox1.TabStop = false;
+            pictureBox1.Click += pictureBox1_Click_1;
+            // 
             // LoginForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1169, 622);
+            BackColor = SystemColors.GradientInactiveCaption;
+            ClientSize = new Size(748, 650);
             Controls.Add(pnlLoginInputs);
+            Controls.Add(label6);
+            Controls.Add(label4);
             Controls.Add(label3);
+            Controls.Add(pictureBox2);
             Controls.Add(pnlRoleSelection);
             Controls.Add(linkLabel1);
+            Controls.Add(pictureBox1);
             Name = "LoginForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Login";
             Load += LoginForm_Load;
             pnlRoleSelection.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             pnlLoginInputs.ResumeLayout(false);
             pnlLoginInputs.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -214,10 +304,16 @@
         private Button btnCreateAccount;
         private Panel pnlRoleSelection;
         private Label label5;
-        private Label label3;
         private Panel pnlLoginInputs;
         private Button btnBack;
         private Button btnRoleHR;
         private Button btnRoleApplicant;
+        private PictureBox pictureBox2;
+        private Label label3;
+        private Label label4;
+        private Label label6;
+        private PictureBox pictureBox1;
+        private PictureBox pictureBox3;
+        private PictureBox pictureBox4;
     }
 }
