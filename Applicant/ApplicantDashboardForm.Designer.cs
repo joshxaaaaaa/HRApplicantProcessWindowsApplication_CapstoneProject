@@ -19,6 +19,7 @@ namespace HRApplicantWindowSystem
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ApplicantDashboardForm));
             panel1 = new Panel();
             btnLogout = new Button();
             btnStatusTracking = new Button();
@@ -26,10 +27,14 @@ namespace HRApplicantWindowSystem
             btnMyApplication = new Button();
             btnJobVacancies = new Button();
             btnProfile = new Button();
+            pictureBox1 = new PictureBox();
             panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
-
-            panel1.BackColor = SystemColors.ControlLight;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = SystemColors.ActiveCaption;
             panel1.Controls.Add(btnLogout);
             panel1.Controls.Add(btnStatusTracking);
             panel1.Controls.Add(btnDocuments);
@@ -41,7 +46,9 @@ namespace HRApplicantWindowSystem
             panel1.Name = "panel1";
             panel1.Size = new Size(366, 613);
             panel1.TabIndex = 0;
-
+            // 
+            // btnLogout
+            // 
             btnLogout.Location = new Point(19, 467);
             btnLogout.Margin = new Padding(3, 4, 3, 4);
             btnLogout.Name = "btnLogout";
@@ -50,7 +57,9 @@ namespace HRApplicantWindowSystem
             btnLogout.Text = "Log Out";
             btnLogout.UseVisualStyleBackColor = true;
             btnLogout.Click += btnLogout_Click;
-
+            // 
+            // btnStatusTracking
+            // 
             btnStatusTracking.Location = new Point(19, 349);
             btnStatusTracking.Margin = new Padding(3, 4, 3, 4);
             btnStatusTracking.Name = "btnStatusTracking";
@@ -59,7 +68,9 @@ namespace HRApplicantWindowSystem
             btnStatusTracking.Text = "Applicant Status Tracking";
             btnStatusTracking.UseVisualStyleBackColor = true;
             btnStatusTracking.Click += btnStatusTracking_Click;
-
+            // 
+            // btnDocuments
+            // 
             btnDocuments.Location = new Point(19, 268);
             btnDocuments.Margin = new Padding(3, 4, 3, 4);
             btnDocuments.Name = "btnDocuments";
@@ -68,7 +79,9 @@ namespace HRApplicantWindowSystem
             btnDocuments.Text = "Applicant Documents";
             btnDocuments.UseVisualStyleBackColor = true;
             btnDocuments.Click += btnDocuments_Click;
-
+            // 
+            // btnMyApplication
+            // 
             btnMyApplication.Location = new Point(19, 187);
             btnMyApplication.Margin = new Padding(3, 4, 3, 4);
             btnMyApplication.Name = "btnMyApplication";
@@ -77,7 +90,9 @@ namespace HRApplicantWindowSystem
             btnMyApplication.Text = "My Application";
             btnMyApplication.UseVisualStyleBackColor = true;
             btnMyApplication.Click += btnMyApplication_Click;
-
+            // 
+            // btnJobVacancies
+            // 
             btnJobVacancies.Location = new Point(19, 105);
             btnJobVacancies.Margin = new Padding(3, 4, 3, 4);
             btnJobVacancies.Name = "btnJobVacancies";
@@ -86,7 +101,9 @@ namespace HRApplicantWindowSystem
             btnJobVacancies.Text = "Job Vacancies";
             btnJobVacancies.UseVisualStyleBackColor = true;
             btnJobVacancies.Click += btnJobVacancies_Click;
-
+            // 
+            // btnProfile
+            // 
             btnProfile.Location = new Point(19, 24);
             btnProfile.Margin = new Padding(3, 4, 3, 4);
             btnProfile.Name = "btnProfile";
@@ -95,9 +112,23 @@ namespace HRApplicantWindowSystem
             btnProfile.Text = "Applicant Profile";
             btnProfile.UseVisualStyleBackColor = true;
             btnProfile.Click += btnProfile_Click;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(364, -4);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(549, 595);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 1;
+            pictureBox1.TabStop = false;
+            // 
+            // ApplicantDashboardForm
+            // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(914, 600);
+            Controls.Add(pictureBox1);
             Controls.Add(panel1);
             HelpButton = true;
             Margin = new Padding(3, 4, 3, 4);
@@ -106,6 +137,7 @@ namespace HRApplicantWindowSystem
             Text = "Applicant Dashboard";
             Load += ApplicantDashboardForm_Load;
             panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -118,5 +150,6 @@ namespace HRApplicantWindowSystem
         private Button btnDocuments;
         private Button btnStatusTracking;
         private Button btnLogout;
+        private PictureBox pictureBox1;
     }
 }

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HRApplicantWindowSystem")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+559919b08add8eaa0391c8132fd52c268562c5a8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5cc6f8f3afee7d840a41083b2261db6d21992754")]
 [assembly: System.Reflection.AssemblyProductAttribute("HRApplicantWindowSystem")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HRApplicantWindowSystem")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
