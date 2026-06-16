@@ -136,5 +136,20 @@ namespace HRApplicantWindowSystem
         {
 
         }
+
+        private void dgvRecentUpdates_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void lblInterviewDetails_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
