@@ -132,7 +132,7 @@ namespace HRApplicantWindowSystem
                             CurrentApplicationID = Convert.ToInt32(res);
                         }
                     }
-                    catch {  }
+                    catch { }
                 }
             }
         }
@@ -308,7 +308,7 @@ namespace HRApplicantWindowSystem
                                 cmdHistory.Parameters.AddWithValue("@AppID", activeApplicationId);
                                 cmdHistory.Parameters.AddWithValue("@OldStatus", (object)oldStatus ?? DBNull.Value);
 
-    
+
                                 cmdHistory.ExecuteNonQuery();
                             }
 
@@ -347,6 +347,9 @@ namespace HRApplicantWindowSystem
 
         }
 
+        private void label1_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }

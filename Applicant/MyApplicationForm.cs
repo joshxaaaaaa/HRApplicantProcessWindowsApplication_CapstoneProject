@@ -219,7 +219,7 @@ namespace HRApplicantWindowSystem
 
                                 try { currentVacancyId = Convert.ToInt32(reader["vacancy_id"]); } catch { currentVacancyId = 0; }
                                 activeApplicationId = Convert.ToInt32(reader["application_id"]);
-                                
+
                                 currentApplicationStatus = reader["status"].ToString();
 
                                 var lockedObj = reader["is_locked"];
@@ -273,7 +273,7 @@ namespace HRApplicantWindowSystem
                 return;
             }
 
- 
+
             btnDeleteDraft.Enabled = (activeApplicationId != 0);
             lblLockNotice.Text = "📝 Unlocked: You may modify or submit your application.";
             lblLockNotice.ForeColor = System.Drawing.Color.DarkGreen;
@@ -308,7 +308,7 @@ namespace HRApplicantWindowSystem
 
         private void btnSubmit_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void btnDeleteDraft_Click(object sender, EventArgs e)
@@ -351,7 +351,7 @@ namespace HRApplicantWindowSystem
 
                                 activeApplicationId = 0;
                                 currentApplicationStatus = "";
-                               
+
 
                                 lblStatusText.Text = "Status: Draft (Unsubmitted)";
                                 EvaluateFormPermissions();
@@ -378,6 +378,11 @@ namespace HRApplicantWindowSystem
         }
 
         private void lblJobTitle_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
         {
 
         }

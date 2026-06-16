@@ -19,8 +19,8 @@ namespace HRApplicantWindowSystem.Applicant
         private Button btnJobVacancies;
         private Button button1;
         private PictureBox pictureBox1;
-        private Label label2;
         private Label label3;
+        private Label label2;
         private DataGridView dgvJobVacancies;
 
         public JobVacanciesForm(int accountId)
@@ -44,17 +44,18 @@ namespace HRApplicantWindowSystem.Applicant
             btnJobVacancies = new Button();
             button1 = new Button();
             pictureBox1 = new PictureBox();
-            label2 = new Label();
             label3 = new Label();
+            label2 = new Label();
             ((System.ComponentModel.ISupportInitialize)dgvJobVacancies).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // button2
             // 
-            button2.Location = new Point(942, 385);
+            button2.Location = new Point(824, 289);
+            button2.Margin = new Padding(3, 2, 3, 2);
             button2.Name = "button2";
-            button2.Size = new Size(180, 50);
+            button2.Size = new Size(158, 38);
             button2.TabIndex = 6;
             button2.Text = "Back";
             button2.Click += button2_Click;
@@ -63,9 +64,9 @@ namespace HRApplicantWindowSystem.Applicant
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Century Gothic", 20F);
-            label4.Location = new Point(49, 111);
+            label4.Location = new Point(43, 83);
             label4.Name = "label4";
-            label4.Size = new Size(263, 40);
+            label4.Size = new Size(210, 33);
             label4.TabIndex = 5;
             label4.Text = "Job Vacancies";
             // 
@@ -73,18 +74,18 @@ namespace HRApplicantWindowSystem.Applicant
             // 
             label13.AutoSize = true;
             label13.Font = new Font("Century Gothic", 8.25F);
-            label13.Location = new Point(49, 153);
+            label13.Location = new Point(43, 115);
             label13.Name = "label13";
-            label13.Size = new Size(276, 19);
+            label13.Size = new Size(217, 16);
             label13.TabIndex = 4;
             label13.Text = "Browse and apply for vacant positions:";
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(64, 480);
+            label1.Location = new Point(56, 360);
             label1.Name = "label1";
-            label1.Size = new Size(113, 20);
+            label1.Size = new Size(90, 15);
             label1.TabIndex = 3;
             label1.Text = "Total Vacancies:";
             // 
@@ -94,29 +95,29 @@ namespace HRApplicantWindowSystem.Applicant
             dgvJobVacancies.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvJobVacancies.BackgroundColor = SystemColors.InactiveCaption;
             dgvJobVacancies.ColumnHeadersHeight = 29;
-            dgvJobVacancies.Location = new Point(49, 193);
+            dgvJobVacancies.Location = new Point(43, 145);
+            dgvJobVacancies.Margin = new Padding(3, 2, 3, 2);
             dgvJobVacancies.Name = "dgvJobVacancies";
             dgvJobVacancies.ReadOnly = true;
             dgvJobVacancies.RowHeadersWidth = 51;
             dgvJobVacancies.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvJobVacancies.Size = new Size(819, 262);
+            dgvJobVacancies.Size = new Size(717, 196);
             dgvJobVacancies.TabIndex = 0;
             // 
             // lblTotalCount
             // 
             lblTotalCount.AutoSize = true;
-            lblTotalCount.Location = new Point(173, 480);
+            lblTotalCount.Location = new Point(151, 360);
             lblTotalCount.Name = "lblTotalCount";
-            lblTotalCount.Size = new Size(17, 20);
+            lblTotalCount.Size = new Size(13, 15);
             lblTotalCount.TabIndex = 1;
             lblTotalCount.Text = "0";
             // 
             // btnJobVacancies
             // 
-            btnJobVacancies.Location = new Point(650, 111);
-            btnJobVacancies.Margin = new Padding(3, 4, 3, 4);
+            btnJobVacancies.Location = new Point(569, 83);
             btnJobVacancies.Name = "btnJobVacancies";
-            btnJobVacancies.Size = new Size(208, 61);
+            btnJobVacancies.Size = new Size(182, 46);
             btnJobVacancies.TabIndex = 7;
             btnJobVacancies.Text = "View Details";
             btnJobVacancies.UseVisualStyleBackColor = true;
@@ -124,10 +125,9 @@ namespace HRApplicantWindowSystem.Applicant
             // 
             // button1
             // 
-            button1.Location = new Point(679, 480);
-            button1.Margin = new Padding(3, 4, 3, 4);
+            button1.Location = new Point(594, 360);
             button1.Name = "button1";
-            button1.Size = new Size(189, 50);
+            button1.Size = new Size(165, 38);
             button1.TabIndex = 8;
             button1.Text = "Apply";
             button1.UseVisualStyleBackColor = true;
@@ -136,38 +136,39 @@ namespace HRApplicantWindowSystem.Applicant
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(310, 12);
+            pictureBox1.Location = new Point(271, 9);
+            pictureBox1.Margin = new Padding(3, 2, 3, 2);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(92, 78);
+            pictureBox1.Size = new Size(80, 58);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 9;
             pictureBox1.TabStop = false;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(357, 39);
+            label3.Name = "label3";
+            label3.Size = new Size(145, 15);
+            label3.TabIndex = 11;
+            label3.Text = "Network and Systems, Co.";
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Century Gothic", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(408, 12);
+            label2.Location = new Point(357, 9);
             label2.Name = "label2";
-            label2.Size = new Size(214, 40);
+            label2.Size = new Size(172, 33);
             label2.TabIndex = 10;
             label2.Text = "PENTANODE";
             // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(408, 52);
-            label3.Name = "label3";
-            label3.Size = new Size(179, 20);
-            label3.TabIndex = 11;
-            label3.Text = "Network and Systems, Co.";
-            // 
             // JobVacanciesForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientInactiveCaption;
-            ClientSize = new Size(914, 600);
+            ClientSize = new Size(800, 450);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(pictureBox1);
@@ -179,6 +180,7 @@ namespace HRApplicantWindowSystem.Applicant
             Controls.Add(label13);
             Controls.Add(label4);
             Controls.Add(button2);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "JobVacanciesForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Job Vacancies";

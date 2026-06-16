@@ -22,7 +22,7 @@ namespace HRApplicantWindowSystem
             InitializeComponent();
         }
 
-        
+
 
         private void ApplicantStatusForm_Load(object sender, EventArgs e)
         {
@@ -130,6 +130,9 @@ namespace HRApplicantWindowSystem
             this.Close();
         }
 
+        private void lblCurrentStage_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }
