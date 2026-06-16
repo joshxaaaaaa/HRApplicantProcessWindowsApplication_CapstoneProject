@@ -13,14 +13,14 @@ namespace HRApplicantWindowSystem
     public partial class ApplicantDashboardForm : Form
     {
         private string connectionString = "Server=localhost;Database=db_hrapplicantwindowsystem;User ID=root;Password=abalo_mysql;";
-  
+
         private int currentAccountId;
 
 
         public ApplicantDashboardForm(int accountId)
         {
             InitializeComponent();
-            currentAccountId = accountId; 
+            currentAccountId = accountId;
         }
 
         private void btnProfile_Click(object sender, EventArgs e)
@@ -185,6 +185,12 @@ namespace HRApplicantWindowSystem
         {
             LoginForm loginForm = new LoginForm();
             loginForm.Close();
+        }
+
+        private void btnDashboard_Click(object sender, EventArgs e)
+        {
+            ApplicantSummaryForm summaryForm = new ApplicantSummaryForm(currentAccountId);
+            summaryForm.ShowDialog();
         }
     }
 }

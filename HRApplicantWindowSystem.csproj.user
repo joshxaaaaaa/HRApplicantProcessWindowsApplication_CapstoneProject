@@ -5,6 +5,9 @@
     <Compile Update="Applicant\MyApplicationForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Applicant\ApplicantSummaryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="HR\FinalDecisionForm.cs">
       <SubType>Form</SubType>
     </Compile>

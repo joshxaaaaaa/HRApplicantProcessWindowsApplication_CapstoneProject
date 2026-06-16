@@ -105,6 +105,8 @@ ALTER TABLE interviewevaluations MODIFY COLUMN schedule_id INT;
 
 ALTER TABLE interviewevaluations ADD CONSTRAINT fk_evaluations_schedule FOREIGN KEY (schedule_id) REFERENCES interviewschedules(schedule_id) ON DELETE CASCADE ON UPDATE CASCADE; 
 
+ALTER TABLE interviewevaluations DROP COLUMN comments; 
+
 # Inserted HR Credentials 
 INSERT IGNORE INTO Roles (role_name, permissions) VALUES ('HR Manager', 'Full Admin Access, Final Hiring Decisions'), ('HR Staff', 'Manage Jobs, Review Applicants, Schedule Interviews');  
 
