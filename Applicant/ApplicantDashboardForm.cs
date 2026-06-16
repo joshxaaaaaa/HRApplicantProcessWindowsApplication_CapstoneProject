@@ -185,12 +185,58 @@ namespace HRApplicantWindowSystem
         {
             LoginForm loginForm = new LoginForm();
             loginForm.Close();
+
+            LoadUserGreeting();
         }
 
         private void btnDashboard_Click(object sender, EventArgs e)
         {
             ApplicantSummaryForm summaryForm = new ApplicantSummaryForm(currentAccountId);
             summaryForm.ShowDialog();
+        }
+
+        private void LoadUserGreeting()
+        {
+            string query = "SELECT first_name FROM Applicants WHERE account_id = @AccountID LIMIT 1;";
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@AccountID", currentAccountId);
+
+                    try
+                    {
+                        conn.Open();
+                        object result = cmd.ExecuteScalar();
+
+                        if (result != null && result != DBNull.Value)
+                        {
+                            string firstName = result.ToString();
+                            lblGreeting.Text = $"Welcome, {firstName}!"; 
+                        }
+                        else
+                        {
+                            lblGreeting.Text = "Welcome, Applicant!";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        lblGreeting.Text = "Welcome!";
+                        MessageBox.Show("Error loading greeting: " + ex.Message, "System Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblGreeting_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

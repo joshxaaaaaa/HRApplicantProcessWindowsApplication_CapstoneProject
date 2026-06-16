@@ -92,3 +92,4 @@ C:\Users\ADMIN\Desktop\HRApplicantProcessWindowsApplication_CapstoneProject\obj\
 C:\Users\ADMIN\Desktop\HRApplicantProcessWindowsApplication_CapstoneProject\obj\Debug\net10.0-windows\HRApplicantWindowSystem.pdb
 C:\Users\ADMIN\Desktop\HRApplicantProcessWindowsApplication_CapstoneProject\obj\Debug\net10.0-windows\HRApplicantWindowSystem.genruntimeconfig.cache
 C:\Users\ADMIN\Desktop\HRApplicantProcessWindowsApplication_CapstoneProject\obj\Debug\net10.0-windows\ref\HRApplicantWindowSystem.dll
+C:\Users\Cheliza Rose\source\repos\HRApplicantProcessWindowsApplication_CapstoneProject\obj\Debug\net10.0-windows\HRApplicantWindowSystem.ApplicantSummaryForm.resources

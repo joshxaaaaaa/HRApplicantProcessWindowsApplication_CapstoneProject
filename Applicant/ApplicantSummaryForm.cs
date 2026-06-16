@@ -131,5 +131,10 @@ namespace HRApplicantWindowSystem
         {
             this.Close();
         }
+
+        private void lblCurrentStatus_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
