@@ -29,10 +29,12 @@
         private void InitializeComponent()
         {
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminSettingsForm));
             label1 = new Label();
             AdminSettings = new TabControl();
             tabUserManagement = new TabPage();
             groupBox1 = new GroupBox();
+            label9 = new Label();
             label8 = new Label();
             btnDeleteUser = new Button();
             btnSaveUser = new Button();
@@ -57,7 +59,11 @@
             tabAuditTrail = new TabPage();
             dgvAuditTrail = new DataGridView();
             btnBack = new Button();
-            label9 = new Label();
+            label10 = new Label();
+            pictureBox1 = new PictureBox();
+            label11 = new Label();
+            label12 = new Label();
+            panel2 = new Panel();
             AdminSettings.SuspendLayout();
             tabUserManagement.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -66,26 +72,28 @@
             ((System.ComponentModel.ISupportInitialize)dgvMaintenanceValues).BeginInit();
             tabAuditTrail.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvAuditTrail).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(72, 34);
+            label1.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(710, 43);
             label1.Name = "label1";
-            label1.Size = new Size(252, 20);
+            label1.Size = new Size(189, 23);
             label1.TabIndex = 0;
-            label1.Text = "Manager/Admin Configuration Panel";
+            label1.Text = "MANAGER/ADMIN";
             // 
             // AdminSettings
             // 
             AdminSettings.Controls.Add(tabUserManagement);
             AdminSettings.Controls.Add(tabMaintenance);
             AdminSettings.Controls.Add(tabAuditTrail);
-            AdminSettings.Location = new Point(0, 0);
+            AdminSettings.Location = new Point(55, 135);
             AdminSettings.Name = "AdminSettings";
             AdminSettings.SelectedIndex = 0;
-            AdminSettings.Size = new Size(800, 410);
+            AdminSettings.Size = new Size(841, 421);
             AdminSettings.TabIndex = 1;
             AdminSettings.SelectedIndexChanged += AdminSettings_SelectedIndexChanged;
             // 
@@ -98,7 +106,7 @@
             tabUserManagement.Location = new Point(4, 29);
             tabUserManagement.Name = "tabUserManagement";
             tabUserManagement.Padding = new Padding(3);
-            tabUserManagement.Size = new Size(792, 377);
+            tabUserManagement.Size = new Size(833, 388);
             tabUserManagement.TabIndex = 0;
             tabUserManagement.Text = "User Management";
             tabUserManagement.UseVisualStyleBackColor = true;
@@ -117,25 +125,37 @@
             groupBox1.Controls.Add(label4);
             groupBox1.Controls.Add(label3);
             groupBox1.Controls.Add(label2);
+            groupBox1.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             groupBox1.Location = new Point(503, 3);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(286, 378);
+            groupBox1.Size = new Size(330, 378);
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
             groupBox1.Text = "Add/Edit User";
             // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label9.Location = new Point(17, 72);
+            label9.Name = "label9";
+            label9.Size = new Size(91, 20);
+            label9.TabIndex = 11;
+            label9.Text = "For HR Only";
+            // 
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(0, 30);
+            label8.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label8.Location = new Point(17, 34);
             label8.Name = "label8";
-            label8.Size = new Size(148, 20);
+            label8.Size = new Size(162, 20);
             label8.TabIndex = 10;
             label8.Text = "Select User to Delete";
             // 
             // btnDeleteUser
             // 
-            btnDeleteUser.Location = new Point(172, 26);
+            btnDeleteUser.Location = new Point(33, 331);
             btnDeleteUser.Name = "btnDeleteUser";
             btnDeleteUser.Size = new Size(108, 29);
             btnDeleteUser.TabIndex = 9;
@@ -145,7 +165,7 @@
             // 
             // btnSaveUser
             // 
-            btnSaveUser.Location = new Point(172, 328);
+            btnSaveUser.Location = new Point(186, 328);
             btnSaveUser.Name = "btnSaveUser";
             btnSaveUser.Size = new Size(108, 34);
             btnSaveUser.TabIndex = 8;
@@ -157,65 +177,65 @@
             // 
             cmbNewRole.FormattingEnabled = true;
             cmbNewRole.Items.AddRange(new object[] { "HR Staff", "HR Manager" });
-            cmbNewRole.Location = new Point(90, 135);
+            cmbNewRole.Location = new Point(34, 127);
             cmbNewRole.Name = "cmbNewRole";
-            cmbNewRole.Size = new Size(190, 28);
+            cmbNewRole.Size = new Size(261, 28);
             cmbNewRole.TabIndex = 7;
             // 
             // txtNewPassword
             // 
-            txtNewPassword.Location = new Point(90, 295);
+            txtNewPassword.Location = new Point(34, 287);
             txtNewPassword.Name = "txtNewPassword";
-            txtNewPassword.Size = new Size(190, 27);
+            txtNewPassword.Size = new Size(261, 26);
             txtNewPassword.TabIndex = 6;
             // 
             // txtNewEmail
             // 
-            txtNewEmail.Location = new Point(90, 242);
+            txtNewEmail.Location = new Point(34, 234);
             txtNewEmail.Name = "txtNewEmail";
-            txtNewEmail.Size = new Size(190, 27);
+            txtNewEmail.Size = new Size(261, 26);
             txtNewEmail.TabIndex = 5;
             // 
             // txtNewUsername
             // 
-            txtNewUsername.Location = new Point(90, 189);
+            txtNewUsername.Location = new Point(34, 181);
             txtNewUsername.Name = "txtNewUsername";
-            txtNewUsername.Size = new Size(190, 27);
+            txtNewUsername.Size = new Size(261, 26);
             txtNewUsername.TabIndex = 4;
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(90, 112);
+            label5.Location = new Point(34, 104);
             label5.Name = "label5";
-            label5.Size = new Size(46, 20);
+            label5.Size = new Size(49, 20);
             label5.TabIndex = 3;
             label5.Text = "Role: ";
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(90, 272);
+            label4.Location = new Point(34, 264);
             label4.Name = "label4";
-            label4.Size = new Size(77, 20);
+            label4.Size = new Size(87, 20);
             label4.TabIndex = 2;
             label4.Text = "Password: ";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(90, 219);
+            label3.Location = new Point(34, 211);
             label3.Name = "label3";
-            label3.Size = new Size(53, 20);
+            label3.Size = new Size(54, 20);
             label3.TabIndex = 1;
             label3.Text = "Email: ";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(90, 166);
+            label2.Location = new Point(34, 158);
             label2.Name = "label2";
-            label2.Size = new Size(82, 20);
+            label2.Size = new Size(91, 20);
             label2.TabIndex = 0;
             label2.Text = "Username: ";
             // 
@@ -246,14 +266,14 @@
             tabMaintenance.Location = new Point(4, 29);
             tabMaintenance.Name = "tabMaintenance";
             tabMaintenance.Padding = new Padding(3);
-            tabMaintenance.Size = new Size(792, 377);
+            tabMaintenance.Size = new Size(833, 388);
             tabMaintenance.TabIndex = 1;
             tabMaintenance.Text = "System Maintenance";
             tabMaintenance.UseVisualStyleBackColor = true;
             // 
             // btnDeleteRecord
             // 
-            btnDeleteRecord.Location = new Point(700, 315);
+            btnDeleteRecord.Location = new Point(729, 323);
             btnDeleteRecord.Name = "btnDeleteRecord";
             btnDeleteRecord.Size = new Size(83, 50);
             btnDeleteRecord.TabIndex = 7;
@@ -263,7 +283,7 @@
             // 
             // btnSaveRecord
             // 
-            btnSaveRecord.Location = new Point(580, 315);
+            btnSaveRecord.Location = new Point(610, 323);
             btnSaveRecord.Name = "btnSaveRecord";
             btnSaveRecord.Size = new Size(102, 50);
             btnSaveRecord.TabIndex = 6;
@@ -273,16 +293,16 @@
             // 
             // txtRecordDesc
             // 
-            txtRecordDesc.Location = new Point(183, 338);
+            txtRecordDesc.Location = new Point(213, 349);
             txtRecordDesc.Multiline = true;
             txtRecordDesc.Name = "txtRecordDesc";
-            txtRecordDesc.Size = new Size(391, 24);
+            txtRecordDesc.Size = new Size(369, 24);
             txtRecordDesc.TabIndex = 5;
             // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(183, 312);
+            label7.Location = new Point(213, 323);
             label7.Name = "label7";
             label7.Size = new Size(85, 20);
             label7.TabIndex = 4;
@@ -290,7 +310,7 @@
             // 
             // txtRecordName
             // 
-            txtRecordName.Location = new Point(7, 335);
+            txtRecordName.Location = new Point(18, 346);
             txtRecordName.Name = "txtRecordName";
             txtRecordName.Size = new Size(170, 27);
             txtRecordName.TabIndex = 3;
@@ -298,7 +318,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(8, 312);
+            label6.Location = new Point(18, 323);
             label6.Name = "label6";
             label6.Size = new Size(49, 20);
             label6.TabIndex = 2;
@@ -316,17 +336,17 @@
             dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             dgvMaintenanceValues.DefaultCellStyle = dataGridViewCellStyle1;
-            dgvMaintenanceValues.Location = new Point(7, 40);
+            dgvMaintenanceValues.Location = new Point(18, 40);
             dgvMaintenanceValues.Name = "dgvMaintenanceValues";
             dgvMaintenanceValues.RowHeadersWidth = 51;
-            dgvMaintenanceValues.Size = new Size(776, 269);
+            dgvMaintenanceValues.Size = new Size(794, 255);
             dgvMaintenanceValues.TabIndex = 1;
             // 
             // cmbMaintenanceCategory
             // 
             cmbMaintenanceCategory.FormattingEnabled = true;
             cmbMaintenanceCategory.Items.AddRange(new object[] { "Departments", "Requirement Types", "Employment Types", "Positions", "Interview Types", "Assessment Types" });
-            cmbMaintenanceCategory.Location = new Point(8, 6);
+            cmbMaintenanceCategory.Location = new Point(18, 6);
             cmbMaintenanceCategory.Name = "cmbMaintenanceCategory";
             cmbMaintenanceCategory.Size = new Size(280, 28);
             cmbMaintenanceCategory.TabIndex = 0;
@@ -337,7 +357,7 @@
             tabAuditTrail.Controls.Add(dgvAuditTrail);
             tabAuditTrail.Location = new Point(4, 29);
             tabAuditTrail.Name = "tabAuditTrail";
-            tabAuditTrail.Size = new Size(792, 377);
+            tabAuditTrail.Size = new Size(833, 388);
             tabAuditTrail.TabIndex = 2;
             tabAuditTrail.Text = "Audit Trail";
             tabAuditTrail.UseVisualStyleBackColor = true;
@@ -345,36 +365,80 @@
             // dgvAuditTrail
             // 
             dgvAuditTrail.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvAuditTrail.Location = new Point(36, 45);
+            dgvAuditTrail.Location = new Point(23, 36);
             dgvAuditTrail.Name = "dgvAuditTrail";
             dgvAuditTrail.RowHeadersWidth = 51;
-            dgvAuditTrail.Size = new Size(701, 311);
+            dgvAuditTrail.Size = new Size(777, 320);
             dgvAuditTrail.TabIndex = 0;
             // 
             // btnBack
             // 
-            btnBack.Location = new Point(679, 416);
+            btnBack.Location = new Point(766, 582);
             btnBack.Name = "btnBack";
-            btnBack.Size = new Size(108, 33);
+            btnBack.Size = new Size(126, 46);
             btnBack.TabIndex = 2;
             btnBack.Text = "Back";
             btnBack.UseVisualStyleBackColor = true;
             btnBack.Click += btnBack_Click;
             // 
-            // label9
+            // label10
             // 
-            label9.AutoSize = true;
-            label9.Location = new Point(90, 83);
-            label9.Name = "label9";
-            label9.Size = new Size(88, 20);
-            label9.TabIndex = 11;
-            label9.Text = "For HR Only";
+            label10.AutoSize = true;
+            label10.Location = new Point(123, 66);
+            label10.Name = "label10";
+            label10.Size = new Size(179, 20);
+            label10.TabIndex = 19;
+            label10.Text = "Network and Systems, Co.";
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(55, 26);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(67, 59);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 17;
+            pictureBox1.TabStop = false;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Font = new Font("Century Gothic", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label11.Location = new Point(118, 26);
+            label11.Name = "label11";
+            label11.Size = new Size(214, 40);
+            label11.TabIndex = 18;
+            label11.Text = "PENTANODE";
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label12.Location = new Point(656, 66);
+            label12.Name = "label12";
+            label12.Size = new Size(243, 23);
+            label12.TabIndex = 20;
+            label12.Text = "CONFIGURATION PANEL";
+            // 
+            // panel2
+            // 
+            panel2.BackColor = SystemColors.ControlDark;
+            panel2.Location = new Point(55, 111);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(841, 1);
+            panel2.TabIndex = 21;
             // 
             // AdminSettingsForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            BackColor = SystemColors.GradientInactiveCaption;
+            ClientSize = new Size(950, 650);
+            Controls.Add(panel2);
+            Controls.Add(label12);
+            Controls.Add(label10);
+            Controls.Add(pictureBox1);
+            Controls.Add(label11);
             Controls.Add(btnBack);
             Controls.Add(AdminSettings);
             Controls.Add(label1);
@@ -391,6 +455,7 @@
             ((System.ComponentModel.ISupportInitialize)dgvMaintenanceValues).EndInit();
             tabAuditTrail.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvAuditTrail).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -426,5 +491,10 @@
         private TabPage tabAuditTrail;
         private DataGridView dgvAuditTrail;
         private Label label9;
+        private Label label10;
+        private PictureBox pictureBox1;
+        private Label label11;
+        private Label label12;
+        private Panel panel2;
     }
 }
