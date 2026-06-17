@@ -33,14 +33,15 @@ namespace HRApplicantWindowSystem
         {
             try
             {
-
                 try { CheckActiveApplication(); } catch { }
                 ApplicantProfileForm profilePage = new ApplicantProfileForm(currentAccountId);
                 profilePage.StartPosition = FormStartPosition.CenterScreen;
 
                 try { profilePage.SetLocked(currentApplicationLocked); } catch { }
-                profilePage.Show();
-                this.Hide();
+
+                this.Hide();                
+                profilePage.ShowDialog();     
+                this.Show();                 
             }
             catch (Exception ex)
             {
@@ -329,8 +330,8 @@ namespace HRApplicantWindowSystem
                             {
 
                                 string historyQuery = @"
-                                    INSERT INTO ApplicationStatusHistory (application_id, old_status, new_status, changed_by) 
-                                    VALUES (@AppID, @OldStatus, 'Retracted', NULL);";
+                                    INSERT INTO ApplicationStatusHistory (application_id, old_status, new_status) 
+                                    VALUES (@AppID, @OldStatus, 'Retracted');";
 
                                 using (MySqlCommand cmdHistory = new MySqlCommand(historyQuery, conn, transaction))
                                 {
@@ -348,6 +349,8 @@ namespace HRApplicantWindowSystem
                                 }
 
                                 transaction.Commit();
+
+                                LogAuditAction(currentAccountId, "Application Retraction", "applications", activeApplicationId, "Applicant completely retracted and deleted their job application.");
 
                                 activeApplicationId = 0;
                                 currentApplicationStatus = "";
@@ -371,16 +374,41 @@ namespace HRApplicantWindowSystem
                 }
             }
         }
+        private void LogAuditAction(int userId, string actionType, string tableAffected, int recordId, string details)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    string sql = @"INSERT INTO audittrail 
+                           (user_id, action_type, table_affected, record_id, details, action_timestamp) 
+                           VALUES (@userId, @actionType, @tableAffected, @recordId, @details, NOW())";
+
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@userId", userId);
+                        cmd.Parameters.AddWithValue("@actionType", actionType);
+                        cmd.Parameters.AddWithValue("@tableAffected", tableAffected);
+                        cmd.Parameters.AddWithValue("@recordId", recordId);
+                        cmd.Parameters.AddWithValue("@details", details);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine("Audit Log Error: " + ex.Message);
+                }
+            }
+        }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void lblJobTitle_Click(object sender, EventArgs e)
-        {
 
-        }
 
         private void label4_Click(object sender, EventArgs e)
         {

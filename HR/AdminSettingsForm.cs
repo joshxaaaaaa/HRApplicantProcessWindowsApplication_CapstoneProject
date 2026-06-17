@@ -31,12 +31,23 @@ namespace HRApplicantWindowSystem
                 {
                     conn.Open();
 
-                    string query = @"SELECT u.user_id AS 'User ID', 
-                                            u.username AS 'Username', 
-                                            u.email AS 'Email Address', 
-                                            r.role_name AS 'Role'
-                                     FROM Users u 
-                                     INNER JOIN Roles r ON u.role_id = r.role_id";
+
+                    string query = @"
+                            SELECT u.user_id AS 'User ID', 
+                                u.username AS 'Username/Full Name', 
+                                u.email AS 'Email Address', 
+                                COALESCE(r.role_name, 'Unknown') AS 'Role'
+                            FROM Users u 
+                            LEFT JOIN Roles r ON u.role_id = r.role_id
+
+                            UNION ALL
+
+                            SELECT acc.account_id AS 'User ID', 
+                                CONCAT(app.first_name, ' ', app.last_name) AS 'Username/Full Name', 
+                                acc.email AS 'Email Address', 
+                                'Applicant' AS 'Role'
+                            FROM applicantaccounts acc
+                            LEFT JOIN applicants app ON acc.account_id = app.account_id";
 
                     MySqlDataAdapter adapter = new MySqlDataAdapter(query, conn);
                     DataTable dt = new DataTable();
@@ -167,11 +178,13 @@ namespace HRApplicantWindowSystem
 
             if (dgvUsers.SelectedRows.Count > 0)
             {
-
                 int selectedUserId = Convert.ToInt32(dgvUsers.SelectedRows[0].Cells["User ID"].Value);
-                string selectedUsername = dgvUsers.SelectedRows[0].Cells["Username"].Value.ToString();
+                string selectedUsername = dgvUsers.SelectedRows[0].Cells["Username/Full Name"].Value.ToString(); 
 
-                DialogResult dialogResult = MessageBox.Show($"Are you sure you want to delete user '{selectedUsername}'?",
+
+                string selectedRole = dgvUsers.SelectedRows[0].Cells["Role"].Value.ToString();
+
+                DialogResult dialogResult = MessageBox.Show($"Are you sure you want to completely delete '{selectedUsername}'?",
                                                             "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 if (dialogResult == DialogResult.Yes)
@@ -181,7 +194,17 @@ namespace HRApplicantWindowSystem
                         try
                         {
                             conn.Open();
-                            string deleteQuery = "DELETE FROM Users WHERE user_id = @userId";
+                            string deleteQuery = "";
+
+
+                            if (selectedRole == "Applicant")
+                            {
+                                deleteQuery = "DELETE FROM applicantaccounts WHERE account_id = @userId";
+                            }
+                            else
+                            {
+                                deleteQuery = "DELETE FROM Users WHERE user_id = @userId";
+                            }
 
                             using (MySqlCommand cmd = new MySqlCommand(deleteQuery, conn))
                             {
@@ -190,7 +213,13 @@ namespace HRApplicantWindowSystem
                             }
 
                             MessageBox.Show("User deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            LoadUsersList();
+                            LoadUsersList(); 
+                        }
+
+                        catch (MySqlException sqlEx) when (sqlEx.Number == 1451)
+                        {
+                            MessageBox.Show("Cannot delete this user because they have active records (like Hiring Decisions or Audit Logs) tied to their account. Please reassign or clear those records first.",
+                                            "Deletion Blocked", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                         }
                         catch (Exception ex)
                         {
@@ -340,26 +369,25 @@ namespace HRApplicantWindowSystem
                 {
                     conn.Open();
 
-
                     string sql = @"
-                            SELECT 
-                                a.audit_id AS 'Audit ID',
-                                u.username AS 'User Name', 
-                                a.action_type AS 'Action Type', 
-                                a.table_affected AS 'Table Affected',
-                                a.record_id AS 'Record ID',
-                                a.details AS 'Details', 
-                                a.action_timestamp AS 'Date & Time'
-                            FROM audittrail a
-                            LEFT JOIN users u ON a.user_id = u.user_id
-                            ORDER BY a.action_timestamp DESC";
+                    SELECT 
+                        a.audit_id AS 'Audit ID',
+                        COALESCE(u.username, CONCAT(app.first_name, ' ', app.last_name), 'Unknown') AS 'Username/Full Name', 
+                        a.action_type AS 'Action Type', 
+                        a.table_affected AS 'Table Affected',
+                        a.record_id AS 'Record ID',
+                        a.details AS 'Details', 
+                        a.action_timestamp AS 'Date & Time'
+                    FROM audittrail a
+                    LEFT JOIN users u ON a.user_id = u.user_id
+                    LEFT JOIN applicants app ON a.user_id = app.account_id
+                    ORDER BY a.action_timestamp DESC";
 
                     MySqlDataAdapter adapter = new MySqlDataAdapter(sql, conn);
                     DataTable dt = new DataTable();
                     adapter.Fill(dt);
 
                     dgvAuditTrail.DataSource = dt;
-
                     dgvAuditTrail.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 }
                 catch (Exception ex)
@@ -369,7 +397,7 @@ namespace HRApplicantWindowSystem
             }
         }
 
-        
+
 
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -379,11 +407,20 @@ namespace HRApplicantWindowSystem
 
         private void AdminSettings_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (AdminSettings.SelectedIndex == 0)
+            {
+                LoadUsersList();
+            }
 
-            if (AdminSettings.SelectedIndex == 2)
+            else if (AdminSettings.SelectedIndex == 2)
             {
                 LoadAuditTrail();
             }
+        }
+
+        private void dgvUsers_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

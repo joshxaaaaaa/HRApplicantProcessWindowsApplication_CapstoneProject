@@ -108,6 +108,7 @@ namespace HRApplicantWindowSystem
             btnMyProfile.TabIndex = 12;
             btnMyProfile.Text = "My Profile";
             btnMyProfile.UseVisualStyleBackColor = true;
+
             // 
             // label4
             // 

@@ -231,18 +231,19 @@ namespace HRApplicantWindowSystem
                     MySqlDataAdapter userAdapter = new MySqlDataAdapter(sqlUsers, conn);
                     DataTable dtUsers = new DataTable();
                     userAdapter.Fill(dtUsers);
-                    cmbInterviewer.DataSource = dtUsers;
+                    
                     cmbInterviewer.DisplayMember = "username";
                     cmbInterviewer.ValueMember = "user_id";
-
+                    cmbInterviewer.DataSource = dtUsers;
 
                     string sqlTypes = "SELECT interview_type_id, interview_name FROM interview_types";
                     MySqlDataAdapter typeAdapter = new MySqlDataAdapter(sqlTypes, conn);
                     DataTable dtTypes = new DataTable();
                     typeAdapter.Fill(dtTypes);
-                    cmbInterviewType.DataSource = dtTypes;
+                    
                     cmbInterviewType.DisplayMember = "interview_name";
                     cmbInterviewType.ValueMember = "interview_type_id";
+                    cmbInterviewType.DataSource = dtTypes;
                 }
                 catch (Exception ex)
                 {
@@ -285,20 +286,26 @@ namespace HRApplicantWindowSystem
             {
                 try
                 {
+
+                    if (cmbInterviewer.SelectedValue == null || cmbInterviewType.SelectedValue == null)
+                    {
+                        MessageBox.Show("Please ensure both an Interviewer and an Interview Type are selected.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
                     conn.Open();
 
 
                     string sqlInsert = @"INSERT INTO interviewschedules 
-                     (application_id, interview_date, interview_time, interviewer_id, interview_type_id, location, status) 
-                     VALUES (@appId, @date, @time, @interviewer, @type, @location, 'Scheduled')"; 
+                        (application_id, interview_date, interview_time, interviewer_id, interview_type_id, location, status) 
+                        VALUES (@appId, @date, @time, @interviewer, @type, @location, 'Scheduled')";
 
                     using (MySqlCommand cmd = new MySqlCommand(sqlInsert, conn))
                     {
                         cmd.Parameters.AddWithValue("@appId", schedSelectedApplicationId);
                         cmd.Parameters.AddWithValue("@date", dtpSchedDate.Value.ToString("yyyy-MM-dd"));
                         cmd.Parameters.AddWithValue("@time", dtpSchedTime.Value.ToString("HH:mm:ss"));
-                        cmd.Parameters.AddWithValue("@interviewer", cmbInterviewer.SelectedValue);
-                        cmd.Parameters.AddWithValue("@type", cmbInterviewType.SelectedValue);
+                        cmd.Parameters.AddWithValue("@interviewer", Convert.ToInt32(cmbInterviewer.SelectedValue));
+                        cmd.Parameters.AddWithValue("@type", Convert.ToInt32(cmbInterviewType.SelectedValue));
                         cmd.Parameters.AddWithValue("@location", txtLocation.Text.Trim());
                         cmd.ExecuteNonQuery();
                     }
@@ -500,7 +507,10 @@ namespace HRApplicantWindowSystem
 
 
             ApplicantProfileForm profileForm = new ApplicantProfileForm(selectedAppId, true);
-            profileForm.ShowDialog();
+
+            this.Hide();                
+            profileForm.ShowDialog();  
+            this.Show();
         }
 
         private void dgvDocs_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)

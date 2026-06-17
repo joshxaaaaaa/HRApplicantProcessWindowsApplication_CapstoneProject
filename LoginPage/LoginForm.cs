@@ -101,12 +101,13 @@ namespace HRApplicantWindowSystem
                                     int userId = reader.GetInt32("user_id");
                                     string roleName = reader.GetString("role_name");
 
-                                    this.Hide();
+                                    this.Hide(); 
                                     HRDashboardForm dashboard = new HRDashboardForm(userId, roleName);
-                                    dashboard.ShowDialog();
-                                    this.Show();
+                                    dashboard.ShowDialog(); 
 
-                                    btnBack_Click(null, null);
+                                    txtUsername.Clear();
+                                    txtPassword.Clear();
+                                    this.Show();
                                 }
                                 else if (selectedRole == "Applicant")
                                 {
@@ -115,11 +116,13 @@ namespace HRApplicantWindowSystem
 
                                     if (status == "Active")
                                     {
-                                        this.Hide();
+                                        this.Hide(); 
                                         ApplicantDashboardForm appDashboard = new ApplicantDashboardForm(accountId);
                                         appDashboard.ShowDialog();
+
+                                        txtUsername.Clear();
+                                        txtPassword.Clear();
                                         this.Show();
-                                        btnBack_Click(null, null);
                                     }
                                 }
                             }
@@ -139,11 +142,10 @@ namespace HRApplicantWindowSystem
 
         private void btnCreateAccount_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            this.Hide(); 
 
             ApplicantRegisterForm registerForm = new ApplicantRegisterForm();
-            registerForm.ShowDialog();
-
+            registerForm.ShowDialog(); 
 
             this.Show();
         }

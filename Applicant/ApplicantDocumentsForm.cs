@@ -313,6 +313,9 @@ namespace HRApplicantWindowSystem
                             }
 
                             transaction.Commit();
+
+                            LogAuditAction("Document Submission", "applications", activeApplicationId, "Applicant successfully uploaded and submitted required documents.");
+
                             MessageBox.Show("Your job application details have been successfully saved and dispatched directly to HR recruitment streams!", "Submission Processed", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             CheckActiveApplication();
 
@@ -338,6 +341,49 @@ namespace HRApplicantWindowSystem
                 catch (Exception ex)
                 {
                     MessageBox.Show("Failed saving details: " + ex.Message, "Execution Failure", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+        private void LogAuditAction(string actionType, string tableAffected, int recordId, string details)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+
+
+                    int currentUserId = 0;
+                    string getUserSql = "SELECT account_id FROM Applicants WHERE applicant_id = @applicantId LIMIT 1";
+                    using (MySqlCommand userCmd = new MySqlCommand(getUserSql, conn))
+                    {
+                        userCmd.Parameters.AddWithValue("@applicantId", currentApplicantId);
+                        object res = userCmd.ExecuteScalar();
+                        if (res != null && res != DBNull.Value)
+                        {
+                            currentUserId = Convert.ToInt32(res);
+                        }
+                    }
+
+
+                    string sql = @"INSERT INTO audittrail 
+                           (user_id, action_type, table_affected, record_id, details, action_timestamp) 
+                           VALUES (@userId, @actionType, @tableAffected, @recordId, @details, NOW())";
+
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@userId", currentUserId);
+                        cmd.Parameters.AddWithValue("@actionType", actionType);
+                        cmd.Parameters.AddWithValue("@tableAffected", tableAffected);
+                        cmd.Parameters.AddWithValue("@recordId", recordId);
+                        cmd.Parameters.AddWithValue("@details", details);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine("Audit Log Error: " + ex.Message);
                 }
             }
         }

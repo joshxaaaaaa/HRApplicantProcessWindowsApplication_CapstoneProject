@@ -47,22 +47,27 @@ namespace HRApplicantWindowSystem
 
             profilePage.StartPosition = FormStartPosition.CenterScreen;
 
-            profilePage.ShowDialog();
+            this.Hide(); 
+            profilePage.ShowDialog(); 
+            this.Show();
         }
 
         private void btnJobVacancies_Click(object sender, EventArgs e)
         {
+            this.Hide(); 
             JobVacanciesForm vacanciesPage = new JobVacanciesForm(currentAccountId);
             vacanciesPage.StartPosition = FormStartPosition.CenterScreen;
-            vacanciesPage.Show();
-            this.Hide();
+            vacanciesPage.ShowDialog(); 
+            this.Show();
         }
 
         private void btnMyApplication_Click(object sender, EventArgs e)
         {
+            this.Hide(); 
             MyApplicationForm appForm = new MyApplicationForm(currentAccountId);
             appForm.StartPosition = FormStartPosition.CenterScreen;
             appForm.ShowDialog();
+            this.Show();
         }
 
         private void btnDocuments_Click(object sender, EventArgs e)
@@ -121,9 +126,11 @@ namespace HRApplicantWindowSystem
 
             if (activeApplicationId > 0)
             {
+                this.Hide(); 
                 ApplicantDocumentsForm docsForm = new ApplicantDocumentsForm();
                 docsForm.CurrentApplicationID = activeApplicationId;
                 docsForm.ShowDialog();
+                this.Show(); 
             }
             else
             {
@@ -167,9 +174,11 @@ namespace HRApplicantWindowSystem
 
             if (activeApplicationId > 0)
             {
+                this.Hide(); 
                 ApplicantStatusForm statusForm = new ApplicantStatusForm();
                 statusForm.CurrentApplicationID = activeApplicationId;
                 statusForm.ShowDialog();
+                this.Show(); 
             }
             else
             {
@@ -191,8 +200,10 @@ namespace HRApplicantWindowSystem
 
         private void btnDashboard_Click(object sender, EventArgs e)
         {
+            this.Hide(); 
             ApplicantSummaryForm summaryForm = new ApplicantSummaryForm(currentAccountId);
             summaryForm.ShowDialog();
+            this.Show();
         }
 
         private void LoadUserGreeting()

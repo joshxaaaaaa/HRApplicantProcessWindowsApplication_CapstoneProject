@@ -455,14 +455,20 @@ namespace HRApplicantWindowSystem.Applicant
                         @applicantId, 
                         @vacancyId, 
                         'Submitted'
-                    )";
+                    );
+                    SELECT LAST_INSERT_ID();"; 
+
+                    int newlyCreatedAppId = 0;
 
                     using (MySqlCommand cmd = new MySqlCommand(insertQuery, conn))
                     {
                         cmd.Parameters.AddWithValue("@applicantId", applicantId);
                         cmd.Parameters.AddWithValue("@vacancyId", vacancyId);
-                        cmd.ExecuteNonQuery();
+                        
+
+                        newlyCreatedAppId = Convert.ToInt32(cmd.ExecuteScalar());
                     }
+                    LogAuditAction(currentAccountId, "Job Application", "applications", newlyCreatedAppId, $"Applicant successfully applied for Vacancy ID: {vacancyId}"); 
 
                     MessageBox.Show("Application submitted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -474,6 +480,34 @@ namespace HRApplicantWindowSystem.Applicant
                     "Database Error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
+            }
+        }
+        private void LogAuditAction(int userId, string actionType, string tableAffected, int recordId, string details)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    string sql = @"INSERT INTO audittrail 
+                           (user_id, action_type, table_affected, record_id, details, action_timestamp) 
+                           VALUES (@userId, @actionType, @tableAffected, @recordId, @details, NOW())";
+
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@userId", userId);
+                        cmd.Parameters.AddWithValue("@actionType", actionType);
+                        cmd.Parameters.AddWithValue("@tableAffected", tableAffected);
+                        cmd.Parameters.AddWithValue("@recordId", recordId);
+                        cmd.Parameters.AddWithValue("@details", details);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine("Audit Log Error: " + ex.Message);
+                }
             }
         }
 

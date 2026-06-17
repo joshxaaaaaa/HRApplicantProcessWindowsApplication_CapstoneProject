@@ -57,6 +57,7 @@
             tabAuditTrail = new TabPage();
             dgvAuditTrail = new DataGridView();
             btnBack = new Button();
+            label9 = new Label();
             AdminSettings.SuspendLayout();
             tabUserManagement.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -104,6 +105,7 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(label9);
             groupBox1.Controls.Add(label8);
             groupBox1.Controls.Add(btnDeleteUser);
             groupBox1.Controls.Add(btnSaveUser);
@@ -127,9 +129,9 @@
             label8.AutoSize = true;
             label8.Location = new Point(0, 30);
             label8.Name = "label8";
-            label8.Size = new Size(172, 20);
+            label8.Size = new Size(148, 20);
             label8.TabIndex = 10;
-            label8.Text = "Select HR User to Delete";
+            label8.Text = "Select User to Delete";
             // 
             // btnDeleteUser
             // 
@@ -227,6 +229,7 @@
             dgvUsers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvUsers.Size = new Size(494, 378);
             dgvUsers.TabIndex = 0;
+            dgvUsers.CellContentClick += dgvUsers_CellContentClick;
             // 
             // tabMaintenance
             // 
@@ -358,6 +361,15 @@
             btnBack.UseVisualStyleBackColor = true;
             btnBack.Click += btnBack_Click;
             // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(90, 83);
+            label9.Name = "label9";
+            label9.Size = new Size(88, 20);
+            label9.TabIndex = 11;
+            label9.Text = "For HR Only";
+            // 
             // AdminSettingsForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -413,5 +425,6 @@
         private Button btnBack;
         private TabPage tabAuditTrail;
         private DataGridView dgvAuditTrail;
+        private Label label9;
     }
 }

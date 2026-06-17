@@ -46,6 +46,11 @@ CREATE TABLE IF NOT EXISTS assessment_types ( assessment_type_id INT AUTO_INCREM
 
 CREATE TABLE applicant_profiles (profile_id INT AUTO_INCREMENT PRIMARY KEY, applicant_id INT NOT NULL, educational_attainments TEXT, work_experiences TEXT, other_details TEXT, updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, FOREIGN KEY (applicant_id) REFERENCES applicants(applicant_id) ON DELETE CASCADE );
 
+# Inserted HR Credentials 
+INSERT IGNORE INTO Roles (role_name, permissions) VALUES ('HR Manager', 'Full Admin Access, Final Hiring Decisions'), ('HR Staff', 'Manage Jobs, Review Applicants, Schedule Interviews');  
+
+INSERT INTO Users (username, password_hash, email, role_id) VALUES ('joshua', 'joshua123', 'joshua@company.com', (SELECT role_id FROM Roles WHERE role_name = 'HR Manager')), ('maryjoy', 'maryjoy123', 'maryjoy@company.com', (SELECT role_id FROM Roles WHERE role_name = 'HR Staff')), ('henry', 'henry123', 'henry@company.com', (SELECT role_id FROM Roles WHERE role_name = 'HR Staff')), ('sheena', 'sheena123', 'sheena@company.com', (SELECT role_id FROM Roles WHERE role_name = 'HR Staff')), ('shiela', 'shiela123', 'shiela@company.com', (SELECT role_id FROM Roles WHERE role_name = 'HR Staff')); 
+
 # Alteration History 
 ALTER TABLE departments MODIFY COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 
@@ -107,7 +112,12 @@ ALTER TABLE interviewevaluations ADD CONSTRAINT fk_evaluations_schedule FOREIGN 
 
 ALTER TABLE interviewevaluations DROP COLUMN comments; 
 
-# Inserted HR Credentials 
-INSERT IGNORE INTO Roles (role_name, permissions) VALUES ('HR Manager', 'Full Admin Access, Final Hiring Decisions'), ('HR Staff', 'Manage Jobs, Review Applicants, Schedule Interviews');  
+INSERT INTO roles (role_id, role_name, permissions) VALUES (3, 'Applicant', 'Submit Application, View Status, Manage Profile'); 
 
-INSERT INTO Users (username, password_hash, email, role_id) VALUES ('joshua', 'joshua123', 'joshua@company.com', (SELECT role_id FROM Roles WHERE role_name = 'HR Manager')), ('maryjoy', 'maryjoy123', 'maryjoy@company.com', (SELECT role_id FROM Roles WHERE role_name = 'HR Staff')), ('henry', 'henry123', 'henry@company.com', (SELECT role_id FROM Roles WHERE role_name = 'HR Staff')), ('sheena', 'sheena123', 'sheena@company.com', (SELECT role_id FROM Roles WHERE role_name = 'HR Staff')), ('shiela', 'shiela123', 'shiela@company.com', (SELECT role_id FROM Roles WHERE role_name = 'HR Staff')); 
+ALTER TABLE applicantaccounts ADD COLUMN role_id INT DEFAULT 3; 
+
+ALTER TABLE applicantaccounts ADD CONSTRAINT fk_applicantaccounts_roles FOREIGN KEY (role_id) REFERENCES roles(role_id) ON UPDATE CASCADE;
+
+ALTER TABLE audittrail DROP FOREIGN KEY audittrail_ibfk_1; 
+
+SELECT CONSTRAINT_NAME FROM information_schema.KEY_COLUMN_USAGE WHERE TABLE_SCHEMA = 'db_hrapplicantwindowsystem' AND TABLE_NAME = 'audittrail' AND REFERENCED_TABLE_NAME IS NOT NULL;

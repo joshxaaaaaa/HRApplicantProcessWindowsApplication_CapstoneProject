@@ -137,8 +137,10 @@ namespace HRApplicantWindowSystem
 
             if (currentUserRole == "HR Manager")
             {
+                this.Hide(); 
                 AdminSettingsForm adminForm = new AdminSettingsForm();
                 adminForm.ShowDialog();
+                this.Show();
             }
 
         }
@@ -328,12 +330,10 @@ namespace HRApplicantWindowSystem
 
         private void btnJobs_Click(object sender, EventArgs e)
         {
-
-
+            this.Hide(); 
             JobOpenings jobsForm = new JobOpenings();
-
-
             jobsForm.ShowDialog();
+            this.Show();
         }
 
         private void btnReports_Click(object sender, EventArgs e)
@@ -356,21 +356,26 @@ namespace HRApplicantWindowSystem
 
         private void btnApplicants_Click(object sender, EventArgs e)
         {
-
+            this.Hide(); 
             ApplicantProcess applicantForm = new ApplicantProcess(currentUserId);
             applicantForm.ShowDialog();
+            this.Show();
         }
 
         private void btnInterviews_Click(object sender, EventArgs e)
         {
+            this.Hide(); 
             Interviews interviewForm = new Interviews(currentUserId);
             interviewForm.ShowDialog();
+            this.Show();
         }
 
         private void btnHiringDecision_Click(object sender, EventArgs e)
         {
+            this.Hide(); 
             FinalDecisionForm decisionForm = new FinalDecisionForm(currentUserId);
             decisionForm.ShowDialog();
+            this.Show();
         }
     }
 }

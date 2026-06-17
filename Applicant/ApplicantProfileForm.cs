@@ -193,6 +193,7 @@ namespace HRApplicantWindowSystem
                 SaveDraftToFile();
                 SaveProfileToDatabase();
                 SaveExtendedProfileToDatabase();
+                LogAuditAction(loggedInAccountId, "Profile Update", "applicants", currentApplicantId, "Applicant successfully updated their personal profile and requirements.");
             }
             catch (Exception ex)
             {
@@ -575,6 +576,34 @@ namespace HRApplicantWindowSystem
                 catch (Exception ex)
                 {
                     MessageBox.Show("Error loading profile: " + ex.Message);
+                }
+            }
+        }
+        private void LogAuditAction(int userId, string actionType, string tableAffected, int recordId, string details)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    string sql = @"INSERT INTO audittrail 
+                           (user_id, action_type, table_affected, record_id, details, action_timestamp) 
+                           VALUES (@userId, @actionType, @tableAffected, @recordId, @details, NOW())";
+
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@userId", userId);
+                        cmd.Parameters.AddWithValue("@actionType", actionType);
+                        cmd.Parameters.AddWithValue("@tableAffected", tableAffected);
+                        cmd.Parameters.AddWithValue("@recordId", recordId);
+                        cmd.Parameters.AddWithValue("@details", details);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine("Audit Log Error: " + ex.Message);
                 }
             }
         }

@@ -98,12 +98,52 @@ namespace HRApplicantWindowSystem
                 return;
             }
 
+
+
+
+            if (string.IsNullOrWhiteSpace(txtProfileName.Text) ||
+                string.IsNullOrWhiteSpace(txtProfileEmail.Text) ||
+                string.IsNullOrWhiteSpace(txtProfilePhone.Text) ||
+                string.IsNullOrWhiteSpace(txtEducation.Text) ||
+                string.IsNullOrWhiteSpace(txtWorkExp.Text) ||
+                string.IsNullOrWhiteSpace(txtOtherDeteails.Text)) 
+            {
+                MessageBox.Show("Cannot lock this application. The applicant has not completed their Profile Summary (Missing Education, Work Experience, Other Details, or Contact Info).",
+                                "Incomplete Profile", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return;
+            }
+
+
+            if (dgvDocuments.DataSource == null || dgvDocuments.Rows.Count == 0)
+            {
+                MessageBox.Show("Cannot lock this application. No documents have been found for this applicant.",
+                                "Missing Documents", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return;
+            }
+
+
+            foreach (DataGridViewRow row in dgvDocuments.Rows)
+            {
+                if (!row.IsNewRow)
+                {
+                    string filePath = row.Cells["File Route"].Value?.ToString();
+
+                    if (string.IsNullOrWhiteSpace(filePath))
+                    {
+                        MessageBox.Show("Cannot lock this application. The applicant still has missing document requirements. Please wait for them to upload all files.",
+                                        "Incomplete Documents", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                        return;
+                    }
+                }
+            }
+
+
+
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 try
                 {
                     conn.Open();
-
 
                     string sql = "UPDATE applications SET is_locked = 1, status = 'Screening' WHERE applicant_id = @id";
 
@@ -113,7 +153,7 @@ namespace HRApplicantWindowSystem
                         cmd.ExecuteNonQuery();
                     }
 
-                    LogAuditAction(currentUserId, "Lock", "applications", selectedApplicantId, "HR locked application for screening."); 
+                    LogAuditAction(currentUserId, "Lock", "applications", selectedApplicantId, "HR locked application for screening.");
                     MessageBox.Show("Application successfully locked for review.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     UpdateMetricSummaryCards();

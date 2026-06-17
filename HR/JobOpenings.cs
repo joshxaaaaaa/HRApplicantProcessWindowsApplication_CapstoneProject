@@ -175,13 +175,18 @@ namespace HRApplicantWindowSystem
 
         private void btnAddVacancy_Click(object sender, EventArgs e)
         {
+            this.Hide(); 
+
             AddVacancyForm addForm = new AddVacancyForm();
+
 
             if (addForm.ShowDialog() == DialogResult.OK)
             {
 
                 LoadJobsFromDatabase();
             }
+
+            this.Show();
         }
 
 
