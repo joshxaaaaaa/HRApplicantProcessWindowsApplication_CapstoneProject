@@ -22,6 +22,7 @@ namespace HRApplicantWindowSystem.Applicant
         private Label label3;
         private Label label2;
         private Button btnBack;
+        private TextBox txtSearch;
         private DataGridView dgvJobVacancies;
 
         public JobVacanciesForm(int accountId)
@@ -48,6 +49,7 @@ namespace HRApplicantWindowSystem.Applicant
             label3 = new Label();
             label2 = new Label();
             btnBack = new Button();
+            txtSearch = new TextBox();
             ((System.ComponentModel.ISupportInitialize)dgvJobVacancies).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
@@ -174,12 +176,20 @@ namespace HRApplicantWindowSystem.Applicant
             btnBack.UseVisualStyleBackColor = true;
             btnBack.Click += btnBack_Click;
             // 
+            // txtSearch
+            // 
+            txtSearch.Location = new Point(392, 124);
+            txtSearch.Name = "txtSearch";
+            txtSearch.Size = new Size(230, 27);
+            txtSearch.TabIndex = 13;
+            // 
             // JobVacanciesForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientInactiveCaption;
             ClientSize = new Size(914, 600);
+            Controls.Add(txtSearch);
             Controls.Add(btnBack);
             Controls.Add(label3);
             Controls.Add(label2);
@@ -207,6 +217,15 @@ namespace HRApplicantWindowSystem.Applicant
             ResolveApplicantId();
             LoadJobVacancies();
             CheckApplicantApplicationExists();
+
+
+            txtSearch.Text = "Search by job title or department...";
+            txtSearch.ForeColor = Color.Gray;
+
+
+            txtSearch.Enter += txtSearch_Enter;
+            txtSearch.Leave += txtSearch_Leave;
+            txtSearch.TextChanged += txtSearch_TextChanged;
         }
 
         private void ResolveApplicantId()
@@ -511,9 +530,49 @@ namespace HRApplicantWindowSystem.Applicant
             }
         }
 
+        private void txtSearch_Enter(object sender, EventArgs e)
+        {
+            if (txtSearch.Text == "Search by job title or department...")
+            {
+                txtSearch.Text = "";
+                txtSearch.ForeColor = Color.Black;
+            }
+        }
+
+        private void txtSearch_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtSearch.Text))
+            {
+                txtSearch.Text = "Search by job title or department...";
+                txtSearch.ForeColor = Color.Gray;
+            }
+        }
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            DataTable dt = dgvJobVacancies.DataSource as DataTable;
+
+            if (dt != null)
+            {
+                string keyword = txtSearch.Text.Trim().Replace("'", "''");
+
+                if (keyword == "search by job title or department..." || string.IsNullOrWhiteSpace(keyword))
+                {
+                    dt.DefaultView.RowFilter = "";
+                }
+                else
+                {
+                    dt.DefaultView.RowFilter = $"[Job Title] LIKE '%{keyword}%' OR [Department] LIKE '%{keyword}%'";
+                }
+
+                lblTotalCount.Text = dgvJobVacancies.Rows.Count.ToString();
+            }
+        }
+
         private void btnBack_Click(object sender, EventArgs e)
         {
             this.Close();
         }
+
     }
 }
