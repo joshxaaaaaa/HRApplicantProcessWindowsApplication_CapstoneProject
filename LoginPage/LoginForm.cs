@@ -1,7 +1,9 @@
 
-using System;
-using System.Windows.Forms;
 using MySql.Data.MySqlClient; 
+using System;
+using System.Security.Cryptography;
+using System.Text;
+using System.Windows.Forms;
 
 namespace HRApplicantWindowSystem
 {
@@ -101,9 +103,9 @@ namespace HRApplicantWindowSystem
                                     int userId = reader.GetInt32("user_id");
                                     string roleName = reader.GetString("role_name");
 
-                                    this.Hide(); 
+                                    this.Hide();
                                     HRDashboardForm dashboard = new HRDashboardForm(userId, roleName);
-                                    dashboard.ShowDialog(); 
+                                    dashboard.ShowDialog();
 
                                     txtUsername.Clear();
                                     txtPassword.Clear();
@@ -116,7 +118,7 @@ namespace HRApplicantWindowSystem
 
                                     if (status == "Active")
                                     {
-                                        this.Hide(); 
+                                        this.Hide();
                                         ApplicantDashboardForm appDashboard = new ApplicantDashboardForm(accountId);
                                         appDashboard.ShowDialog();
 
@@ -142,12 +144,26 @@ namespace HRApplicantWindowSystem
 
         private void btnCreateAccount_Click(object sender, EventArgs e)
         {
-            this.Hide(); 
+            this.Hide();
 
             ApplicantRegisterForm registerForm = new ApplicantRegisterForm();
-            registerForm.ShowDialog(); 
+            registerForm.ShowDialog();
 
             this.Show();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            txtPassword.PasswordChar = '\0';
+            button2.Visible = false;       
+            button3.Visible = true;         
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            txtPassword.PasswordChar = '*';
+            button3.Visible = false;        
+            button2.Visible = true;          
         }
 
         private void pnlRoleSelection_Paint(object sender, PaintEventArgs e)
@@ -176,5 +192,7 @@ namespace HRApplicantWindowSystem
         {
 
         }
+
+
     }
 }

@@ -46,6 +46,8 @@
             btnRoleApplicant = new Button();
             label5 = new Label();
             pnlLoginInputs = new Panel();
+            button3 = new Button();
+            button2 = new Button();
             label11 = new Label();
             label10 = new Label();
             pictureBox3 = new PictureBox();
@@ -221,6 +223,8 @@
             // pnlLoginInputs
             // 
             pnlLoginInputs.BackColor = SystemColors.GradientActiveCaption;
+            pnlLoginInputs.Controls.Add(button3);
+            pnlLoginInputs.Controls.Add(button2);
             pnlLoginInputs.Controls.Add(label11);
             pnlLoginInputs.Controls.Add(label10);
             pnlLoginInputs.Controls.Add(pictureBox3);
@@ -238,6 +242,32 @@
             pnlLoginInputs.Name = "pnlLoginInputs";
             pnlLoginInputs.Size = new Size(318, 651);
             pnlLoginInputs.TabIndex = 11;
+            // 
+            // button3
+            // 
+            button3.BackColor = Color.White;
+            button3.FlatStyle = FlatStyle.Flat;
+            button3.ForeColor = Color.Black;
+            button3.Image = (Image)resources.GetObject("button3.Image");
+            button3.Location = new Point(251, 320);
+            button3.Name = "button3";
+            button3.Size = new Size(31, 27);
+            button3.TabIndex = 25;
+            button3.UseVisualStyleBackColor = false;
+            button3.Click += button3_Click;
+            // 
+            // button2
+            // 
+            button2.BackColor = Color.White;
+            button2.FlatStyle = FlatStyle.Flat;
+            button2.ForeColor = Color.Black;
+            button2.Image = (Image)resources.GetObject("button2.Image");
+            button2.Location = new Point(251, 320);
+            button2.Name = "button2";
+            button2.Size = new Size(31, 27);
+            button2.TabIndex = 24;
+            button2.UseVisualStyleBackColor = false;
+            button2.Click += button2_Click;
             // 
             // label11
             // 
@@ -351,5 +381,7 @@
         private Label label6;
         private Label label13;
         private Label label7;
+        private Button button3;
+        private Button button2;
     }
 }

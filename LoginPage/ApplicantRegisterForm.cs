@@ -111,6 +111,40 @@ namespace HRApplicantWindowSystem
         }
 
 
+        private void ApplicantRegisterForm_Load(object sender, EventArgs e)
+        {
+            txtPassword.PasswordChar = '*';
+
+            button1.Visible = true;  
+            button2.Visible = false; 
+        }
+
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+            txtPassword.PasswordChar = '*';
+
+            button2.Visible = false;
+            button1.Visible = true;
+
+
+            
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            txtPassword.PasswordChar = '\0';
+
+            button1.Visible = false;
+            button2.Visible = true;
+        }
+
+        private void txtPassword_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
 
         private void txtEmail_TextChanged(object sender, EventArgs e)
         {

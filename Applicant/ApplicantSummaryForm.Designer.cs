@@ -142,11 +142,11 @@
             label5.AutoSize = true;
             label5.BackColor = SystemColors.ActiveCaption;
             label5.Font = new Font("Century Gothic", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.Location = new Point(226, 12);
+            label5.Location = new Point(290, 12);
             label5.Name = "label5";
-            label5.Size = new Size(475, 40);
+            label5.Size = new Size(403, 40);
             label5.TabIndex = 10;
-            label5.Text = "MY APPLICATION SUMMARY";
+            label5.Text = "DASHBOARD SUMMARY";
             // 
             // label3
             // 
@@ -172,9 +172,11 @@
             // 
             label4.AutoSize = true;
             label4.BackColor = Color.PaleTurquoise;
+            label4.Font = new Font("Stencil", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label4.ForeColor = Color.CornflowerBlue;
             label4.Location = new Point(169, 110);
             label4.Name = "label4";
-            label4.Size = new Size(133, 20);
+            label4.Size = new Size(220, 24);
             label4.TabIndex = 13;
             label4.Text = "Application Status:";
             // 
@@ -202,9 +204,11 @@
             // 
             label6.AutoSize = true;
             label6.BackColor = Color.DeepSkyBlue;
+            label6.Font = new Font("Stencil", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label6.ForeColor = Color.PaleTurquoise;
             label6.Location = new Point(646, 110);
             label6.Name = "label6";
-            label6.Size = new Size(122, 20);
+            label6.Size = new Size(207, 24);
             label6.TabIndex = 16;
             label6.Text = "Interview Details:";
             // 
