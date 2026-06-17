@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using HRApplicantWindowSystem.Applicant;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,12 +23,13 @@ namespace HRApplicantWindowSystem
         public static string draftEdu = null;
         public static string draftWork = null;
         public static string draftOther = null;
-        
+
         public ApplicantProfileForm(int accountId)
         {
             InitializeComponent();
             loggedInAccountId = accountId;
             isHRView = false;
+            btnChangePassword.Visible = true;
             SetEditable(false);
         }
 
@@ -48,24 +50,24 @@ namespace HRApplicantWindowSystem
 
         private void SetEditable(bool editable)
         {
-         
+
             textBox1.ReadOnly = !editable;
             textBox2.ReadOnly = !editable;
             textBox3.ReadOnly = !editable;
             textBox4.ReadOnly = !editable;
 
-           
+
             txtEducation.ReadOnly = !editable;
             txtWorkExp.ReadOnly = !editable;
             txtOtherDetails.ReadOnly = !editable;
 
-          
+
             button1.Enabled = editable;
 
-          
+
             button3.Enabled = editable;
-       
-     
+
+
         }
 
 
@@ -113,7 +115,7 @@ namespace HRApplicantWindowSystem
 
         private void pictureBox2_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -143,7 +145,7 @@ namespace HRApplicantWindowSystem
             }
             catch (Exception)
             {
-               
+
             }
 
             this.Close();
@@ -210,7 +212,7 @@ namespace HRApplicantWindowSystem
             }
             catch { }
 
-            
+
         }
 
         private void SaveProfileToDatabase()
@@ -306,7 +308,7 @@ namespace HRApplicantWindowSystem
                                 }
                             }
                         }
-                        catch {  }
+                        catch { }
 
 
                         try
@@ -314,7 +316,7 @@ namespace HRApplicantWindowSystem
                             string fileName = System.IO.Path.Combine(Application.StartupPath, $"draft_{loggedInAccountId}.txt");
                             if (System.IO.File.Exists(fileName)) System.IO.File.Delete(fileName);
                         }
-                        catch {  }
+                        catch { }
                     }
                     catch
                     {
@@ -363,7 +365,7 @@ namespace HRApplicantWindowSystem
         }
 
 
-        
+
 
         private bool IsProfileFormCompletelyEmpty()
         {
@@ -377,7 +379,7 @@ namespace HRApplicantWindowSystem
                    pictureBox2.Image == null;
         }
 
- 
+
         private void SaveDraftToFile()
         {
             try
@@ -416,7 +418,7 @@ namespace HRApplicantWindowSystem
             }
         }
 
-        
+
         private void ApplicantProfileForm_Load(object sender, EventArgs e)
         {
 
@@ -426,6 +428,7 @@ namespace HRApplicantWindowSystem
                 try { buttonEdit.Visible = false; } catch { }
                 try { button3.Visible = false; } catch { }
                 try { button1.Visible = false; } catch { }
+                try { btnChangePassword.Visible = false; } catch { }
             }
             else
             {
@@ -495,7 +498,7 @@ namespace HRApplicantWindowSystem
 
 
                                 LoadProfileFromDatabase(currentApplicantId);
-                                successfullyLoadedFromDraft = true; 
+                                successfullyLoadedFromDraft = true;
                             }
                         }
                     }
@@ -552,7 +555,7 @@ namespace HRApplicantWindowSystem
         }
         private void LoadProfileFromDatabase(int applicantId)
         {
-            using (MySqlConnection conn = new MySqlConnection(connectionString)) 
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 try
                 {
@@ -561,7 +564,7 @@ namespace HRApplicantWindowSystem
 
                     using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                     {
-                        cmd.Parameters.AddWithValue("@id", applicantId); 
+                        cmd.Parameters.AddWithValue("@id", applicantId);
                         using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
                             if (reader.Read())
@@ -606,6 +609,16 @@ namespace HRApplicantWindowSystem
                     Console.WriteLine("Audit Log Error: " + ex.Message);
                 }
             }
+        }
+
+        private void btnChangePassword_Click(object sender, EventArgs e)
+        {
+            ChangePasswordForm passForm = new ChangePasswordForm(loggedInAccountId);
+            passForm.StartPosition = FormStartPosition.CenterScreen;
+
+            this.Hide();
+            passForm.ShowDialog();
+            this.Show();
         }
     }
 }

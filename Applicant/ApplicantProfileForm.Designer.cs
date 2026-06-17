@@ -58,6 +58,7 @@
             label13 = new Label();
             label14 = new Label();
             buttonEdit = new Button();
+            btnChangePassword = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -334,12 +335,23 @@
             buttonEdit.UseVisualStyleBackColor = true;
             buttonEdit.Click += buttonEdit_Click;
             // 
+            // btnChangePassword
+            // 
+            btnChangePassword.Location = new Point(747, 558);
+            btnChangePassword.Name = "btnChangePassword";
+            btnChangePassword.Size = new Size(150, 26);
+            btnChangePassword.TabIndex = 17;
+            btnChangePassword.Text = "Change Password";
+            btnChangePassword.UseVisualStyleBackColor = true;
+            btnChangePassword.Click += btnChangePassword_Click;
+            // 
             // ApplicantProfileForm
             // 
             AutoScaleDimensions = new SizeF(8F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientInactiveCaption;
             ClientSize = new Size(950, 650);
+            Controls.Add(btnChangePassword);
             Controls.Add(label14);
             Controls.Add(label13);
             Controls.Add(label12);
@@ -404,5 +416,6 @@
         private Label label14;
         private Button buttonEdit;
         private Label label1;
+        private Button btnChangePassword;
     }
 }
