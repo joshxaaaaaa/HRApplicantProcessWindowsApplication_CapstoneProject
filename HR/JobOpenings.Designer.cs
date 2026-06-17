@@ -28,11 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(JobOpenings));
             panel1 = new Panel();
             btnBack = new Button();
-            txtSearch = new TextBox();
             btnAddVacancy = new Button();
             lblWelcome = new Label();
+            txtSearch = new TextBox();
             label1 = new Label();
             label2 = new Label();
             panel2 = new Panel();
@@ -57,23 +58,27 @@
             ColDescription2 = new DataGridViewTextBoxColumn();
             ColRequirements2 = new DataGridViewTextBoxColumn();
             label5 = new Label();
+            label6 = new Label();
+            pictureBox1 = new PictureBox();
+            label7 = new Label();
             panel1.SuspendLayout();
             panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvJobOpenings).BeginInit();
             panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvClosedJobs).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // panel1
             // 
-            panel1.BackColor = SystemColors.ControlDarkDark;
+            panel1.BackColor = SystemColors.ActiveCaption;
             panel1.Controls.Add(btnBack);
             panel1.Controls.Add(btnAddVacancy);
             panel1.Controls.Add(lblWelcome);
             panel1.Dock = DockStyle.Left;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(260, 654);
+            panel1.Size = new Size(260, 650);
             panel1.TabIndex = 1;
             // 
             // btnBack
@@ -86,22 +91,9 @@
             btnBack.UseVisualStyleBackColor = true;
             btnBack.Click += btnLogout_Click;
             // 
-            // txtSearch
-            // 
-            txtSearch.ForeColor = SystemColors.WindowFrame;
-            txtSearch.Location = new Point(805, 109);
-            txtSearch.Name = "txtSearch";
-            txtSearch.Size = new Size(318, 27);
-            txtSearch.TabIndex = 8;
-            txtSearch.Text = "Search job title...";
-            txtSearch.TextChanged += txtSearch_TextChanged;
-            txtSearch.Enter += txtSearch_Enter;
-            txtSearch.KeyDown += txtSearch_KeyDown;
-            txtSearch.Leave += txtSearch_Leave;
-            // 
             // btnAddVacancy
             // 
-            btnAddVacancy.BackColor = SystemColors.Highlight;
+            btnAddVacancy.BackColor = SystemColors.HotTrack;
             btnAddVacancy.FlatStyle = FlatStyle.Flat;
             btnAddVacancy.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnAddVacancy.ForeColor = SystemColors.ButtonHighlight;
@@ -116,39 +108,53 @@
             // lblWelcome
             // 
             lblWelcome.AutoSize = true;
-            lblWelcome.ForeColor = SystemColors.HighlightText;
-            lblWelcome.Location = new Point(51, 13);
+            lblWelcome.ForeColor = SystemColors.Desktop;
+            lblWelcome.Location = new Point(70, 26);
             lblWelcome.Name = "lblWelcome";
             lblWelcome.Size = new Size(99, 20);
             lblWelcome.TabIndex = 0;
             lblWelcome.Text = "Welcome HR!";
             // 
+            // txtSearch
+            // 
+            txtSearch.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtSearch.ForeColor = SystemColors.WindowFrame;
+            txtSearch.Location = new Point(780, 116);
+            txtSearch.Name = "txtSearch";
+            txtSearch.Size = new Size(318, 26);
+            txtSearch.TabIndex = 8;
+            txtSearch.Text = "Search job title...";
+            txtSearch.TextChanged += txtSearch_TextChanged;
+            txtSearch.Enter += txtSearch_Enter;
+            txtSearch.KeyDown += txtSearch_KeyDown;
+            txtSearch.Leave += txtSearch_Leave;
+            // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(323, 23);
+            label1.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(795, 26);
             label1.Name = "label1";
-            label1.Size = new Size(308, 28);
+            label1.Size = new Size(303, 23);
             label1.TabIndex = 2;
             label1.Text = "JOB OPENINGS MANAGEMENT";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(323, 51);
+            label2.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label2.Location = new Point(795, 54);
             label2.Name = "label2";
-            label2.Size = new Size(269, 20);
+            label2.Size = new Size(303, 20);
             label2.TabIndex = 3;
             label2.Text = "Manage job vacancies and hiring status";
             // 
             // panel2
             // 
             panel2.BackColor = SystemColors.ControlDark;
-            panel2.Location = new Point(323, 93);
+            panel2.Location = new Point(298, 105);
             panel2.Name = "panel2";
-            panel2.Size = new Size(800, 1);
+            panel2.Size = new Size(820, 1);
             panel2.TabIndex = 4;
             // 
             // panel3
@@ -156,7 +162,7 @@
             panel3.BorderStyle = BorderStyle.FixedSingle;
             panel3.Controls.Add(dgvJobOpenings);
             panel3.Controls.Add(label4);
-            panel3.Location = new Point(323, 149);
+            panel3.Location = new Point(298, 156);
             panel3.Name = "panel3";
             panel3.Size = new Size(817, 233);
             panel3.TabIndex = 6;
@@ -232,20 +238,20 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(14, 18);
+            label4.Font = new Font("Century Gothic", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label4.Location = new Point(14, 12);
             label4.Name = "label4";
-            label4.Size = new Size(102, 23);
+            label4.Size = new Size(101, 19);
             label4.TabIndex = 10;
             label4.Text = "OPEN JOBS";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(323, 109);
+            label3.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label3.Location = new Point(298, 116);
             label3.Name = "label3";
-            label3.Size = new Size(230, 28);
+            label3.Size = new Size(236, 23);
             label3.TabIndex = 7;
             label3.Text = "Job openings overview";
             // 
@@ -254,7 +260,7 @@
             panel4.BorderStyle = BorderStyle.FixedSingle;
             panel4.Controls.Add(dgvClosedJobs);
             panel4.Controls.Add(label5);
-            panel4.Location = new Point(323, 393);
+            panel4.Location = new Point(298, 400);
             panel4.Name = "panel4";
             panel4.Size = new Size(817, 233);
             panel4.TabIndex = 10;
@@ -330,18 +336,51 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.Location = new Point(14, 18);
+            label5.Font = new Font("Century Gothic", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label5.Location = new Point(14, 14);
             label5.Name = "label5";
-            label5.Size = new Size(122, 23);
+            label5.Size = new Size(119, 19);
             label5.TabIndex = 10;
             label5.Text = "CLOSED JOBS";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(366, 66);
+            label6.Name = "label6";
+            label6.Size = new Size(179, 20);
+            label6.TabIndex = 13;
+            label6.Text = "Network and Systems, Co.";
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(298, 26);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(67, 59);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 11;
+            pictureBox1.TabStop = false;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("Century Gothic", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label7.Location = new Point(361, 26);
+            label7.Name = "label7";
+            label7.Size = new Size(214, 40);
+            label7.TabIndex = 12;
+            label7.Text = "PENTANODE";
             // 
             // JobOpenings
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1154, 654);
+            BackColor = SystemColors.GradientInactiveCaption;
+            ClientSize = new Size(1152, 650);
+            Controls.Add(label6);
+            Controls.Add(pictureBox1);
+            Controls.Add(label7);
             Controls.Add(panel4);
             Controls.Add(txtSearch);
             Controls.Add(label3);
@@ -361,6 +400,7 @@
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvClosedJobs).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -396,5 +436,8 @@
         private DataGridViewComboBoxColumn ColActions2;
         private DataGridViewTextBoxColumn ColDescription2;
         private DataGridViewTextBoxColumn ColRequirements2;
+        private Label label6;
+        private PictureBox pictureBox1;
+        private Label label7;
     }
 }
