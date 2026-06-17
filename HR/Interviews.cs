@@ -17,7 +17,9 @@ namespace HRApplicantWindowSystem
         {
             InitializeComponent();
             currentUserId = userId;
+
         }
+        private int screeningSelectedAppId = -1;
 
         private void Interviews_Load(object sender, EventArgs e)
         {
@@ -85,25 +87,31 @@ namespace HRApplicantWindowSystem
                     conn.Open();
 
                     string appLookup = "SELECT application_id FROM applications WHERE applicant_id = @id ORDER BY applied_date DESC LIMIT 1";
-                    int appId = 0;
+                    screeningSelectedAppId = 0; 
+
                     using (MySqlCommand appCmd = new MySqlCommand(appLookup, conn))
                     {
                         appCmd.Parameters.AddWithValue("@id", txtAppID.Text);
                         object resApp = appCmd.ExecuteScalar();
-                        if (resApp != null && resApp != DBNull.Value) appId = Convert.ToInt32(resApp);
+                        if (resApp != null && resApp != DBNull.Value)
+                        {
+                            screeningSelectedAppId = Convert.ToInt32(resApp);
+                        }
                     }
 
-                    if (appId == 0)
+                    if (screeningSelectedAppId == 0)
                     {
                         dgvDocs.DataSource = null;
                     }
                     else
                     {
+
+             
                         string docSql = @"SELECT rt.requirement_name AS 'Document', ad.file_path AS 'File' 
                                           FROM RequirementTypes rt 
                                           LEFT JOIN ApplicantDocuments ad ON rt.requirement_type_id = ad.requirement_type_id AND ad.application_id = @appId";
                         MySqlDataAdapter docAdapter = new MySqlDataAdapter(docSql, conn);
-                        docAdapter.SelectCommand.Parameters.AddWithValue("@appId", appId);
+                        docAdapter.SelectCommand.Parameters.AddWithValue("@appId", screeningSelectedAppId); 
                         DataTable docDt = new DataTable();
                         docAdapter.Fill(docDt);
                         dgvDocs.DataSource = docDt;
@@ -113,7 +121,7 @@ namespace HRApplicantWindowSystem
         }
         private void SaveScreeningDecision(string decisionStatus)
         {
-            if (string.IsNullOrWhiteSpace(txtAppID.Text))
+            if (screeningSelectedAppId <= 0)
             {
                 MessageBox.Show("Please select an applicant from the list first.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -131,39 +139,48 @@ namespace HRApplicantWindowSystem
                 {
                     conn.Open();
 
+                    string newStatus = decisionStatus == "Qualified" ? "Shortlisted" : "Rejected";
 
-
-                    string updateStatusSql = @"UPDATE applications SET status = @status WHERE application_id = 
-                                              (SELECT application_id FROM (SELECT application_id FROM applications WHERE applicant_id = @id ORDER BY applied_date DESC LIMIT 1) AS t)";
+      
+                    string updateStatusSql = "UPDATE applications SET status = @status WHERE application_id = @appId";
                     using (MySqlCommand cmdStatus = new MySqlCommand(updateStatusSql, conn))
                     {
-                        string newStatus = decisionStatus == "Qualified" ? "Shortlisted" : "Rejected";
                         cmdStatus.Parameters.AddWithValue("@status", newStatus);
-                        cmdStatus.Parameters.AddWithValue("@id", txtAppID.Text);
+                        cmdStatus.Parameters.AddWithValue("@appId", screeningSelectedAppId);
                         cmdStatus.ExecuteNonQuery();
                     }
 
+       
+                    string historySql = "INSERT INTO applicationstatushistory (application_id, old_status, new_status) VALUES (@appId, 'Screening', @newStatus)";
+                    using (MySqlCommand cmdHist = new MySqlCommand(historySql, conn))
+                    {
+                        cmdHist.Parameters.AddWithValue("@appId", screeningSelectedAppId);
+                        cmdHist.Parameters.AddWithValue("@newStatus", newStatus);
+                        cmdHist.ExecuteNonQuery();
+                    }
 
+         
                     string insertRemarksSql = @"INSERT INTO screeningresults (application_id, screened_by, remarks, result) 
-                            VALUES ((SELECT application_id FROM (SELECT application_id FROM applications WHERE applicant_id = @id ORDER BY applied_date DESC LIMIT 1) AS t), @screenedBy, @remarks, @result)";
+                                        VALUES (@appId, @screenedBy, @remarks, @result)";
                     using (MySqlCommand cmdRemarks = new MySqlCommand(insertRemarksSql, conn))
                     {
-                        cmdRemarks.Parameters.AddWithValue("@id", txtAppID.Text);
-                        cmdRemarks.Parameters.AddWithValue("@screenedBy", currentUserId); 
+                        cmdRemarks.Parameters.AddWithValue("@appId", screeningSelectedAppId);
+                        cmdRemarks.Parameters.AddWithValue("@screenedBy", currentUserId);
                         cmdRemarks.Parameters.AddWithValue("@remarks", txtRemarks.Text.Trim());
                         cmdRemarks.Parameters.AddWithValue("@result", decisionStatus);
                         cmdRemarks.ExecuteNonQuery();
                     }
-                    LogAuditAction(currentUserId, "Screening", "screeningresults", Convert.ToInt32(txtAppID.Text),
-                    $"Applicant screening completed. Decision: {decisionStatus}. Remarks: {txtRemarks.Text.Trim()}");
+
+                    LogAuditAction(currentUserId, "Screening", "screeningresults", screeningSelectedAppId, $"Applicant screening completed. Decision: {decisionStatus}. Remarks: {txtRemarks.Text.Trim()}");
                     MessageBox.Show($"Applicant successfully marked as {decisionStatus}!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-
+              
                     txtAppID.Clear();
                     txtAppName.Clear();
                     txtAppPos.Clear();
                     txtRemarks.Clear();
                     dgvDocs.DataSource = null;
+                    screeningSelectedAppId = -1; 
 
                     LoadPendingApplicants();
                 }
@@ -318,6 +335,13 @@ namespace HRApplicantWindowSystem
                         cmdUpdate.ExecuteNonQuery();
                     }
 
+                    string sqlHistory = "INSERT INTO applicationstatushistory (application_id, old_status, new_status) VALUES (@appId, 'Shortlisted', 'Interviewing')";
+                    using (MySqlCommand cmdHist = new MySqlCommand(sqlHistory, conn))
+                    {
+                        cmdHist.Parameters.AddWithValue("@appId", schedSelectedApplicationId);
+                        cmdHist.ExecuteNonQuery();
+                    }
+
                     MessageBox.Show("Interview scheduled successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     txtSchedName.Clear();
@@ -465,12 +489,18 @@ namespace HRApplicantWindowSystem
 
                     string newStatus = cmbPassFail.SelectedItem.ToString() == "Pass" ? "Offered" : "Rejected";
                     string sqlUpdate = "UPDATE applications SET status = @status WHERE application_id = @appId";
-
                     using (MySqlCommand cmdUpdate = new MySqlCommand(sqlUpdate, conn))
                     {
                         cmdUpdate.Parameters.AddWithValue("@status", newStatus);
                         cmdUpdate.Parameters.AddWithValue("@appId", evalSelectedApplicationId);
                         cmdUpdate.ExecuteNonQuery();
+                    }
+                    string sqlHistory = "INSERT INTO applicationstatushistory (application_id, old_status, new_status) VALUES (@appId, 'Interviewing', @newStatus)";
+                    using (MySqlCommand cmdHist = new MySqlCommand(sqlHistory, conn))
+                    {
+                        cmdHist.Parameters.AddWithValue("@appId", evalSelectedApplicationId);
+                        cmdHist.Parameters.AddWithValue("@newStatus", newStatus); 
+                        cmdHist.ExecuteNonQuery();
                     }
                     LogAuditAction(currentUserId, "Interview Evaluation", "interviewevaluations", evalSelectedApplicationId, "Applicant passed/failed interview.");
 

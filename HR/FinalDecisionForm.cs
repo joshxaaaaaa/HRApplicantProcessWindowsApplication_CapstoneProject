@@ -123,6 +123,7 @@ namespace HRApplicantWindowSystem
                 {
                     conn.Open();
 
+
                     string sqlInsert = @"INSERT INTO hiringdecisions 
                                  (application_id, decision_maker_id, final_decision, remarks, decision_date) 
                                  VALUES (@appId, @makerId, @decision, @remarks, @date)";
@@ -130,27 +131,38 @@ namespace HRApplicantWindowSystem
                     using (MySqlCommand cmd = new MySqlCommand(sqlInsert, conn))
                     {
                         cmd.Parameters.AddWithValue("@appId", finalSelectedAppId);
-
-
-                        cmd.Parameters.AddWithValue("@makerId", currentUserId); 
-
+                        cmd.Parameters.AddWithValue("@makerId", currentUserId);
                         cmd.Parameters.AddWithValue("@decision", cmbFinalDecision.SelectedItem.ToString());
                         cmd.Parameters.AddWithValue("@remarks", txtFinalRemarks.Text.Trim());
                         cmd.Parameters.AddWithValue("@date", DateTime.Now);
                         cmd.ExecuteNonQuery();
                     }
 
-
+      
                     string newStatus = cmbFinalDecision.SelectedItem.ToString();
-                    string sqlUpdate = "UPDATE applications SET status = @status WHERE application_id = @appId";
 
+
+                    string sqlUpdate = "UPDATE applications SET status = @status WHERE application_id = @appId";
                     using (MySqlCommand cmdUpdate = new MySqlCommand(sqlUpdate, conn))
                     {
                         cmdUpdate.Parameters.AddWithValue("@status", newStatus);
                         cmdUpdate.Parameters.AddWithValue("@appId", finalSelectedAppId);
                         cmdUpdate.ExecuteNonQuery();
                     }
+
+
+                    string historySql = @"INSERT INTO applicationstatushistory (application_id, old_status, new_status) 
+                                  VALUES (@appId, 'Offered', @newStatus);";
+                    using (MySqlCommand cmdHist = new MySqlCommand(historySql, conn))
+                    {
+                        cmdHist.Parameters.AddWithValue("@appId", finalSelectedAppId);
+                        cmdHist.Parameters.AddWithValue("@newStatus", newStatus);
+                        cmdHist.ExecuteNonQuery();
+                    }
+
+
                     LogAuditAction(currentUserId, "Final Hiring Decision", "hiringdecisions", finalSelectedAppId, $"Applicant marked as {newStatus}. Remarks: {txtFinalRemarks.Text.Trim()}");
+
                     MessageBox.Show($"Final decision saved! Applicant has been {newStatus}.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 
@@ -158,7 +170,9 @@ namespace HRApplicantWindowSystem
                     txtFinalRemarks.Clear();
                     cmbFinalDecision.SelectedIndex = -1;
                     finalSelectedAppId = -1;
-                    LoadPendingDecisions();
+
+
+                    LoadOfferedApplicants();
                 }
                 catch (Exception ex)
                 {

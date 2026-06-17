@@ -145,19 +145,37 @@ namespace HRApplicantWindowSystem
                 {
                     conn.Open();
 
-                    string sql = "UPDATE applications SET is_locked = 1, status = 'Screening' WHERE applicant_id = @id";
 
-                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    int appId = 0;
+                    string getAppIdSql = "SELECT application_id FROM applications WHERE applicant_id = @id ORDER BY applied_date DESC LIMIT 1";
+                    using (MySqlCommand cmdGet = new MySqlCommand(getAppIdSql, conn))
                     {
-                        cmd.Parameters.AddWithValue("@id", selectedApplicantId);
+                        cmdGet.Parameters.AddWithValue("@id", selectedApplicantId);
+                        object res = cmdGet.ExecuteScalar();
+                        if (res != null && res != DBNull.Value) appId = Convert.ToInt32(res);
+                    }
+
+
+                    string sqlUpdate = "UPDATE applications SET is_locked = 1, status = 'Screening' WHERE application_id = @appId";
+                    using (MySqlCommand cmd = new MySqlCommand(sqlUpdate, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@appId", appId);
                         cmd.ExecuteNonQuery();
+                    }
+
+   
+                    string sqlHistory = "INSERT INTO applicationstatushistory (application_id, old_status, new_status) VALUES (@appId, 'Submitted', 'Screening')";
+                    using (MySqlCommand cmdHist = new MySqlCommand(sqlHistory, conn))
+                    {
+                        cmdHist.Parameters.AddWithValue("@appId", appId);
+                        cmdHist.ExecuteNonQuery();
                     }
 
                     LogAuditAction(currentUserId, "Lock", "applications", selectedApplicantId, "HR locked application for screening.");
                     MessageBox.Show("Application successfully locked for review.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     UpdateMetricSummaryCards();
-
+                    RefreshApplicantGrid(); 
                 }
                 catch (Exception ex)
                 {
