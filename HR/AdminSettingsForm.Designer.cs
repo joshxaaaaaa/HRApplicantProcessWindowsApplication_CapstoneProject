@@ -443,6 +443,7 @@
             Controls.Add(AdminSettings);
             Controls.Add(label1);
             Name = "AdminSettingsForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Manager/Admin Panel";
             Load += AdminSettingsForm_Load;
             AdminSettings.ResumeLayout(false);

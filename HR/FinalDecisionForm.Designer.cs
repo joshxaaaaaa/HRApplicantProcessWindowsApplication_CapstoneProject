@@ -206,6 +206,7 @@
             Controls.Add(txtDecisionName);
             Controls.Add(dgvFinalReview);
             Name = "FinalDecisionForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Final Hiring Decision";
             Load += FinalDecisionForm_Load;
             ((System.ComponentModel.ISupportInitialize)dgvFinalReview).EndInit();

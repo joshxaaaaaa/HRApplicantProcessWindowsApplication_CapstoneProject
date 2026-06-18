@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HRDashboardForm));
             panel1 = new Panel();
             btnHiringDecision = new Button();
             btnAdminPanel = new Button();
@@ -78,7 +79,7 @@
             // 
             // panel1
             // 
-            panel1.BackColor = SystemColors.ControlDarkDark;
+            panel1.BackColor = SystemColors.ActiveCaption;
             panel1.Controls.Add(btnHiringDecision);
             panel1.Controls.Add(btnAdminPanel);
             panel1.Controls.Add(btnLogout);
@@ -375,11 +376,11 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Image = Properties.Resources._669691451_26325044287151514_249119427592236573_n;
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
             pictureBox1.Location = new Point(20, 62);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(805, 564);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
@@ -446,6 +447,7 @@
             Controls.Add(pnlDashboardSummary);
             Controls.Add(panel1);
             Name = "HRDashboardForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "HR UI";
             Load += HRDashboardForm_Load;
             panel1.ResumeLayout(false);

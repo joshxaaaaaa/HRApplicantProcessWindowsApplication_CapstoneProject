@@ -706,6 +706,7 @@
             ForeColor = Color.Gray;
             Margin = new Padding(2);
             Name = "ApplicantProcess";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "HR Applicant Process System - Dashboard";
             Load += ApplicantProcess_Load;
             pnlHeader.ResumeLayout(false);

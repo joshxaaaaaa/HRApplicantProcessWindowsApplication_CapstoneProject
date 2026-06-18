@@ -276,6 +276,7 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Name = "AddVacancyForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "AddVacancyForm";
             Load += AddVacancyForm_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();

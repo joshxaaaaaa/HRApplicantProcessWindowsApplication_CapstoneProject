@@ -390,6 +390,7 @@
             Controls.Add(label1);
             Controls.Add(panel1);
             Name = "JobOpenings";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Job Openings";
             Load += JobOpenings_Load;
             panel1.ResumeLayout(false);

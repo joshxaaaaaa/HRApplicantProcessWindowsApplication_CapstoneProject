@@ -106,7 +106,7 @@
             // 
             // panel1
             // 
-            panel1.BackColor = SystemColors.ControlDarkDark;
+            panel1.BackColor = SystemColors.ActiveCaption;
             panel1.Controls.Add(btnScreening);
             panel1.Controls.Add(btnInterviewScheduling);
             panel1.Controls.Add(btnInterviewEvaluation);
@@ -324,6 +324,7 @@
             // 
             // pnlScreening
             // 
+            pnlScreening.BackColor = SystemColors.InactiveCaption;
             pnlScreening.Controls.Add(btnViewApplicantProfile);
             pnlScreening.Controls.Add(label4);
             pnlScreening.Controls.Add(dgvDocs);
@@ -353,7 +354,7 @@
             // 
             // pnlScheduling
             // 
-            pnlScheduling.BackColor = SystemColors.AppWorkspace;
+            pnlScheduling.BackColor = SystemColors.InactiveCaption;
             pnlScheduling.Controls.Add(label15);
             pnlScheduling.Controls.Add(label14);
             pnlScheduling.Controls.Add(label13);
@@ -664,6 +665,7 @@
             Controls.Add(txtRemarks);
             Controls.Add(pnlScreening);
             Name = "Interviews";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Interviews Module";
             Load += Interviews_Load;
             panel1.ResumeLayout(false);
